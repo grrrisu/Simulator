@@ -37,6 +37,10 @@ class SimQueue
     @queue1
   end
 
+  def size
+    @queue1.size + @queue2.size
+  end
+
   def stop
     @stopped = true
     @workers.finalize
@@ -64,7 +68,7 @@ class SimQueue
 
   def run_workers
     @last_run = Time.now
-    p @queue1.map(&:sim_lock)
+    #p @queue1.map(&:sim_lock)
     timeout = @loop_time / (@queue1.size)
     while @queue1.any? && !@stopped
       puts "#{Thread.current} queue size #{@queue1.size}"

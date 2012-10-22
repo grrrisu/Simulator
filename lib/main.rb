@@ -2,12 +2,12 @@ require 'celluloid'
 
 puts 'preparing...'
 
-require './sim_queue'
-require './sim_system'
-require './sim_worker'
-require './sim_object'
-require './snapshot'
-require './agent'
+require_relative './sim_queue'
+require_relative './sim_system'
+require_relative './sim_worker'
+require_relative './sim_object'
+require_relative './snapshot'
+require_relative './agent'
 =begin
 Dir["#{File.dirname(__FILE__)}/*.rb"].uniq.each do |file|
   puts file

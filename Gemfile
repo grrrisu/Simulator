@@ -12,3 +12,7 @@ group :development do
   gem 'guard-rspec'
   gem 'growl'
 end
+
+group :test do
+  gem 'rb-fsevent'
+end
