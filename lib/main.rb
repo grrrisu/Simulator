@@ -1,44 +1,121 @@
 require 'celluloid'
 
-puts 'preparing...'
+class SimObject
 
-require_relative './sim_queue'
-require_relative './sim_system'
-require_relative './sim_worker'
-require_relative './sim_object'
-require_relative './snapshot'
-require_relative './agent'
-=begin
-Dir["#{File.dirname(__FILE__)}/*.rb"].uniq.each do |file|
-  puts file
-  require file
+  attr_accessor :state, :name
+
+  def initialize name
+    self.name  = name
+    self.state = 0
+  end
+
+  def sim
+    5.times do |i|
+      self.state += 1
+      puts "sim #{name} #{state}"
+      sleep 1
+    end
+    puts 'done!'
+    #raise Exception, "CRASH"
+  end
+
 end
-=end
 
-# test scenario: 5 workers, 10 sim object takes 5 sec, 3 locks
-# at most 3 workers can sim an object (because of the locks)
-# workers loop needs at least 15 sec to delegate the work (3 x 5 sec)
-# sim loop takes also
+class Worker
+  include Celluloid
+
+  def sim object
+    object.sim
+  end
+
+  def finalize
+    puts "worker #{object_id} stopped"
+  end
+
+end
+
+class MyQueue
+  include Celluloid
+
+  attr_accessor :objects
+
+  trap_exit :pool_died
+
+  def initialize
+    @pool = Worker.pool_link
+    @objects = []
+    @enumerator = @objects.each
+  end
+
+  def add object
+    @objects << object
+    puts "added #{object.name}"
+  end
+
+  def start
+    @stopped = false
+    self.next!
+  end
+
+  def stop
+    @stopped = true
+    wait_for_busy_workers
+  end
+
+  def wait_for_busy_workers
+    unless @pool.idle_size == @pool.size
+      sleep 1
+      wait_for_busy_workers
+    end
+  end
+
+  def pool_died actor, reason
+    puts "pool died #{actor} #{reason} #{current_actor.mailbox}"
+  end
+
+  def next
+    puts "next #{@pool.idle_size}"
+    unless @stopped
+      if @pool.idle_size > 0
+        begin
+          object = @enumerator.next
+          @pool.sim!(object)
+          self.next!
+        rescue StopIteration
+          @enumerator.rewind
+          puts "all objects simulated!"
+          after(1) {self.next!}
+        end
+      else
+        after(1) {self.next!}
+      end
+    end
+    puts " end"
+  end
+
+  def finalize
+    puts "pool stopped #{@pool.busy_size}"
+  end
+
+end
 
 
-queue = SimQueue.new
-# registered as :queue
-Celluloid::Actor[:queue] = queue
-system = SimSystem.new
-objects = (0..10).map { system << SimObject.new(system) }
-agents  = (0..5).map { Agent.new(system) }
+queue = MyQueue.new
 
-puts "starting queue..."
 queue.start
-sleep 20
-system.add(SimObject.new(system))
-sleep 10
-system.remove(objects.last)
-sleep 20
 
-#p queue.snapshot
+5.times do |i|
+  queue.add!(SimObject.new("Sim#{i}"))
+  sleep 1
+end
 
-agents.each(&:terminate)
+sleep 8
+
 queue.stop
-system.terminate
+
+queue.objects.each do |object|
+  puts "the end: sim #{object.name} #{object.state}"
+end
+
+queue.terminate
 
