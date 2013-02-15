@@ -17,12 +17,12 @@ class SimQueue
   end
 
   def start
-    @stopped = false
+    @running = true
     self.next!
   end
 
   def stop
-    @stopped = true
+    @running = false
     wait_for_busy_workers
   end
 
@@ -39,7 +39,7 @@ class SimQueue
 
   def next
     puts "next #{@pool.idle_size}"
-    unless @stopped
+    if @running
       if @pool.idle_size > 0
         begin
           object = @enumerator.next
