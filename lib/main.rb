@@ -3,9 +3,9 @@ require 'celluloid'
 require_relative './sim_object'
 require_relative './sim_worker'
 require_relative './sim_queue'
-require_relative './guard'
+require_relative './semaphore'
 
-Celluloid::Actor[:guard] = Guard.new
+Celluloid::Actor[:semaphore] = Semaphore.new
 queue = SimQueue.new
 
 queue.start

@@ -3,7 +3,7 @@ class SimWorker
 
   def get_lock object
     @object = object
-    Celluloid::Actor[:guard].obtain(current_actor, :sim, @object.get_key)
+    Celluloid::Actor[:semaphore].obtain(current_actor, :sim, @object.get_key)
   end
 
   def sim

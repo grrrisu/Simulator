@@ -1,4 +1,6 @@
-class Guard
+require 'celluloid'
+
+class Semaphore
   include Celluloid
 
   def initialize
