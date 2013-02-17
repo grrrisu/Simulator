@@ -11,10 +11,15 @@ class SimQueue
     @enumerator = @objects.each
   end
 
+  def size
+    @objects.size
+  end
+
   def add object
     @objects << object
-    puts "added #{object.name}"
+    #puts "added #{object.name}"
   end
+  alias << add
 
   def start
     @running = true
