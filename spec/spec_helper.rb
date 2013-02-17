@@ -1,10 +1,7 @@
-p 'spec helper start'
 require 'rubygems'
 require 'bundler/setup'
 require 'celluloid'
 require 'celluloid/rspec'
-
-p 'huhu', Celluloid
 
 require_relative '../lib/sim_object'
 require_relative '../lib/sim_worker'

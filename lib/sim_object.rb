@@ -2,7 +2,7 @@ class SimObject
 
   attr_accessor :state, :name
 
-  def initialize name
+  def initialize name = nil
     self.name  = name
     self.state = 0
   end
