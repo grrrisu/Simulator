@@ -9,6 +9,10 @@ module Sim
       self.state = 0
     end
 
+    def touch
+      @last_touched = Time.now
+    end
+
     def get_key
       :a_key
     end

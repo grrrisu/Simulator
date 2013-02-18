@@ -18,12 +18,14 @@ module Sim
     end
 
     def add object
+      object.touch
       @objects << object
     end
     alias << add
 
     def start
       @running = true
+      @objects.each {|obj| obj.touch}
       self.next!
     end
 

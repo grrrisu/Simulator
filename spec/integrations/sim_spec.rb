@@ -18,7 +18,7 @@ describe "Sim" do
       object.should_receive(:sim).once
     end
     @queue.start
-    sleep 0.2
+    sleep 0.5
     @queue.stop
   end
 
