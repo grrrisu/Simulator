@@ -19,7 +19,6 @@ module Sim
 
     def add object
       @objects << object
-      #puts "added #{object.name}"
     end
     alias << add
 

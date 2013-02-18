@@ -1,12 +1,7 @@
-require 'celluloid'
-
-require_relative './sim/object'
-require_relative './sim/worker'
-require_relative './sim/queue'
-require_relative './sim/guard'
+require_relative './sim.rb'
 
 Celluloid::Actor[:guard] = Sim::Guard.new
-queue = SimQueue.new
+queue = Sim::Queue.new
 
 queue.start
 
