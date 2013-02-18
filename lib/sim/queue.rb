@@ -44,7 +44,6 @@ module Sim
     end
 
     def next
-      puts "next #{@pool.idle_size}"
       if @running
         if @pool.idle_size > 0
           begin
@@ -53,14 +52,12 @@ module Sim
             self.next!
           rescue StopIteration
             @enumerator.rewind
-            puts "all objects simulated!"
             after(1) {self.next!}
           end
         else
           after(1) {self.next!}
         end
       end
-      puts " end"
     end
 
     def finalize
