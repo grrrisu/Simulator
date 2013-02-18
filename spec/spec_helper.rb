@@ -3,10 +3,10 @@ require 'bundler/setup'
 require 'celluloid'
 require 'celluloid/rspec'
 
-require_relative '../lib/sim_object'
-require_relative '../lib/sim_worker'
-require_relative '../lib/sim_queue'
-require_relative '../lib/semaphore'
+require_relative '../lib/sim/object'
+require_relative '../lib/sim/worker'
+require_relative '../lib/sim/queue'
+require_relative '../lib/sim/guard'
 
 # Terminate the default incident reporter and replace it with one that logs to a file
 logfile = File.open(File.expand_path("../../log/test.log", __FILE__), 'a')

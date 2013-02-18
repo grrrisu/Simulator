@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe SimQueue do
+describe Sim::Queue do
 
   before :each do
-    @queue = SimQueue.new
+    @queue = Sim::Queue.new
     @objects = Array.new(3) do |i|
-      object = mock(SimObject)
+      object = mock(Sim::Object)
       object.stub!(:sim)
       object.stub!(:lock).and_return(true)
       @queue << object

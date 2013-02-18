@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "Sim" do
 
   before :each do
-    Celluloid::Actor[:semaphore] = Semaphore.new
-    @queue = SimQueue.new
+    Celluloid::Actor[:guard] = Sim::Guard.new
+    @queue = Sim::Queue.new
     @objects = Array.new(3) do |i|
-      object = SimObject.new
+      object = Sim::Object.new
       object.stub!(:sim)
       @queue << object
       object
