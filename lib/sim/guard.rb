@@ -12,11 +12,11 @@ module Sim
     end
 
     def obtain requester, method, *args
-      logos = @locks[to_key(args)]
-      unless logos
+      lock = @locks[to_key(args)]
+      unless lock
         @locks[to_key(args)] = requester.future.send(method)
       else
-        logos.value # wait for requester to finish
+        lock.value # wait for requester to finish
         @locks[to_key(args)] = nil
         obtain requester, method, *args # retry
       end
