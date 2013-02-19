@@ -12,6 +12,10 @@ describe Sim::Queue do
     end
   end
 
+  after :each do
+    @queue.terminate
+  end
+
   it "should have a filled queue" do
     @queue.size.should == @objects.size
   end
@@ -35,16 +39,15 @@ describe Sim::Queue do
   describe 'start' do
 
     before :each do
-      @queue.stub(:next!).and_return('')
-      @queue.stub(:next).and_return('')
+      @queue.wrapped_object.stub(:next!).and_return('')
     end
 
     it "should call next" do
-      @queue.should_receive(:next)
+      @queue.wrapped_object.should_receive(:next!)
       @queue.start
     end
 
-    it "should touch every object", focus: true do
+    it "should touch every object" do
       @objects.each {|obj| obj.should_receive(:touch)}
       @queue.start
     end

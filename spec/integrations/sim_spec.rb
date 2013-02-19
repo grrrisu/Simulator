@@ -5,9 +5,9 @@ describe "Sim" do
   before :each do
     Celluloid::Actor[:guard] = Sim::Guard.new
     @queue = Sim::Queue.new
-    @objects = Array.new(3) do |i|
+    @objects = Array.new(2) do |i|
       object = Sim::Object.new
-      object.stub!(:sim)
+      object.stub(:sim)
       @queue << object
       object
     end
@@ -18,7 +18,7 @@ describe "Sim" do
       object.should_receive(:sim).once
     end
     @queue.start
-    sleep 0.5
+    sleep 0.2
     @queue.stop
   end
 
