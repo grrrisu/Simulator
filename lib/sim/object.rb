@@ -13,8 +13,18 @@ module Sim
       @last_touched = Time.now
     end
 
+    def parent_guard
+      Celluloid::Actor[:guard]
+    end
+
     def get_key
       :a_key
+    end
+
+    def delay time = Time.now
+      delay =  time - @last_touched
+      @last_touched = time
+      delay
     end
 
     def sim

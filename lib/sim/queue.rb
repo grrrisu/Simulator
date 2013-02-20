@@ -50,7 +50,7 @@ module Sim
         if @pool.idle_size > 0
           begin
             object = @enumerator.next
-            @pool.get_lock!(object)
+            @pool.process!(object)
             self.next!
           rescue StopIteration
             @enumerator.rewind

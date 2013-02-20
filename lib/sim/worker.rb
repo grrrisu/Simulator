@@ -3,9 +3,10 @@ module Sim
   class Worker
     include Celluloid
 
-    def get_lock object
+    def process object
       @object = object
-      Celluloid::Actor[:guard].obtain(current_actor, :sim, @object.get_key)
+      guard = object.parent_guard
+      guard.obtain(current_actor, :sim, @object.get_key)
     end
 
     def sim
