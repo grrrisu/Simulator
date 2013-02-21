@@ -2,6 +2,7 @@ module Sim
 
   class Worker
     include Celluloid
+    include Celluloid::Logger
 
     def process object
       @object = object
@@ -15,7 +16,7 @@ module Sim
     end
 
     def finalize
-      puts "worker #{object_id} stopped"
+      info "worker #{object_id} stopped"
     end
 
   end

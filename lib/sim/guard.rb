@@ -2,6 +2,7 @@ module Sim
 
   class Guard
     include Celluloid
+    include Celluloid::Logger
 
     def initialize
       @locks = {}
