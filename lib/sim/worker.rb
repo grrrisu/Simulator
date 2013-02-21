@@ -10,6 +10,7 @@ module Sim
     end
 
     def sim
+      @object.touch
       @object.sim
     end
 
