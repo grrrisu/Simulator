@@ -32,6 +32,10 @@ module Sim
     end
     alias << add
 
+    def remove object
+      @objects.delete object
+    end
+
     def start
       @running = true
       @objects.each {|obj| obj.touch}
@@ -76,7 +80,8 @@ module Sim
     end
 
     def max_time
-      @max_time ||= level.time_unit * @priority
+      5
+      #@max_time ||= level.time_unit * @priority
     end
 
     def wait_before_next_loop

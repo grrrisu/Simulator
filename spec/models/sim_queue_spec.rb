@@ -34,6 +34,14 @@ describe Sim::Queue do
       @queue << object
     end
 
+    it "and remove" do
+      object = Sim::Object.new
+      @queue.add(object)
+      lambda {
+        @queue.remove(object)
+      }.should change(@queue, :size).by(-1)
+    end
+
   end
 
   describe 'start' do
