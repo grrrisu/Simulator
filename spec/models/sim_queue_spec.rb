@@ -22,7 +22,7 @@ describe Sim::Queue do
 
   describe 'add' do
 
-    it "should add an object" do
+    it "should increment queue objects" do
       lambda {
         @queue << Sim::Object.new
       }.should change(@queue, :size).by(1)
@@ -34,7 +34,11 @@ describe Sim::Queue do
       @queue << object
     end
 
-    it "and remove" do
+  end
+
+  describe 'remove' do
+
+    it "should dec queue objects" do
       object = Sim::Object.new
       @queue.add(object)
       lambda {
@@ -58,6 +62,21 @@ describe Sim::Queue do
     it "should touch every object" do
       @objects.each {|obj| obj.should_receive(:touch)}
       @queue.start
+    end
+
+  end
+
+  describe 'stop' do
+
+    it "should wait for busy workers" do
+      @queue.wrapped_object.should_receive(:wait_for_busy_workers)
+      @queue.stop
+    end
+
+    it "should not call for a worker" do
+      @queue.wrapped_object.instance_variable_get("@pool").should_receive(:process!).never
+      @queue.stop
+      @queue.next
     end
 
   end
