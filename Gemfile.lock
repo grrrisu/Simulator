@@ -53,6 +53,7 @@ GEM
     spoon (0.0.1)
     terminal-table (1.4.5)
     thor (0.17.0)
+    timecop (0.5.2)
     timers (1.1.0)
 
 PLATFORMS
@@ -68,3 +69,4 @@ DEPENDENCIES
   rake
   rb-fsevent
   rspec
+  timecop

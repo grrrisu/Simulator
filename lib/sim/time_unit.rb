@@ -9,28 +9,20 @@ module Sim
 
     def start
       now = Time.now
-      p now
       @started, @time_last_change = now, now
       @units_since_start = 0
-      p 'end start'
     end
 
     def time_unit= value
-      p "set time unit #{value}"
       if @started
         @units_since_start = time_elapsed
-        now = Time.now
-        p now
-        @time_last_change = now
+        @time_last_change = Time.now
       end
       @time_unit = value.to_f
     end
 
     def time_elapsed
-      p "time elpased"
-      now = Time.now
-      p now, @time_unit, now - @time_last_change
-      @units_since_start + (now - @time_last_change) / @time_unit
+      @units_since_start + (Time.now - @time_last_change) / @time_unit
     end
 
   end

@@ -15,4 +15,5 @@ end
 
 group :test do
   gem 'rb-fsevent'
+  gem 'timecop'
 end

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'celluloid'
 require 'celluloid/rspec'
+require 'timecop'
 
 require_relative '../lib/sim'
 
