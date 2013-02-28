@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Sim" do
 
   before :each do
+    Sim::TimeUnit.new(5)
     Celluloid::Actor[:guard] = Sim::Guard.new
     @queue = Sim::Queue.new
     @objects = Array.new(2) do |i|

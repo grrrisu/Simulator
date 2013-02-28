@@ -2,6 +2,7 @@ require_relative './sim.rb'
 
 #Celluloid.logger = Rails.logger
 
+Sim::TimeUnit.new(5)
 Celluloid::Actor[:guard] = Sim::Guard.new
 queue = Sim::Queue.new
 

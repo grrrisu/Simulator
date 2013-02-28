@@ -13,7 +13,7 @@ module Sim
     end
 
     def touch time = Time.now
-      @delay =  time - @last_touched
+      @delay =  (time - @last_touched) / Celluloid::Actor[:time_unit].time_unit
       @last_touched = time
     end
 

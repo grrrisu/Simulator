@@ -17,12 +17,14 @@ describe Sim::Queue do
   end
 
   it "should have a filled queue" do
+    Sim::TimeUnit.new(5)
     @queue.size.should == @objects.size
   end
 
   describe 'add' do
 
     it "should increment queue objects" do
+      Sim::TimeUnit.new(5)
       lambda {
         @queue << Sim::Object.new
       }.should change(@queue, :size).by(1)
@@ -78,6 +80,56 @@ describe Sim::Queue do
       @queue.stop
       @queue.next
     end
+
+  end
+
+  describe 'next' do
+
+  end
+
+  describe 'wait_before_next_loop' do
+
+    before :all do
+      Sim::TimeUnit.new(5)
+    end
+
+    before :each do
+      @now = Time.now
+      Timecop.freeze(@now)
+      @queue.wrapped_object.instance_variable_set('@last_run', @now - 5)
+    end
+
+    after :all do
+      Celluloid::Actor[:time_unit].terminate
+    end
+
+    it "should calculate time for next loop" do
+      @queue.wrapped_object.stub(:max_time).and_return(10)
+      #@queue.wait_before_next_loop.should == 5
+    end
+
+    it "should not extend time unit after the first delay" do
+      @queue.wrapped_object.instance_variable_set('@late_again', 0)
+      @queue.wrapped_object.stub(:max_time).and_return(3)
+      @queue.wait_before_next_loop.should == 0
+      @queue.wrapped_object.instance_variable_get('@late_again').should == 1
+    end
+
+    it "should extend time unit after 3 delays in a row" do
+      @queue.wrapped_object.instance_variable_set('@late_again', 3)
+      @queue.wrapped_object.stub(:max_time).and_return(3)
+      @queue.wait_before_next_loop.should == 0
+      Celluloid::Actor[:time_unit].time_unit.should == 25
+    end
+
+    it "should extend time unit after 3 delays in a row" do
+      @queue.wrapped_object.instance_variable_set('@priority', 1.5) # low priority
+      @queue.wrapped_object.instance_variable_set('@late_again', 3)
+      @queue.wrapped_object.stub(:max_time).and_return(3)
+      @queue.wait_before_next_loop.should == 0
+      Celluloid::Actor[:time_unit].time_unit.should > 5
+    end
+
 
   end
 

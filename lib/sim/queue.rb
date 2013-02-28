@@ -15,7 +15,7 @@ module Sim
 
     trap_exit :pool_died
 
-    def initialize priority = :low
+    def initialize priority = :high
       @pool = Sim::Worker.pool_link
       @objects = []
       @enumerator = @objects.each
@@ -50,13 +50,14 @@ module Sim
 
     def wait_for_busy_workers
       unless @pool.idle_size == @pool.size
-        sleep 1
+        info "wating for busy workers..."
+        sleep max_time / (size * 2)
         wait_for_busy_workers
       end
     end
 
     def pool_died actor, reason
-      puts "queue pool died #{actor} #{reason} #{current_actor.mailbox}"
+      warn "queue pool died #{actor} #{reason} #{current_actor.mailbox}"
     end
 
     def next
@@ -74,20 +75,18 @@ module Sim
             end
           end
         else
-          after(1) {self.next!}
+          after(max_time / (size * 2)) {self.next!}
         end
       end
     end
 
     def max_time
-      5
-      #@max_time ||= level.time_unit * @priority
+      @max_time ||= Celluloid::Actor[:time_unit].time_unit * @priority
     end
 
     def wait_before_next_loop
       duration = Time.now - @last_run
-
-      #p "queue took #{duration.to_f} sec for one loop"
+      debug "queue took #{duration.to_f} sec for one loop"
 
       if duration <= max_time
         @late_again = 0
@@ -97,10 +96,9 @@ module Sim
           @late_again += 1
           info "queue took too long [#{duration}], max time #{max_time} for #{@late_again} time! Give it try again!"
         else
-          new_time_unit = duration * (1/@priority)
-          #level.time_unit = new_time_unit
+          new_time_unit = duration / @priority
           info "queue took too long[#{duration}], max time #{max_time} -> setting time unit to #{new_time_unit}"
-          #level.game.time_unit = new_time_unit
+          Celluloid::Actor[:time_unit].time_unit = new_time_unit
           @max_time = nil
         end
         0
@@ -108,7 +106,7 @@ module Sim
     end
 
     def finalize
-      puts "pool stopped #{@pool.busy_size}"
+      debug "pool stopped #{@pool.busy_size}"
     end
 
   end

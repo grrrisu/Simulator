@@ -3,8 +3,11 @@ module Sim
   class TimeUnit
     include Celluloid
 
+    attr_reader :time_unit
+
     def initialize time_unit
       @time_unit = time_unit # secs representing 1 time unit
+      Celluloid::Actor[:time_unit] = current_actor
     end
 
     def start
