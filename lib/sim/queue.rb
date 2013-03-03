@@ -81,7 +81,7 @@ module Sim
     end
 
     def max_time
-      @max_time ||= Celluloid::Actor[:time_unit].time_unit * @priority
+      @max_time ||= TimeUnit.instance.time_unit * @priority
     end
 
     def wait_before_next_loop
@@ -98,7 +98,7 @@ module Sim
         else
           new_time_unit = duration / @priority
           info "queue took too long[#{duration}], max time #{max_time} -> setting time unit to #{new_time_unit}"
-          Celluloid::Actor[:time_unit].time_unit = new_time_unit
+          TimeUnit.instance.time_unit = new_time_unit
           @max_time = nil
         end
         0

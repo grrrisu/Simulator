@@ -5,6 +5,10 @@ module Sim
 
     attr_reader :time_unit
 
+    def self.instance
+      Celluloid::Actor[:time_unit]
+    end
+
     def initialize time_unit
       @time_unit = time_unit # secs representing 1 time unit
       Celluloid::Actor[:time_unit] = current_actor

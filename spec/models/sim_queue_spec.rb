@@ -18,6 +18,7 @@ describe Sim::Queue do
 
   it "should have a filled queue" do
     Sim::TimeUnit.new(5)
+    p  '***', Celluloid::Actor[:time_unit]
     @queue.size.should == @objects.size
   end
 
@@ -100,7 +101,7 @@ describe Sim::Queue do
     end
 
     after :all do
-      Celluloid::Actor[:time_unit].terminate
+      TimeUnit.instance.terminate
     end
 
     it "should calculate time for next loop" do
@@ -119,15 +120,16 @@ describe Sim::Queue do
       @queue.wrapped_object.instance_variable_set('@late_again', 3)
       @queue.wrapped_object.stub(:max_time).and_return(3)
       @queue.wait_before_next_loop.should == 0
-      Celluloid::Actor[:time_unit].time_unit.should == 25
+      Sim::TimeUnit.instance.time_unit.should == 25
     end
 
-    it "should extend time unit after 3 delays in a row" do
+    it "should extend time unit after 3 delays in a row for a low prio queue" do
+      pending "Rethink this!"
       @queue.wrapped_object.instance_variable_set('@priority', 1.5) # low priority
       @queue.wrapped_object.instance_variable_set('@late_again', 3)
       @queue.wrapped_object.stub(:max_time).and_return(3)
       @queue.wait_before_next_loop.should == 0
-      Celluloid::Actor[:time_unit].time_unit.should > 5
+      Sim::TimeUnit.instance.time_unit.should > 5
     end
 
 
