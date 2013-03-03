@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Sim::Queue do
 
   before :each do
+    Sim::TimeUnit.new(5)
     @queue = Sim::Queue.new
     @objects = Array.new(3) do |i|
       object = Sim::Object.new
@@ -16,16 +17,14 @@ describe Sim::Queue do
     @queue.terminate
   end
 
-  it "should have a filled queue" do
-    Sim::TimeUnit.new(5)
-    p  '***', Celluloid::Actor[:time_unit]
-    @queue.size.should == @objects.size
-  end
-
   describe 'add' do
 
+    it "should have a filled queue" do
+      @queue.size.should == @objects.size
+    end
+
+
     it "should increment queue objects" do
-      Sim::TimeUnit.new(5)
       lambda {
         @queue << Sim::Object.new
       }.should change(@queue, :size).by(1)

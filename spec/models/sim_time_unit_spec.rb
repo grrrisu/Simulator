@@ -9,6 +9,10 @@ describe Sim::TimeUnit do
     @time_unit.start
   end
 
+  it "should return instance" do
+    Sim::TimeUnit.instance.wrapped_object.should be_instance_of(Sim::TimeUnit)
+  end
+
   it "should return 4 time units" do
     Timecop.freeze(@now + 8)
     @time_unit.time_elapsed.should == 4
