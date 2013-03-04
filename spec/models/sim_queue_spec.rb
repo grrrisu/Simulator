@@ -99,10 +99,6 @@ describe Sim::Queue do
       @queue.wrapped_object.instance_variable_set('@last_run', @now - 5)
     end
 
-    after :all do
-      TimeUnit.instance.terminate
-    end
-
     it "should calculate time for next loop" do
       @queue.wrapped_object.stub(:max_time).and_return(10)
       #@queue.wait_before_next_loop.should == 5

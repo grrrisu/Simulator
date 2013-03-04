@@ -12,12 +12,6 @@ class BuildableTest < BuildableSuperTest
   default_attr :size, 7
 end
 
-# wolf = Wolf.build config, :min => 3
-# p wolf.min == 3 # option
-# p wolf.hunger == 6 # yaml config
-# p wolf.size == 7 # default class
-# p wolf.max == 8 # default super
-
 describe Sim::Buildable do
 
   before :all do

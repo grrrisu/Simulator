@@ -16,7 +16,7 @@ module Sim
     end
 
     def finalize
-      info "worker #{object_id} stopped"
+      debug "worker #{object_id} stopped"
     end
 
   end
