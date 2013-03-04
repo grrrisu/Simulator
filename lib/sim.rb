@@ -1,6 +1,7 @@
 require 'celluloid'
 
 require_relative './sim/version'
+require_relative './sim/buildable'
 require_relative './sim/object'
 require_relative './sim/time_unit'
 require_relative './sim/worker'
