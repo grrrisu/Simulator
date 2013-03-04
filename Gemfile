@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'celluloid'
+gem 'eventmachine'
 
 group :development do
   gem 'jeweler'
