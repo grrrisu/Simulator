@@ -1,9 +1,21 @@
+require 'yaml'
+
 module Sim
 
+  # usage:
+  #
+  # config = Wolf.load_config('wolf.yml')
+  # wolf = Wolf.build(config, :min => 3)
+  #
+  # values are set in the following priority:
+  #
+  # wolf.min == 3 # options
+  # wolf.hunger == 6 # yaml config
+  # wolf.size == 7 # default class
+  # wolf.max == 8 # default superclass
   module Buildable
 
     def Buildable.included other
-      other.instance_eval {include InstanceMethods}
       class << other
         include ClassMethods
       end
@@ -11,99 +23,46 @@ module Sim
 
     module ClassMethods
 
-      def build_option_key
-        @build_option_key || name
+      def default_attr name, value = nil
+        attr_accessor name.to_sym
+        @defaults ||= {}
+        @defaults[name.to_s] = value
       end
 
-      # @param attributes [Hash]
-      def default attributes
-        @default = attributes
-      end
-
-      def default_get
-        default_attributes = @default || {}
-        if superclass.respond_to? :default_get
-          default_attributes = superclass.default_get.merge(default_attributes)
+      def defaults
+        default_attributes = @defaults || {}
+        if superclass.respond_to? :defaults
+          default_attributes = superclass.defaults.merge(default_attributes)
         end
         default_attributes
       end
 
-      def build options = {}
-        if buildable = build_for(build_option_key, options)
-          buildable.after_build
+      def build config, options = {}
+        # convert sym keys to string keys
+        options = options.inject({}) do |memo, item|
+          memo[item[0].to_s] = item[1]
+          memo
         end
-        buildable
-      end
-
-      def build_for key, options = {}
-        begin
-          options = Level.current.build_options.fetch(key).merge options
-        rescue NameError
-          nil # NameError raised if Level.current is not set
-        rescue IndexError
-          nil
-        ensure
-          options = default_get.merge options
-        end
+        attributes = defaults.merge(config).merge(options)
         buildable = new
-        buildable.initialize_attributes options
+        attributes.each do |key, value|
+          buildable.send("#{key}=", convert_build_value(value))
+        end
         buildable
       end
 
-      def build_options *attributes
-        build_options_for build_option_key, *attributes
-      end
-
-      def build_options_for key, *attributes
-        begin
-          options = Level.current.build_options.fetch key
-          options = default_get.merge options
-        rescue NameError
-          # NameError raised if Level.current is not set
-          options = default_get
-        rescue IndexError
-          options = default_get
-        end
-        unless attributes.empty?
-          values = attributes.collect {|a| options[a] }
-          values.length == 1 ? values[0] : values
-        else
-          options
+      def convert_build_value value
+        case value.class.name
+          when 'Range'
+            # sets a random integer within the specified range
+            value.first + rand(value.last - value.first)
+          else
+            value
         end
       end
 
-    end
-
-    module InstanceMethods
-
-      def initialize_attributes attributes = {}
-        attributes.each do |variable, value|
-          if value.instance_of? Range then value = range_to_i(value) end
-          send "#{variable}=", value
-        end
-      end
-
-      def initialize_attributes_with_defaults attributes = {}
-        initialize_attributes self.class.default_get.merge(attributes)
-      end
-
-      # sets a random integer within the specified range
-      def range_to_i range
-        range.first + rand(range.last - range.first)
-      end
-
-      def after_build
-      end
-
-      def delete
-        after_delete if before_delete
-      end
-
-      def before_delete
-        true
-      end
-
-      def after_delete
+      def load_config file_name
+        YAML.load(File.open(file_name))
       end
 
     end
