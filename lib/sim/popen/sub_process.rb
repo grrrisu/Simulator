@@ -5,22 +5,30 @@ module Sim
 
     class SubProcess
 
-      attr_accessor :running
-
       def self.start
-        $sdterr.puts 'started'
-        self.running = true
-        while running
-          $stdin.read.split("\n").each do |line|
-            send_message "[parent] stdout: #{line}"
-            self.running = false
+        process = new
+        process.send_message('ready')
+        process.receive_message
+      end
+
+      def receive_message
+        log 'started'
+        2.times do
+          $stdin.gets("\n").split("\n").each do |line|
+            log line
+            send_message "back again #{line.reverse}"
           end
         end
-        raise Exception, "SubProcess ended!!!"
+        log "SubProcess ended!!!"
       end
 
       def send_message message
-        $stdout.puts message
+        log "send #{message}"
+        $stdout.write(message + "\n")
+      end
+
+      def log message
+        $stderr.puts "[subprocess] #{message}"
       end
 
     end
