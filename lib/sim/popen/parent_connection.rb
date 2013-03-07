@@ -15,7 +15,6 @@ module Sim
         cmd = %W{#{RUBY} -r #{SUBPROCESS_FILE} -e Sim::Popen::SubProcess.start}
         @in_connection, @out_connection, wait_thr = popen2(*cmd)
         @pid = wait_thr.pid
-        p @pid
         # wait for sub process to be ready
         receive_message
       end
@@ -29,7 +28,7 @@ module Sim
 
       def receive_message
         puts 'parent wait for message'
-        line = out_connection.readline
+        line = out_connection.readline.chomp
         puts "[parent]: #{line}"
       end
 
@@ -47,7 +46,6 @@ end
 connection = Sim::Popen::ParentConnection.new
 connection.start
 p '******'
-p connection
-p connection.send_message 'see all the stars'
+connection.send_message 'see all the stars'
 p '******'
 connection.close

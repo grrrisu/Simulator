@@ -14,7 +14,7 @@ module Sim
       def receive_message
         log 'started'
         2.times do
-          line = $stdin.readline
+          line = $stdin.readline.chomp
           send_message "back again #{line.reverse}"
         end
         log "SubProcess ended!!!"
@@ -30,6 +30,10 @@ module Sim
 
       def log message
         $stderr.puts "[subprocess] #{message}"
+      end
+
+      def p object
+        $stderr.puts object.inspect
       end
 
     end
