@@ -1,23 +1,32 @@
-#require "eventmachine"
-
 module Sim
   module Popen
 
     class SubProcess
 
-      def self.start
-        process = new
-        process.send_message('ready')
-        process.receive_message
+      def start(receiver)
+        @receiver = receiver
+        send_message('ready')
+        @running = true
+        log 'started'
+        receive_message
+      end
+
+      def stop
+        @running = false
       end
 
       def receive_message
-        log 'started'
-        2.times do
+        while @running
           line = $stdin.readline.chomp
-          send_message "back again #{line.reverse}"
+          begin
+            answer = @receiver.process_message line
+            send_message answer
+          rescue Exception => e
+            log "ERROR: #{e.class} #{e.message}"
+            log e.backtrace.join("\n")
+            send_message "exception #{e.message} in subprocess"
+          end
         end
-        log "SubProcess ended!!!"
       rescue EOFError
         log "parent closed connection"
       end

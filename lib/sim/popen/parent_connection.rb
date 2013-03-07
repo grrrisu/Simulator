@@ -9,10 +9,9 @@ module Sim
       attr_reader :in_connection, :out_connection, :pid
 
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
-      SUBPROCESS_FILE = File.expand_path('../sub_process.rb', __FILE__)
 
-      def start
-        cmd = %W{#{RUBY} -r #{SUBPROCESS_FILE} -e Sim::Popen::SubProcess.start}
+      def start sim_library, level_class, config_file
+        cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.boot #{config_file}}
         @in_connection, @out_connection, wait_thr = popen2(*cmd)
         @pid = wait_thr.pid
         # wait for sub process to be ready
@@ -20,14 +19,11 @@ module Sim
       end
 
       def send_message message
-        puts 'parent send message'
         in_connection.write(message + "\n")
-        #in_connection.flush
         receive_message
       end
 
       def receive_message
-        puts 'parent wait for message'
         line = out_connection.readline.chomp
         puts "[parent]: #{line}"
       end
@@ -43,8 +39,11 @@ module Sim
 end
 
 
-connection = Sim::Popen::ParentConnection.new
-connection.start
+connection  = Sim::Popen::ParentConnection.new
+sim_library = File.expand_path('../../../sim.rb', __FILE__)
+level_class = 'Sim::Level'
+config_file = File.expand_path('../../../level.yml', __FILE__)
+connection.start(sim_library, level_class, config_file)
 p '******'
 connection.send_message 'see all the stars'
 p '******'
