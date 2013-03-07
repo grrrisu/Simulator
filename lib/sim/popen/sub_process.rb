@@ -1,4 +1,4 @@
-require "eventmachine"
+#require "eventmachine"
 
 module Sim
   module Popen
@@ -14,17 +14,18 @@ module Sim
       def receive_message
         log 'started'
         2.times do
-          $stdin.gets("\n").split("\n").each do |line|
-            log line
-            send_message "back again #{line.reverse}"
-          end
+          line = $stdin.readline
+          send_message "back again #{line.reverse}"
         end
         log "SubProcess ended!!!"
+      rescue EOFError
+        log "parent closed connection"
       end
 
       def send_message message
         log "send #{message}"
-        $stdout.write(message + "\n")
+        $stdout.puts message
+        $stdout.flush
       end
 
       def log message
