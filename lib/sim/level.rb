@@ -5,10 +5,15 @@ module Sim
     #include Celluloid::Logger
     include Buildable
 
+    def self.attach_parent_process
+      level = boot
+      level.listen
+    end
+
     def self.boot
       raise ArgumentError, "no configuration file present" unless ARGV[0]
       config_file = ARGV[0]
-      level = new(config_file)
+      new(config_file)
     end
 
     def initialize config_file
@@ -18,7 +23,6 @@ module Sim
       @queue = Sim::Queue.new
 
       create
-      listen
     end
 
     def create
