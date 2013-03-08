@@ -8,27 +8,32 @@ module Sim
         send_message('ready')
         @running = true
         log 'started'
-        receive_message
+        listen
       end
 
       def stop
         @running = false
       end
 
-      def receive_message
+      def listen
         while @running
-          line = $stdin.readline.chomp
-          begin
-            answer = @receiver.process_message line
-            send_message answer
-          rescue Exception => e
-            log "ERROR: #{e.class} #{e.message}"
-            log e.backtrace.join("\n")
-            send_message "exception #{e.message} in subprocess"
-          end
+          receive_message
         end
       rescue EOFError
         log "parent closed connection"
+        @receiver.stop
+      end
+
+      def receive_message
+        line = $stdin.readline.chomp
+        begin
+          answer = @receiver.process_message line
+          send_message answer
+        rescue Exception => e
+          log "ERROR: #{e.class} #{e.message}"
+          log e.backtrace.join("\n")
+          send_message "exception '#{e.message}' occured in subprocess"
+        end
       end
 
       def send_message message

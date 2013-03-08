@@ -11,7 +11,7 @@ module Sim
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 
       def start sim_library, level_class, config_file
-        cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.boot #{config_file}}
+        cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.attach #{config_file}}
         @in_connection, @out_connection, wait_thr = popen2(*cmd)
         @pid = wait_thr.pid
         # wait for sub process to be ready
@@ -38,13 +38,14 @@ module Sim
   end
 end
 
-
-connection  = Sim::Popen::ParentConnection.new
-sim_library = File.expand_path('../../../sim.rb', __FILE__)
-level_class = 'Sim::Level'
-config_file = File.expand_path('../../../level.yml', __FILE__)
-connection.start(sim_library, level_class, config_file)
-p '******'
-connection.send_message 'see all the stars'
-p '******'
-connection.close
+if $0 == __FILE__
+  connection  = Sim::Popen::ParentConnection.new
+  sim_library = File.expand_path('../../../sim.rb', __FILE__)
+  level_class = 'Sim::Level'
+  config_file = File.expand_path('../../../level.yml', __FILE__)
+  connection.start(sim_library, level_class, config_file)
+  p '******'
+  connection.send_message 'see all the stars'
+  p '******'
+  connection.close
+end

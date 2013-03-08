@@ -2,12 +2,12 @@ module Sim
 
   class Level
     include Celluloid
-    #include Celluloid::Logger
+    include Celluloid::Logger
     include Buildable
 
-    def self.attach_parent_process
+    def self.attach
       level = boot
-      level.listen
+      level.listen_to_parent_process
     end
 
     def self.boot
@@ -18,20 +18,17 @@ module Sim
 
     def initialize config_file
       config = load_config(config_file)
+      build config
+    end
 
+    def build config
       Sim::TimeUnit.new config["time_unit"]
       @queue = Sim::Queue.new
-
-      create
     end
 
-    def create
-      raise ArgumentError, "overwrite in subclass"
-      #Celluloid::Actor[:guard] = Sim::Guard.new
-    end
-
-    def listen
-      @process = Popen::SubProcess.new(level)
+    def listen_to_parent_process
+      Celluloid.logger = $stderr # TODO log to a file
+      @process = Popen::SubProcess.new(self)
       @process.start
     end
 
@@ -54,7 +51,7 @@ module Sim
     end
 
     def stop
-      @process.stop
+      @process.stop if @process
       @queue.stop
       Celluloid.shutdown
     end
