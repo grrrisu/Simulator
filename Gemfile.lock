@@ -6,8 +6,6 @@ GEM
       timers (>= 1.0.0)
     coderay (1.0.9)
     diff-lcs (1.2.1)
-    eventmachine (1.0.1)
-    eventmachine (1.0.1-java)
     facter (1.6.17)
     git (1.2.5)
     growl (1.0.3)
@@ -64,7 +62,6 @@ PLATFORMS
 
 DEPENDENCIES
   celluloid
-  eventmachine
   growl
   guard
   guard-rspec
