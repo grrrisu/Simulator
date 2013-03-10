@@ -1,9 +1,10 @@
 module Sim
 
   class Level
+    include Buildable
     include Celluloid
     include Celluloid::Logger
-    include Buildable
+
 
     def self.attach
       level = boot
@@ -17,7 +18,7 @@ module Sim
     end
 
     def initialize config_file
-      config = load_config(config_file)
+      config = Level.load_config(config_file)
       build config
     end
 
@@ -27,9 +28,9 @@ module Sim
     end
 
     def listen_to_parent_process
-      Celluloid.logger = $stderr # TODO log to a file
-      @process = Popen::SubProcess.new(self)
-      @process.start
+      Celluloid.logger = ::Logger.new($stderr) # TODO log to a file
+      @process = Popen::SubProcess.new
+      @process.start(self)
     end
 
     # process a message and returns an answer

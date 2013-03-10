@@ -26,6 +26,7 @@ module Sim
       def receive_message
         line = out_connection.readline.chomp
         puts "[parent]: #{line}"
+        line
       end
 
       def close
@@ -36,16 +37,4 @@ module Sim
     end
 
   end
-end
-
-if $0 == __FILE__
-  connection  = Sim::Popen::ParentConnection.new
-  sim_library = File.expand_path('../../../sim.rb', __FILE__)
-  level_class = 'Sim::Level'
-  config_file = File.expand_path('../../../level.yml', __FILE__)
-  connection.start(sim_library, level_class, config_file)
-  p '******'
-  connection.send_message 'see all the stars'
-  p '******'
-  connection.close
 end
