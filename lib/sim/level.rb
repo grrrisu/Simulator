@@ -56,7 +56,7 @@ module Sim
     def stop
       @process.stop if @process
       @queue.stop
-      Celluloid.shutdown
+      #Celluloid.shutdown
     end
 
     def actor_died actor, exception
