@@ -5,6 +5,8 @@ module Sim
     include Celluloid
     include Celluloid::Logger
 
+    trap_exit :actor_died
+
 
     def self.attach
       level = boot
@@ -24,7 +26,7 @@ module Sim
 
     def build config
       Sim::TimeUnit.new config["time_unit"]
-      @queue = Sim::Queue.new
+      @queue = Sim::Queue.new_link
     end
 
     def listen_to_parent_process
@@ -55,6 +57,10 @@ module Sim
       @process.stop if @process
       @queue.stop
       Celluloid.shutdown
+    end
+
+    def actor_died actor, exception
+      warn "[level] actor #{actor.inspect} died of reason #{exception}"
     end
 
   end

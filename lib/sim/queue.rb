@@ -57,7 +57,7 @@ module Sim
     end
 
     def pool_died actor, reason
-      warn "queue pool died #{actor} #{reason} #{current_actor.mailbox}"
+      warn "[queue] actor #{actor.inspect} died of reason #{reason.inspect}"
     end
 
     def next
@@ -106,7 +106,7 @@ module Sim
     end
 
     def finalize
-      debug "pool stopped #{@pool.busy_size}"
+      debug "queue stopped"
     end
 
   end
