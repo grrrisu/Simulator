@@ -6,7 +6,7 @@ module Sim
     class ParentConnection
       include Open3
 
-      attr_reader :in_connection, :out_connection, :pid
+      attr_reader :pid
 
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 
@@ -19,18 +19,18 @@ module Sim
       end
 
       def send_message message
-        in_connection.write(message + "\n")
+        @in_connection.write(message + "\n")
         receive_message
       end
 
       def receive_message
-        line = out_connection.readline.chomp
+        line = @out_connection.readline.chomp
         puts "[parent]: #{line}"
         line
       end
 
       def close
-        @in_connection.close
+        @in_connection.close_write
         @out_connection.close
       end
 
