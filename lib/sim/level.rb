@@ -56,11 +56,16 @@ module Sim
     def stop
       @process.stop if @process
       @queue.stop
-      #Celluloid.shutdown
     end
 
     def actor_died actor, exception
       warn "[level] actor #{actor.inspect} died of reason #{exception}"
+    end
+
+    def finalize
+      @queue.terminate if @queue.alive?
+      Celluloid::Actor[:time_unit].terminate if Celluloid::Actor[:time_unit].alive?
+      debug "level stopped"
     end
 
   end

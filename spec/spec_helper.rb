@@ -10,7 +10,7 @@ require_relative '../lib/sim'
 logfile = File.open(File.expand_path("../../log/test.log", __FILE__), 'a')
 Celluloid::Actor[:default_incident_reporter].silence
 Celluloid::IncidentReporter.supervise_as :test_incident_reporter, logfile
-Celluloid.logger.level = Logger::WARN # warn
+Celluloid.logger.level = Logger::WARN
 
 Dir['./lib/*.rb'].map {|f| require f unless f =~ /main\.rb/ }
 Dir['./spec/support/*.rb'].map {|f| require f }
@@ -25,6 +25,6 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.after(:each) do
-    Celluloid.shutdown
+    #Celluloid.shutdown
   end
 end

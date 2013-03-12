@@ -7,10 +7,6 @@ describe Sim::Level do
     @level = Sim::Level.new(@config_file)
   end
 
-  after :each do
-    @level.terminate
-  end
-
   describe 'build' do
 
     it "should set time unit" do
