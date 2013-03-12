@@ -33,10 +33,11 @@ describe Sim::Level do
       @level.process_message('stop').should be_true
     end
 
-    it "should raise error if it doesn't understand the message", skip: true do
+    it "should raise error if it doesn't understand the message" do
       lambda {
         @level.process_message('foo')
       }.should raise_error(ArgumentError, "unknown message foo")
+      @level.should be_alive
     end
 
   end
@@ -50,7 +51,7 @@ describe Sim::Level do
 
   end
 
-  describe 'stop', skip: true do
+  describe 'stop' do
 
     it "should stop queue" do
       @level.wrapped_object.instance_variable_get('@queue').should_receive(:stop)
@@ -59,7 +60,7 @@ describe Sim::Level do
 
     it "should stop listing to parent process" do
       process = mock('SubProcess')
-      @level.instance_variable_set('@process', process)
+      @level.wrapped_object.instance_variable_set('@process', process)
       process.should_receive(:stop)
       @level.stop
     end
