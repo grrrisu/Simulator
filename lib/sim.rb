@@ -8,6 +8,7 @@ require_relative './sim/worker'
 require_relative './sim/queue'
 require_relative './sim/guard'
 require_relative './sim/level'
+require_relative './sim/popen/message_serializer'
 require_relative './sim/popen/parent_connection'
 require_relative './sim/popen/sub_process'
 
