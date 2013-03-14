@@ -37,6 +37,7 @@ module Sim
         end
       rescue EOFError
         log "parent closed connection"
+        @running = false
         @receiver.stop
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"

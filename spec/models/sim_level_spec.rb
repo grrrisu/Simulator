@@ -25,12 +25,12 @@ describe Sim::Level do
 
     it "should understand start" do
       @level.wrapped_object.should_receive(:start)
-      @level.process_message('start').should be_true
+      @level.process_message('action' => 'start').should be_true
     end
 
     it "should understand stop" do
       @level.wrapped_object.should_receive(:stop)
-      @level.process_message('stop').should be_true
+      @level.process_message('action' => 'stop').should be_true
     end
 
     it "should raise error if it doesn't understand the message", skip: true do

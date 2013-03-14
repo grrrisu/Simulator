@@ -11,18 +11,18 @@ describe Sim::Popen::SubProcess do
   describe 'receive_message' do
 
     before :each do
-      $stdin.stub(:readline).and_return("foo\n")
+      @process.stub(:receive_data).and_return({'action' => 'foo'})
     end
 
     it "should forward message to receiver" do
-      @receiver.should_receive(:process_message).with('foo').and_return('bar')
-      @process.should_receive(:send_message).with('bar')
+      @receiver.should_receive(:process_message).with({'action' => 'foo'}).and_return('bar')
+      @process.should_receive(:send_message).with({'answer' => 'bar'})
       @process.receive_message
     end
 
     it "should send the exception message back" do
-      @receiver.should_receive(:process_message).with('foo').and_raise("process error")
-      @process.should_receive(:send_message).with("exception 'process error' occured in subprocess")
+      @receiver.should_receive(:process_message).with({'action' => 'foo'}).and_raise("process error")
+      @process.should_receive(:send_message).with('exception' => 'process error')
       $stderr.should_receive(:puts).with('[subprocess] ERROR: RuntimeError process error').once
       $stderr.should_receive(:puts).once # stacetrack
       @process.receive_message
@@ -40,7 +40,7 @@ describe Sim::Popen::SubProcess do
 
     it "should stop receiver if parent connection closed" do
       @process.instance_variable_set('@running', true)
-      $stdin.stub(:readline) { raise EOFError }
+      @process.stub(:receive_data) { raise EOFError }
       @receiver.should_receive(:stop)
       $stderr.should_receive(:puts).once # log
       @process.listen
@@ -51,8 +51,8 @@ describe Sim::Popen::SubProcess do
   describe 'send_message' do
 
     it "should send message through stdout" do
-      $stdout.should_receive(:puts).with('foo')
-      $stderr.should_receive(:puts).once # log
+      @process.should_receive(:send_data).with('foo')
+      #$stderr.should_receive(:puts).once # log
       @process.send_message('foo')
     end
 
