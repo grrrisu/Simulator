@@ -25,7 +25,7 @@ module Sim
       end
 
       def receive_message
-        message = receive_data[:message]
+        message = receive_data['message']
         puts "[parent]: #{message}"
         message
       end

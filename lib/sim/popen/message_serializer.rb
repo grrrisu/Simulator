@@ -30,15 +30,13 @@ module Sim
       #   end
       # end
       def receive_data
-        $stderr.puts("***[#{self.class}] reading....")
         size_data = @input.read(4)
         if size_data
           size = size_data.unpack('N').first
-          $stderr.puts("***[#{self.class}] size #{size}")
           data = @input.read(size)
           JSON.load(data)
         else
-          $stderr.puts "*ERROR*[#{self.class}] connection closed"
+          raise EOFError
         end
       end
 

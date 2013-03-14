@@ -21,15 +21,15 @@ module Sim
         while @running
           receive_message
         end
-      rescue EOFError
-        log "parent closed connection"
-        @receiver.stop
       end
 
       def receive_message
-        message = receive_data[:message]
+        message = receive_data['message']
         answer = @receiver.process_message message
         send_message answer
+      rescue EOFError
+        log "parent closed connection"
+        @receiver.stop
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"
         log e.backtrace.join("\n")
