@@ -37,7 +37,7 @@ module Sim
 
     # process a message and returns an answer
     def process_message message
-      case message
+      case message['action']
       when 'start'
         start!
         true

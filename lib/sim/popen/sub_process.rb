@@ -7,7 +7,7 @@ module Sim
       def start(receiver)
         @receiver = receiver
         self.input, self.output = $stdin, $stdout
-        send_message('ready')
+        send_message 'answer' => 'ready'
         @running = true
         log 'started'
         listen
@@ -24,21 +24,29 @@ module Sim
       end
 
       def receive_message
-        message = receive_data['message']
-        answer = @receiver.process_message message
-        send_message answer
+        message = receive_data
+        if message['answer']
+          raise ArgumentError, "got answer #{message['answer']} but this is only an executer"
+        elsif message['exception']
+          raise RemoteException, message['exception']
+        elsif message['action']
+          answer = @receiver.process_message message
+          send_message 'answer' => answer
+        else
+          raise ArgumentError, "message has no key action or exception #{message.inspect}"
+        end
       rescue EOFError
         log "parent closed connection"
         @receiver.stop
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"
         log e.backtrace.join("\n")
-        send_message "exception '#{e.message}' occured in subprocess"
+        send_message "exception" => e.message
       end
 
       def send_message message
         log "send #{message}"
-        send_data message: message
+        send_data message
       end
 
       def log message

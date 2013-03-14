@@ -8,7 +8,7 @@ describe "popen" do
     level_class = 'PopenTestLevel'
     config_file = File.expand_path('../../level.yml', __FILE__)
     connection.start(sim_library, level_class, config_file)
-    answer = connection.send_message 'see all the stars'
+    answer = connection.send_message 'action' => 'see all the stars'
     answer.should == 'see all the stars'.reverse
     connection.close
   end

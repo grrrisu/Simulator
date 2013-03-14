@@ -20,14 +20,21 @@ module Sim
       end
 
       def send_message message
-        send_data message: message
+        send_data message
         receive_message
       end
 
       def receive_message
-        message = receive_data['message']
-        puts "[parent]: #{message}"
-        message
+        message = receive_data
+        if message['answer']
+          message['answer']
+        elsif message['exception']
+          raise RemoteException, message['exception']
+        elsif message['action']
+          raise ArgumentError, "got action #{message['action']} but this is only a receiver"
+        else
+          raise ArgumentError, "message has no key answer or exception #{message.inspect}"
+        end
       end
 
       def close
