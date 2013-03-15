@@ -12,8 +12,8 @@ Level Actions:
 {"action": "create"}
 {"action": "load"}
 {"action": "stop"}
-{"action": "add_player", "params": {id": "123"}}
-{"action": "remove_player", "params": {id": "123"}}
+{"action": "add_player", "params": {"id": "123"}}
+{"action": "remove_player", "params": {"id": "123"}}
 ```
 Answers:
 ```json
@@ -23,8 +23,8 @@ Answers:
 
 Player:
 ```json
-{"action": "view", player": "123"}
-{"action": "move", player": "123", "params": {"x": "-1", "y": "0"}}
+{"action": "view", "player": "123"}
+{"action": "move", "player": "123", "params": {"x": "-1", "y": "0"}}
 ```
 
 
