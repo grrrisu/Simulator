@@ -37,15 +37,28 @@ module Sim
 
     # process a message and returns an answer
     def process_message message
-      case message['action']
-      when 'start'
-        start!
-        true
-      when 'stop'
-        stop
-        true
+      if message.key? 'player'
+        player = find_player ['player']
+        player.process_message message
       else
-        raise ArgumentError, "unknown message #{message}"
+        case message['action']
+        when 'start'
+          start!
+          true
+        when 'stop'
+          stop
+          true
+        when 'create'
+          create
+        when 'load'
+          load
+        when 'add_player'
+          add_player(message['params']['id'])
+        when 'remove_player'
+          remove_player(message['params']['id'])
+        else
+          raise ArgumentError, "unknown message #{message}"
+        end
       end
     end
 
@@ -53,13 +66,35 @@ module Sim
       @queue.start
     end
 
+
     def stop
       @process.stop if @process
       @queue.stop
     end
 
+    def create
+      raise "implement in subclass"
+    end
+
+    def load
+      raise "implement in subclass"
+    end
+
+    def add_player id
+      # player_supervisors_as << Sim::Player.supervise_as "player_#{id}"
+      raise "implement in subclass"
+    end
+
+    def remove_player id
+      raise "implement in subclass"
+    end
+
     def actor_died actor, exception
       warn "[level] actor #{actor.inspect} died of reason #{exception}"
+    end
+
+    def find_player id
+      Celluloid::Actor["player_#{id}"]
     end
 
     def finalize

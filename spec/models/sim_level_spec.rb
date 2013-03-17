@@ -33,10 +33,30 @@ describe Sim::Level do
       @level.process_message('action' => 'stop').should be_true
     end
 
+    it "should understand create" do
+      @level.wrapped_object.should_receive(:create).and_return(true)
+      @level.process_message('action' => 'create').should be_true
+    end
+
+    it "should understand load" do
+      @level.wrapped_object.should_receive(:load).and_return(true)
+      @level.process_message('action' => 'load').should be_true
+    end
+
+    it "should understand add_player" do
+      @level.wrapped_object.should_receive(:add_player).with("abc123").and_return(true)
+      @level.process_message('action' => 'add_player', 'params' => {'id' => 'abc123'}).should be_true
+    end
+
+    it "should understand remove_player" do
+      @level.wrapped_object.should_receive(:remove_player).with("abc123").and_return(true)
+      @level.process_message('action' => 'remove_player', 'params' => {'id' => 'abc123'}).should be_true
+    end
+
     it "should raise error if it doesn't understand the message" do
       lambda {
-        @level.process_message('foo')
-      }.should raise_error(ArgumentError, "unknown message foo")
+        @level.process_message('action' => 'foo')
+      }.should raise_error(ArgumentError, 'unknown message {"action"=>"foo"}')
       @level.should be_alive
     end
 
