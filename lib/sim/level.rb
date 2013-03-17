@@ -38,7 +38,7 @@ module Sim
     # process a message and returns an answer
     def process_message message
       if message.key? 'player'
-        player = find_player ['player']
+        player = find_player message['player']
         player.process_message message
       else
         case message['action']

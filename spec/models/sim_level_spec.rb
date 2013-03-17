@@ -53,6 +53,14 @@ describe Sim::Level do
       @level.process_message('action' => 'remove_player', 'params' => {'id' => 'abc123'}).should be_true
     end
 
+    it "should delegate action to player" do
+      message = {'action' => 'view', 'player' => 'abc123'}
+      player = mock(Sim::Player)
+      player.should_receive(:process_message).with(message)
+      @level.wrapped_object.should_receive(:find_player).with('abc123').and_return(player)
+      @level.process_message(message)
+    end
+
     it "should raise error if it doesn't understand the message" do
       lambda {
         @level.process_message('action' => 'foo')
