@@ -3,13 +3,10 @@ module Sim
   class Object
 
     attr_reader :delay
-    attr_accessor :state, :name
 
-    def initialize name = nil
+    def initialize
       # just in order that @last_touched is not nil
       @last_touched = Time.now
-      self.name  = name
-      self.state = 0
     end
 
     def touch time = Time.now
@@ -18,21 +15,15 @@ module Sim
     end
 
     def parent_guard
-      Celluloid::Actor[:guard]
+      raise "implement in subclass"
     end
 
     def get_key
-      :a_key
+      raise "implement in subclass"
     end
 
     def sim
-      5.times do |i|
-        self.state += 1
-        puts "sim #{name} #{state}"
-        sleep 1
-      end
-      puts 'done!'
-      #raise Exception, "CRASH"
+      raise "implement in subclass"
     end
 
   end

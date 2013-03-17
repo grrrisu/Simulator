@@ -7,7 +7,7 @@ describe "Sim" do
     Celluloid::Actor[:guard] = Sim::Guard.new
     @queue = Sim::Queue.new
     @objects = Array.new(2) do |i|
-      object = Sim::Object.new
+      object = DummyObject.new
       object.stub(:sim)
       @queue << object
       object
