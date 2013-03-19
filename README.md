@@ -1,6 +1,8 @@
 README
 ======
 
+[![Code Climate](https://codeclimate.com/github/grrrisu/Simulator.png)](https://codeclimate.com/github/grrrisu/Simulator)
+
 A simulation container based on [Celluloid](https://github.com/celluloid/celluloid).
 
 JSON API
