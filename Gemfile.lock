@@ -37,7 +37,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
       spoon (~> 0.0)
-    rake (10.0.3)
+    rake (10.0.4)
     rb-fsevent (0.9.3)
     rdoc (4.0.0)
       json (~> 1.4)
