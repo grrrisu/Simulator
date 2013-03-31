@@ -59,7 +59,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  celluloid (~> 0.12)
+  celluloid (~> 0.13)
   growl
   guard
   guard-rspec

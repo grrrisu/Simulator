@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'celluloid', '~> 0.12'
+gem 'celluloid', '~> 0.13'
 
 group :development do
   gem 'jeweler'
