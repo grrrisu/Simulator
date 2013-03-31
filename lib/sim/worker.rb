@@ -4,6 +4,8 @@ module Sim
     include Celluloid
     include Celluloid::Logger
 
+    finalizer :debug_stop
+
     def process object
       @object = object
       guard = object.parent_guard
@@ -15,7 +17,7 @@ module Sim
       @object.sim
     end
 
-    def finalize
+    def debug_stop
       debug "worker #{object_id} stopped"
     end
 

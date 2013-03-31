@@ -14,6 +14,7 @@ module Sim
     attr_accessor :objects
 
     trap_exit :pool_died
+    finalizer :debug_stop
 
     def initialize priority = :high
       @pool = Sim::Worker.pool_link
@@ -40,7 +41,7 @@ module Sim
       @running = true
       @objects.each {|obj| obj.touch}
       @last_run = Time.now
-      self.next!
+      async.next
     end
 
     def stop
@@ -65,17 +66,17 @@ module Sim
         if @pool.idle_size > 0
           begin
             object = @enumerator.next
-            @pool.process!(object)
-            self.next!
+            @pool.async.process(object)
+            async.next
           rescue StopIteration
             @enumerator.rewind
             after(wait_before_next_loop) do
               @last_run = Time.now
-              self.next!
+              async.next
             end
           end
         else
-          after(max_time / (size * 2)) {self.next!}
+          after(max_time / (size * 2)) {async.next}
         end
       end
     end
@@ -105,7 +106,7 @@ module Sim
       end
     end
 
-    def finalize
+    def debug_stop
       debug "queue stopped"
     end
 

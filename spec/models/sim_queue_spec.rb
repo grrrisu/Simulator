@@ -53,11 +53,11 @@ describe Sim::Queue do
   describe 'start' do
 
     before :each do
-      @queue.wrapped_object.stub(:next!).and_return('')
+      @queue.wrapped_object.stub_chain(:async, :next).and_return('')
     end
 
     it "should call next" do
-      @queue.wrapped_object.should_receive(:next!)
+      @queue.wrapped_object.async.should_receive(:next)
       @queue.start
     end
 
@@ -76,7 +76,7 @@ describe Sim::Queue do
     end
 
     it "should not call for a worker" do
-      @queue.wrapped_object.instance_variable_get("@pool").should_receive(:process!).never
+      @queue.wrapped_object.instance_variable_get("@pool").should_receive(:async).never
       @queue.stop
       @queue.next
     end

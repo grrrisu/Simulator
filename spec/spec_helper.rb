@@ -8,8 +8,8 @@ require_relative '../lib/sim'
 
 # Terminate the default incident reporter and replace it with one that logs to a file
 logfile = File.open(File.expand_path("../../log/test.log", __FILE__), 'a')
-Celluloid::Actor[:default_incident_reporter].silence
-Celluloid::IncidentReporter.supervise_as :test_incident_reporter, logfile
+#Celluloid::Actor[:default_incident_reporter].silence
+#Celluloid::IncidentReporter.supervise_as :test_incident_reporter, logfile
 Celluloid.logger.level = Logger::WARN
 
 Dir['./lib/*.rb'].map {|f| require f unless f =~ /main\.rb/ }
@@ -24,7 +24,8 @@ RSpec.configure do |config|
   config.filter_run_excluding :skip => true
   config.run_all_when_everything_filtered = true
 
-  config.after(:each) do
-    #Celluloid.shutdown
+  config.before(:each) do
+    Celluloid.shutdown
+    Celluloid.boot
   end
 end

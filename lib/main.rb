@@ -9,7 +9,7 @@ queue = Sim::Queue.new
 queue.start
 
 5.times do |i|
-  queue.add!(Sim::Object.new("Sim#{i}"))
+  queue.async.add(Sim::Object.new("Sim#{i}"))
   sleep 1
 end
 

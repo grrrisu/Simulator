@@ -6,6 +6,7 @@ module Sim
     include Celluloid::Logger
 
     trap_exit :actor_died
+    finalizer :stop_subactors
 
 
     def self.attach
@@ -43,7 +44,7 @@ module Sim
       else
         case message['action']
         when 'start'
-          start!
+          async.start
           true
         when 'stop'
           stop
@@ -97,7 +98,7 @@ module Sim
       Celluloid::Actor["player_#{id}"]
     end
 
-    def finalize
+    def stop_subactors
       @queue.terminate if @queue.alive?
       Celluloid::Actor[:time_unit].terminate if Celluloid::Actor[:time_unit].alive?
       debug "level stopped"
