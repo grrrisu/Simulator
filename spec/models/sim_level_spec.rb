@@ -4,7 +4,7 @@ describe Sim::Level do
 
   before :each do
     @config_file = File.expand_path('../../level.yml', __FILE__)
-    @level = Sim::Level.new(@config_file)
+    @level = PopenTestLevel.new
   end
 
   describe 'build' do
@@ -35,7 +35,7 @@ describe Sim::Level do
 
     it "should understand create" do
       @level.wrapped_object.should_receive(:create).and_return(true)
-      @level.process_message('action' => 'create').should be_true
+      @level.process_message('action' => 'create', 'params' => {'config_file' => @config_file}).should be_true
     end
 
     it "should understand load" do
@@ -70,27 +70,35 @@ describe Sim::Level do
 
   end
 
-  describe 'start' do
+  describe 'that is ready' do
 
-    it "should start queue" do
-      @level.wrapped_object.instance_variable_get('@queue').should_receive(:start)
-      @level.start
+    before :each do
+      @level.build(@config_file)
     end
 
-  end
+    describe 'start' do
 
-  describe 'stop' do
+      it "should start queue" do
+        @level.wrapped_object.instance_variable_get('@queue').should_receive(:start)
+        @level.start
+      end
 
-    it "should stop queue" do
-      @level.wrapped_object.instance_variable_get('@queue').should_receive(:stop)
-      @level.stop
     end
 
-    it "should stop listing to parent process" do
-      process = mock('SubProcess')
-      @level.wrapped_object.instance_variable_set('@process', process)
-      process.should_receive(:stop)
-      @level.stop
+    describe 'stop' do
+
+      it "should stop queue" do
+        @level.wrapped_object.instance_variable_get('@queue').should_receive(:stop)
+        @level.stop
+      end
+
+      it "should stop listing to parent process" do
+        process = mock('SubProcess')
+        @level.wrapped_object.instance_variable_set('@process', process)
+        process.should_receive(:stop)
+        @level.stop
+      end
+
     end
 
   end

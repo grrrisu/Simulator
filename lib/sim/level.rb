@@ -10,24 +10,15 @@ module Sim
 
 
     def self.attach
-      level = boot
+      level = new
       level.listen_to_parent_process
     end
 
-    def self.boot
-      raise ArgumentError, "no configuration file present" unless ARGV[0]
-      config_file = ARGV[0]
-      new(config_file)
-    end
-
-    def initialize config_file
+    def build config_file
       config = Level.load_config(config_file)
-      build config
-    end
-
-    def build config
       Sim::TimeUnit.new config["time_unit"]
       @queue = Sim::Queue.new_link
+      create
     end
 
     def listen_to_parent_process
@@ -50,7 +41,7 @@ module Sim
           stop
           true
         when 'create'
-          create
+          build message['params']['config_file']
         when 'load'
           load
         when 'add_player'
@@ -99,7 +90,7 @@ module Sim
     end
 
     def stop_subactors
-      @queue.terminate if @queue.alive?
+      @queue.terminate if @queue && @queue.alive?
       Celluloid::Actor[:time_unit].terminate if Celluloid::Actor[:time_unit].alive?
       debug "level stopped"
     end

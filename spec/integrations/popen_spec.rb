@@ -7,7 +7,8 @@ describe "popen" do
     sim_library = File.expand_path('../../support/popen_test_level.rb', __FILE__)
     level_class = 'PopenTestLevel'
     config_file = File.expand_path('../../level.yml', __FILE__)
-    @connection.start(sim_library, level_class, config_file)
+    @connection.start(sim_library, level_class)
+    @connection.send_message action: 'create', params: {config_file: config_file}
   end
 
   after :each do
