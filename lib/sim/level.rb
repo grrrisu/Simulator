@@ -24,7 +24,7 @@ module Sim
     def listen_to_parent_process
       Celluloid.logger = ::Logger.new($stderr) # TODO log to a file
       @process = Popen::SubProcess.new
-      @process.start(self)
+      @process.listen(self)
     end
 
     # process a message and returns an answer
@@ -34,16 +34,16 @@ module Sim
         player.process_message message
       else
         case message['action']
+        when 'build'
+          build message['params']['config_file']
+        when 'load'
+          load
         when 'start'
           async.start
           true
         when 'stop'
           stop
           true
-        when 'create'
-          build message['params']['config_file']
-        when 'load'
-          load
         when 'add_player'
           add_player(message['params']['id'])
         when 'remove_player'

@@ -4,20 +4,20 @@ module Sim
     class SubProcess
       include MessageSerializer
 
-      def start(receiver)
+      def listen(receiver)
         @receiver = receiver
         self.input, self.output = $stdin, $stdout
         send_message 'answer' => 'ready'
         @running = true
         log 'started'
-        listen
+        listen_for_messages
       end
 
       def stop
         @running = false
       end
 
-      def listen
+      def listen_for_messages
         while @running
           receive_message
         end

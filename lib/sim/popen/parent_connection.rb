@@ -11,7 +11,7 @@ module Sim
 
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 
-      def start sim_library, level_class
+      def launch_subprocess sim_library, level_class
         cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.attach}
         self.output, self.input, wait_thr = popen2(*cmd)
         @pid = wait_thr.pid

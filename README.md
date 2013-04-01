@@ -10,9 +10,9 @@ JSON API
 
 Level Actions:
 ```json
-{"action": "start"}
-{"action": "create", "params": {"config_file": "path/to/config_file.yml"}}
+{"action": "build", "params": {"config_file": "path/to/config_file.yml"}}
 {"action": "load"}
+{"action": "start"}
 {"action": "stop"}
 {"action": "add_player", "params": {"id": "123"}}
 {"action": "remove_player", "params": {"id": "123"}}

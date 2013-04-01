@@ -34,8 +34,8 @@ describe Sim::Level do
     end
 
     it "should understand create" do
-      @level.wrapped_object.should_receive(:create).and_return(true)
-      @level.process_message('action' => 'create', 'params' => {'config_file' => @config_file}).should be_true
+      @level.wrapped_object.should_receive(:build).and_return(true)
+      @level.process_message('action' => 'build', 'params' => {'config_file' => @config_file}).should be_true
     end
 
     it "should understand load" do
