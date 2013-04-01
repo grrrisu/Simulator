@@ -24,6 +24,21 @@ module Sim
         receive_message
       end
 
+      def send_action action, params = {}
+        message = {}
+        message[:action] = action
+        message[:params] = params if params.any?
+        send_message message
+      end
+
+      def send_player_action player_id, action, params = nil
+        message = {}
+        message[:player] = player_id
+        message[:action] = action
+        message[:params] = params if params.any?
+        send_message message
+      end
+
       def receive_message
         message = receive_data
         if message['answer']

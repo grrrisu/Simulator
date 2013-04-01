@@ -61,7 +61,7 @@ module Sim
 
     def stop
       @process.stop if @process
-      @queue.stop
+      @queue.stop if @queue
     end
 
     def create
