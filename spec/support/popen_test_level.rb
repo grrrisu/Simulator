@@ -10,7 +10,7 @@ class PopenTestLevel < Sim::Level
     end
   end
 
-  def create
+  def create config
     debug "creating..."
   end
 

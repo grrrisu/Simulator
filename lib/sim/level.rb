@@ -18,7 +18,7 @@ module Sim
       config = Level.load_config(config_file)
       Sim::TimeUnit.new config["time_unit"]
       @queue = Sim::Queue.new_link
-      create
+      create(config)
     end
 
     def listen_to_parent_process
@@ -64,7 +64,7 @@ module Sim
       @queue.stop if @queue
     end
 
-    def create
+    def create config
       raise "implement in subclass"
     end
 
