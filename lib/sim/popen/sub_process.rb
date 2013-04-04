@@ -42,7 +42,7 @@ module Sim
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"
         log e.backtrace.join("\n")
-        send_message "exception" => e.message
+        send_message "exception" => "#{e.class}: #{e.message}"
       end
 
       def send_message message

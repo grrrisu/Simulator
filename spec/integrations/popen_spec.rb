@@ -23,7 +23,7 @@ describe "popen" do
   it "should get exception" do
     lambda {
       answer = @connection.send_action :foo
-    }.should raise_error(Sim::Popen::RemoteException, 'unknown message {"action"=>"foo"}')
+    }.should raise_error(Sim::Popen::RemoteException, 'ArgumentError: unknown message {"action"=>"foo"}')
     answer = @connection.send_action 'see all the stars'
     answer.should == 'see all the stars'.reverse
   end
