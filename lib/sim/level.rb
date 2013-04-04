@@ -1,7 +1,6 @@
 module Sim
 
   class Level
-    include Buildable
     include Celluloid
     include Celluloid::Logger
 
@@ -15,7 +14,7 @@ module Sim
     end
 
     def build config_file
-      config = Level.load_config(config_file)
+      config = Buildable.load_config(config_file)
       Sim::TimeUnit.new config["time_unit"]
       @queue = Sim::Queue.new_link
       create(config)

@@ -15,10 +15,15 @@ module Sim
   # wolf.max == 8 # default superclass
   module Buildable
 
+    def self.load_config file_name
+      YAML.load(File.open(file_name))
+    end
+
     def Buildable.included other
       class << other
         include ClassMethods
       end
+      other.send(:include, InstanceMethods)
     end
 
     module ClassMethods
@@ -44,11 +49,21 @@ module Sim
           memo
         end
         attributes = defaults.merge(config).merge(options)
-        buildable = new
+        buildable = new *initialize_parameters(attributes)
         attributes.each do |key, value|
-          buildable.send("#{key}=", convert_build_value(value))
+          if buildable.respond_to?("#{key}=".to_sym)
+            buildable.send("#{key}=", convert_build_value(value))
+          end
         end
+        buildable.build(config)
         buildable
+      end
+
+      def initialize_parameters attributes
+        parameter_names = instance_method(:initialize).parameters.map {|p| p[1]}
+        parameter_names.map do |name|
+          attributes[name.to_s]
+        end.compact
       end
 
       def convert_build_value value
@@ -61,8 +76,13 @@ module Sim
         end
       end
 
-      def load_config file_name
-        YAML.load(File.open(file_name))
+    end
+
+    module InstanceMethods
+
+      # post initialize process
+      def build config
+        # implement in subclass
       end
 
     end

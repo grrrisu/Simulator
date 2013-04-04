@@ -12,6 +12,21 @@ class BuildableTest < BuildableSuperTest
   default_attr :size, 7
 end
 
+class BuildableTwo
+  include Sim::Buildable
+
+  attr_reader :x, :y, :z, :a
+
+  def initialize x, y, z = nil
+    @x, @y, @z = x, y, z
+  end
+
+  def build config
+    @a = config['factor'] * x
+  end
+
+end
+
 describe Sim::Buildable do
 
   before :all do
@@ -48,6 +63,21 @@ describe Sim::Buildable do
       @buildable.max.should == 8
     end
 
+  end
+
+  describe "initialize parameters" do
+    let(:config) { {"x" => 1, "y" => 2, "factor" => 5} }
+    let(:buildable) { BuildableTwo.build(config) }
+
+    it "should initialize with parameters" do
+      buildable.x.should == 1
+      buildable.y.should == 2
+      buildable.z.should be_nil
+    end
+
+    it "should do post build process" do
+      buildable.a.should == 5
+    end
   end
 
   describe "convert build values" do
