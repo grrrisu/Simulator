@@ -1,4 +1,5 @@
 require 'celluloid'
+require 'active_support/core_ext'
 
 require_relative './sim/version'
 require_relative './sim/buildable'

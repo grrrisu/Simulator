@@ -15,7 +15,7 @@ module Sim
 
     def build config_file
       config = Buildable.load_config(config_file)
-      Sim::TimeUnit.new config["time_unit"]
+      Sim::TimeUnit.new config[:time_unit]
       @queue = Sim::Queue.new_link
       create(config)
     end

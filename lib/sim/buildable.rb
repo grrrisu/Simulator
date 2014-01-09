@@ -16,7 +16,7 @@ module Sim
   module Buildable
 
     def self.load_config file_name
-      YAML.load(File.open(file_name))
+      YAML.load(File.open(file_name)).deep_symbolize_keys
     end
 
     def Buildable.included other
