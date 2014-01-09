@@ -43,12 +43,7 @@ module Sim
       end
 
       def build config, options = {}
-        # convert sym keys to string keys
-        options = options.inject({}) do |memo, item|
-          memo[item[0].to_s] = item[1]
-          memo
-        end
-        attributes = defaults.merge(config).merge(options)
+        attributes = defaults.merge(config).merge(options.symbolize_keys)
         buildable = new *initialize_parameters(attributes)
         attributes.each do |key, value|
           if buildable.respond_to?("#{key}=".to_sym)
@@ -62,7 +57,7 @@ module Sim
       def initialize_parameters attributes
         parameter_names = instance_method(:initialize).parameters.map {|p| p[1]}
         parameter_names.map do |name|
-          attributes[name.to_s]
+          attributes[name]
         end.compact
       end
 

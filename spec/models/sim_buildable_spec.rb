@@ -22,7 +22,7 @@ class BuildableTwo
   end
 
   def build config
-    @a = config['factor'] * x
+    @a = config[:factor] * x
   end
 
 end
@@ -30,7 +30,7 @@ end
 describe Sim::Buildable do
 
   before :all do
-    @config = { "min" => 1, "hunger" => 6 }
+    @config = { min: 1, hunger: 6 }
   end
 
   it "should create accessors" do
@@ -66,7 +66,7 @@ describe Sim::Buildable do
   end
 
   describe "initialize parameters" do
-    let(:config) { {"x" => 1, "y" => 2, "factor" => 5} }
+    let(:config) { {x: 1, y: 2, factor: 5} }
     let(:buildable) { BuildableTwo.build(config) }
 
     it "should initialize with parameters" do
