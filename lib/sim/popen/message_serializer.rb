@@ -22,7 +22,7 @@ module Sim
         if size_data
           size = size_data.unpack('N').first
           data = @input.read(size)
-          JSON.load(data)
+          JSON.parse(data, symbolize_names: true)
         else
           raise EOFError
         end

@@ -3,8 +3,8 @@ require_relative '../../lib/sim'
 class PopenTestLevel < Sim::Level
 
   def process_message message
-    if message['action'] == 'see all the stars'
-      message['action'].reverse
+    if message[:action] == 'see all the stars'
+      message[:action].reverse
     else
       super
     end

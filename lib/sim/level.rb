@@ -28,13 +28,13 @@ module Sim
 
     # process a message and returns an answer
     def process_message message
-      if message.key? 'player'
-        player = find_player message['player']
+      if message.key? :player
+        player = find_player message[:player]
         player.process_message message
       else
-        case message['action']
+        case message[:action]
         when 'build'
-          build message['params']['config_file']
+          build message[:params][:config_file]
         when 'load'
           load
         when 'start'
@@ -44,9 +44,9 @@ module Sim
           stop
           true
         when 'add_player'
-          add_player(message['params']['id'])
+          add_player(message[:params][:id])
         when 'remove_player'
-          remove_player(message['params']['id'])
+          remove_player(message[:params][:id])
         else
           raise ArgumentError, "unknown message #{message}"
         end

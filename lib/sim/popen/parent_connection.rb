@@ -41,12 +41,12 @@ module Sim
 
       def receive_message
         message = receive_data
-        if message['answer']
-          message['answer']
-        elsif message['exception']
-          raise RemoteException, message['exception']
-        elsif message['action']
-          raise ArgumentError, "got action #{message['action']} but this is only a receiver"
+        if message[:answer]
+          message[:answer]
+        elsif message[:exception]
+          raise RemoteException, message[:exception]
+        elsif message[:action]
+          raise ArgumentError, "got action #{message[:action]} but this is only a receiver"
         else
           raise ArgumentError, "message has no key answer or exception #{message.inspect}"
         end

@@ -11,18 +11,18 @@ describe Sim::Popen::SubProcess do
   describe 'receive_message' do
 
     before :each do
-      @process.stub(:receive_data).and_return({'action' => 'foo'})
+      @process.stub(:receive_data).and_return({action: 'foo'})
     end
 
     it "should forward message to receiver" do
-      @receiver.should_receive(:process_message).with({'action' => 'foo'}).and_return('bar')
-      @process.should_receive(:send_message).with({'answer' => 'bar'})
+      @receiver.should_receive(:process_message).with({action: 'foo'}).and_return('bar')
+      @process.should_receive(:send_message).with({answer: 'bar'})
       @process.receive_message
     end
 
     it "should send the exception message back" do
-      @receiver.should_receive(:process_message).with({'action' => 'foo'}).and_raise("process error")
-      @process.should_receive(:send_message).with('exception' => 'RuntimeError: process error')
+      @receiver.should_receive(:process_message).with({action: 'foo'}).and_raise("process error")
+      @process.should_receive(:send_message).with(exception: 'RuntimeError: process error')
       $stderr.should_receive(:puts).with('[subprocess] ERROR: RuntimeError process error').once
       $stderr.should_receive(:puts).once # stacetrack
       @process.receive_message
