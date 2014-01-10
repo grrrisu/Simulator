@@ -1,5 +1,9 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'celluloid'
 require 'active_support/core_ext'
+
+require_relative './ext/hash_ext'
 
 require_relative './sim/version'
 require_relative './sim/buildable'
