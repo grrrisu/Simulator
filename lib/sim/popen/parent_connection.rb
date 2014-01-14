@@ -27,7 +27,7 @@ module Sim
       def send_action action, params = {}
         message = {}
         message[:action] = action
-        message[:params] = params if params.any?
+        message[:params] = params if params.try(:any?)
         send_message message
       end
 
@@ -35,7 +35,7 @@ module Sim
         message = {}
         message[:player] = player_id
         message[:action] = action
-        message[:params] = params if params.any?
+        message[:params] = params if params.try(:any?)
         send_message message
       end
 
