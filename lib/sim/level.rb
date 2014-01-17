@@ -29,8 +29,11 @@ module Sim
     # process a message and returns an answer
     def process_message message
       if message.key? :player
-        player = find_player message[:player]
-        player.process_message message
+        if player = find_player(message[:player])
+          player.process_message message
+        else
+          raise ArgumentError, "no player[#{message[:player]} found in this level"
+        end
       else
         case message[:action]
         when 'build'
