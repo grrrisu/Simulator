@@ -35,7 +35,7 @@ module Sim
         else
           raise ArgumentError, "message has no key action or exception #{message.inspect}"
         end
-      rescue EOFError
+      rescue EOFError, Errno::EPIPE
         log "parent closed connection"
         @running = false
         @receiver.stop
