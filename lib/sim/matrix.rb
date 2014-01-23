@@ -93,11 +93,14 @@ module Sim
 
     def get_field x, y
       @matrix.fetch(y).fetch(x)
+    rescue IndexError
+      raise ArgumentError, "coordinates[#{x}, #{y}] out of matrix[#{width}, #{height}]"
     end
     # matrix[1,0] #=> value
     alias [] get_field
 
     def set_field x, y, value
+      raise ArgumentError, "coordinates[#{x}, #{y}] out of matrix[#{width}, #{height}]" unless x < width && y < height
       @matrix[y][x] = value
     end
     # matrix[1,0] = value
