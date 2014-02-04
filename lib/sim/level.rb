@@ -26,8 +26,8 @@ module Sim
       @process.listen(self)
     end
 
-    # process a message and returns an answer
-    def process_message message
+    # dispatches a message either to a player or this level
+    def dispatch message
       if message.key? :player
         if player = find_player(message[:player])
           player.process_message message
@@ -35,7 +35,13 @@ module Sim
           raise ArgumentError, "no player[#{message[:player]} found in this level"
         end
       else
-        case message[:action]
+        process_message message
+      end
+    end
+
+    # process a message and returns an answer
+    def process_message message
+      case message[:action]
         when 'build'
           build message[:params][:config_file]
         when 'load'
@@ -52,7 +58,6 @@ module Sim
           remove_player(message[:params][:id])
         else
           raise ArgumentError, "unknown message #{message}"
-        end
       end
     end
 
