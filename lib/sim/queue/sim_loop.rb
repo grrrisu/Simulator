@@ -8,6 +8,7 @@ module Sim
       def initialize duration, objects = []
         @duration = duration.to_f || 1.0
         @objects  = objects
+        @counter  = 0
       end
 
       def add object
@@ -30,7 +31,6 @@ module Sim
 
       def start
         @start_time = Time.now
-        @counter  = 0
         sim
       end
 

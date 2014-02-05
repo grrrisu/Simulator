@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Sim" do
+describe "Sim", skip: true do
 
   before :each do
     Sim::TimeUnit.new(5)

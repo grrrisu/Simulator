@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sim::Queue do
+describe Sim::Queue, skip: true do
 
   before :each do
     Sim::TimeUnit.new(5)
