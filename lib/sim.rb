@@ -16,8 +16,12 @@ require_relative './sim/queue_v1/player'
 require_relative './sim/field_properties'
 require_relative './sim/matrix'
 require_relative './sim/level'
+
 require_relative './sim/popen/remote_exception'
 require_relative './sim/popen/message_serializer'
 require_relative './sim/popen/parent_connection'
 require_relative './sim/popen/sub_process'
 
+require_relative './queue/sim_loop.rb'
+require_relative './queue/event_queue.rb'
+require_relative './queue/master.rb'
