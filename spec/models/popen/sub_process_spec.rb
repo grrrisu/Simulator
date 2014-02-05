@@ -15,13 +15,13 @@ describe Sim::Popen::SubProcess do
     end
 
     it "should forward message to receiver" do
-      @receiver.should_receive(:process_message).with({action: 'foo'}).and_return('bar')
+      @receiver.should_receive(:dispatch).with({action: 'foo'}).and_return('bar')
       @process.should_receive(:send_message).with({answer: 'bar'})
       @process.receive_message
     end
 
     it "should send the exception message back" do
-      @receiver.should_receive(:process_message).with({action: 'foo'}).and_raise("process error")
+      @receiver.should_receive(:dispatch).with({action: 'foo'}).and_raise("process error")
       @process.should_receive(:send_message).with(exception: 'RuntimeError: process error')
       $stderr.should_receive(:puts).with('[subprocess] ERROR: RuntimeError process error').once
       $stderr.should_receive(:puts).once # stacetrack

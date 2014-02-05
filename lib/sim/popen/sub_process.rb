@@ -30,12 +30,12 @@ module Sim
         elsif message[:exception]
           raise RemoteException, message[:exception]
         elsif message[:action]
-          answer = @receiver.process_message message
+          answer = @receiver.dispatch message
           send_message answer: answer
         else
           raise ArgumentError, "message has no key action or exception #{message.inspect}"
         end
-      rescue EOFError
+      rescue EOFError, Errno::EPIPE
         log "parent closed connection"
         @running = false
         @receiver.stop

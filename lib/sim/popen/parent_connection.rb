@@ -1,4 +1,5 @@
 require "open3"
+require "thread"
 
 module Sim
   module Popen
@@ -12,6 +13,7 @@ module Sim
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 
       def launch_subprocess sim_library, level_class
+        @mutex = Mutex.new
         cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.attach}
         self.output, self.input, wait_thr = popen2(*cmd)
         @pid = wait_thr.pid
@@ -20,8 +22,12 @@ module Sim
       end
 
       def send_message message
-        send_data message
-        receive_message
+        # synchronize the sending messages from parent
+        # for puma
+        @mutex.synchronize do
+          send_data message
+          receive_message
+        end
       end
 
       def send_action action, params = {}

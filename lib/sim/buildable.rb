@@ -31,7 +31,7 @@ module Sim
       def default_attr name, value = nil
         attr_accessor name.to_sym
         @defaults ||= {}
-        @defaults[name.to_s] = value
+        @defaults[name.to_sym] = value
       end
 
       def defaults
