@@ -15,6 +15,14 @@ module Sim
         @pool       = FireWorker.pool
       end
 
+      def start
+        run
+      end
+
+      def stop
+        @timer.reset
+      end
+
       def needed_resources_free? event
         event.needed_resources.none? {|resource| @locks.include? resource }
       end
@@ -47,18 +55,17 @@ module Sim
         end
       end
 
+      def delay
+        @processing.empty? ? TIMEOUT : DELAY
+      end
+
       def run
         # release finished events
         release_finished_events
         # collect unblocked events
         delegate_ready_events
-
-        if @processing.empty?
-          sleep(TIMEOUT)
-        else
-          sleep(DELAY)
-        end
-        run
+        # after delay restart again
+        @timer = after(delay) { run }
       end
 
       def remove_event object

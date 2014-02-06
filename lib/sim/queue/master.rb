@@ -10,8 +10,13 @@ module Sim
       end
 
       def self.start
-        Celluloid::Actor[:event_queue].async.run
+        Celluloid::Actor[:event_queue].async.start
         Celluloid::Actor[:sim_loop].async.start
+      end
+
+      def self.start
+        Celluloid::Actor[:sim_loop].async.stop
+        Celluloid::Actor[:event_queue].async.stop
       end
 
     end
