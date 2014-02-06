@@ -35,7 +35,7 @@ module Sim
     sleep 1.5
     sim_loop.remove 2
     sleep 20
-    sim_loop.stop
-    sleep 1
+    Master.stop
+    #sleep 1
   end
 end

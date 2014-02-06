@@ -22,7 +22,7 @@ module Sim
         if @objects.index(object) < @counter
           @counter -= 1
         end
-        event_queue.remove_event(object)
+        event_queue.remove_events(object)
         @objects.delete object
       end
 

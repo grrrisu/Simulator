@@ -10,6 +10,10 @@ module Sim
         @done = false
       end
 
+      def fire
+        raise "implement in subclass"
+      end
+
       def done!
         @done = true
       end
