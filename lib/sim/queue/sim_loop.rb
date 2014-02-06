@@ -22,6 +22,7 @@ module Sim
         if @objects.index(object) < @counter
           @counter -= 1
         end
+        event_queue.remove_event(object)
         @objects.delete object
       end
 
@@ -59,8 +60,13 @@ module Sim
         object
       end
 
+      def create_event object
+        SimEvent.new(object)
+      end
+
       def sim
-        event_queue.async.fire(next_object)
+        event = create_event(next_object)
+        event_queue.async.fire(event)
         @timer = after(delay) { sim }
       end
 

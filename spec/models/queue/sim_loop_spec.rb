@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sim::Queue::SimLoop do
+describe Sim::Queue::SimLoop, focus: true do
 
   let(:sim_loop) { Sim::Queue::SimLoop.new(15, %w{a b c d e f}) }
   let (:event_queue) { double(Sim::Queue::EventQueue) }
@@ -36,18 +36,19 @@ describe Sim::Queue::SimLoop do
 
     before :each do
       sim_loop.wrapped_object.stub(:event_queue).and_return(event_queue)
+      sim_loop.wrapped_object.stub(:create_event).and_return('event')
     end
 
     it "should add object to event queue" do
       event_queue.should_receive(:async).once.and_return(event_queue)
-      event_queue.should_receive(:fire).once.with('a')
-      expect(sim_loop.sim)
+      event_queue.should_receive(:fire).once.with('event')
+      sim_loop.sim
     end
 
     it "should schedule next sim call" do
       event_queue.stub_chain(:async, :fire)
       sim_loop.wrapped_object.should_receive(:after).once.with(15 / 6.0)
-      expect(sim_loop.sim)
+      sim_loop.sim
     end
 
   end
