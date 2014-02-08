@@ -8,28 +8,31 @@ describe "Sim Queues", focus: true do
 
   before :each do
     Sim::Queue::Master.setup nil
-    Sim::Queue::Master.launch 1, %w{a b c d e}
-    Sim::Queue::Master.run!
   end
 
   it "should process sim objects" do
-    fire_count = 0
-    Sim::Queue::SimEvent.any_instance.stub(:fire) do |arg|
-      fire_count += 1
-    end
+    sim_objects = %w{a b c d e x y}.map {|n| SimulatedObject.new(n)}
+    Sim::Queue::Master.launch 1, sim_objects[0,5]
+    Sim::Queue::Master.run!
 
     Sim::Queue::Master.start
-    sim_loop << 'x'
-    sim_loop << 'y'
-    sim_loop.remove 'a'
-    sim_loop.remove 'c'
-    sleep 1
+    sim_loop << sim_objects[5]
+    sim_loop << sim_objects[6]
+    sim_loop.remove sim_objects[0]
+    sim_loop.remove sim_objects[2]
+    sleep 1.2
     Sim::Queue::Master.stop
-    # within 1 sec all 5 objects should have been simulated
-    expect(fire_count).to be >= 5
+    # within 1.2 sec all objects should have been simulated
+    sim_objects.delete_at 2 # this object has been removed before simulated
+    sim_objects.each do |sim_object|
+      expect(sim_object.simulated).to be_true
+    end
   end
 
   it "should process sim object even if they raise execptions" do
+    Sim::Queue::Master.launch 1, %w{a b c d e}
+    Sim::Queue::Master.run!
+
     fire_count = 0
     Sim::Queue::SimEvent.any_instance.stub(:fire) do |arg|
       fire_count += 1
@@ -37,22 +40,14 @@ describe "Sim Queues", focus: true do
     end
 
     Sim::Queue::Master.start
-    sim_loop << 'x'
-    sim_loop << 'y'
-    sim_loop.remove 'a'
-    sim_loop.remove 'c'
-
     sleep 1
-    expect(fire_count).to be >= 5
     sim_loop.stop
+    expect(fire_count).to be >= 5
     expect(event_queue.instance_variable_get("@waitings")).to be_empty
     sleep 0.1
     expect(event_queue.instance_variable_get("@processing")).to be_empty
 
     event_queue.stop
-    #sleep 1
-    # within 1 sec all 5 objects should have been simulated
-
   end
 
 end
