@@ -5,10 +5,15 @@ describe Sim::Queue::SimLoop, focus: true do
   let(:sim_loop) { Sim::Queue::SimLoop.new(15, %w{a b c d e f}) }
   let (:event_queue) { double(Sim::Queue::EventQueue) }
 
+  before :each do
+    sim_loop.wrapped_object.stub(:event_queue).and_return(event_queue)
+  end
+
   describe "objects" do
 
     before :each do
-      sim_loop.wrapped_object.stub :stop_time
+      event_queue.stub(:remove_events)
+      sim_loop.wrapped_object.stub(:stop_time)
     end
 
     it "should loop through all objects and start again" do
@@ -35,7 +40,6 @@ describe Sim::Queue::SimLoop, focus: true do
   describe "sim" do
 
     before :each do
-      sim_loop.wrapped_object.stub(:event_queue).and_return(event_queue)
       sim_loop.wrapped_object.stub(:create_event).and_return('event')
     end
 

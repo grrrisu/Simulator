@@ -52,11 +52,12 @@ module Sim
         events = @waitings.clone
         while events.any? && fire_workers.idle_size > 0
           event = events.pop
-          needed_resources_free?(event)
-          lock_resources(event)
-          @processing << event
-          @waitings.delete(event)
-          fire_workers.async.fire(event)
+          if needed_resources_free?(event)
+            lock_resources(event)
+            @processing << event
+            @waitings.delete(event)
+            fire_workers.async.fire(event)
+          end
         end
       end
 
