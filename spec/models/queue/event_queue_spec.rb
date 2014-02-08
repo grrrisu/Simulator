@@ -72,7 +72,9 @@ describe Sim::Queue::EventQueue, focus: true do
     end
 
     it "should delegate event to fireworker" do
-      fire_workers.should_receive(:async).twice
+      fire_workers.stub(:async).and_return(fire_workers)
+      fire_workers.should_receive(:fire).once.with(event)
+      fire_workers.should_receive(:fire).once.with(event_3)
       event_queue.delegate_ready_events
     end
 
@@ -88,16 +90,27 @@ describe Sim::Queue::EventQueue, focus: true do
 
   describe "run" do
 
-    it "should reschedule if an event was blocked" do
+    before :each do
+      event_queue.wrapped_object.stub(:fire_workers).and_return(fire_workers)
+      fire_workers.stub(:idle_size).and_return(2)
+      fire_workers.stub_chain(:async, :fire)
+    end
 
+    it "should reschedule if an event was blocked" do
+      event_queue.wrapped_object.should_receive(:after).once
+      event_queue.instance_variable_set("@waitings", [event, event_2])
+      event_queue.run
     end
 
     it "should reschedule for cleanup if an event is processed" do
-
+      event_queue.wrapped_object.should_receive(:after).once
+      event_queue.instance_variable_set("@processing", [event])
+      event_queue.run
     end
 
-    it "should not reschedule if no events are have been blocked or are processed" do
-
+    it "should not reschedule if no events have been blocked or are processed" do
+      event_queue.wrapped_object.should_receive(:after).never
+      event_queue.run
     end
 
   end

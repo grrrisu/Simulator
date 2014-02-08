@@ -16,10 +16,8 @@ require_relative './master.rb'
 module Sim
   module Queue
 
-    Celluloid.logger = ::Logger.new($stderr)
-    #Celluloid.logger = ::Logger.new("mylog.log")
-
-    Master.launch nil
+    Master.setup $stderr
+    Master.launch 15, [1,2,3,4,5]
     Master.run!
     Master.start
 

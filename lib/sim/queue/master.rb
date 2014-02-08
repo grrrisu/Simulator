@@ -3,10 +3,15 @@ module Sim
 
     class Master < Celluloid::SupervisionGroup
 
-      def self.launch level
+      def self.setup logfile
+        Celluloid.logger = ::Logger.new(logfile)
+        #Celluloid.logger = ::Logger.new("mylog.log")
+      end
+
+      def self.launch duration, sim_objects
         # this queues will be restarted automaticaly if they crash
         supervise EventQueue, as: :event_queue  # declare first as sim_loop depends on it
-        supervise SimLoop,    as: :sim_loop,    args: [ 15, [1,2,3,4,5] ]
+        supervise SimLoop,    as: :sim_loop,    args: [ duration, sim_objects ]
         pool      FireWorker, as: :fire_workers
       end
 

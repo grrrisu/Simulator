@@ -18,6 +18,7 @@ module Sim
       alias << add
 
       def remove object
+        return unless @objects.include?(object)
         debug "remove #{object} #{@objects}"
         if @objects.index(object) < @counter
           @counter -= 1
