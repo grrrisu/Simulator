@@ -13,6 +13,7 @@ module Sim
 
       def add object
         debug "add #{object} #{@objects}"
+        object.touch
         @objects << object
       end
       alias << add
@@ -32,6 +33,7 @@ module Sim
       end
 
       def start
+        @objects.each {|obj| obj.touch}
         @start_time = Time.now
         sim
       end

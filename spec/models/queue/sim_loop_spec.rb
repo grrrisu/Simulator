@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Sim::Queue::SimLoop, focus: true do
 
-  let(:sim_loop) { Sim::Queue::SimLoop.new(15, %w{a b c d e f}) }
+  let(:sim_objects) { %w{a b c d e f}.map{|n| SimulatedObject.new(n)} }
+  let(:sim_loop) { Sim::Queue::SimLoop.new(15, sim_objects) }
   let (:event_queue) { double(Sim::Queue::EventQueue) }
 
   before :each do
@@ -18,21 +19,27 @@ describe Sim::Queue::SimLoop, focus: true do
 
     it "should loop through all objects and start again" do
       %w{a b c d e f a b c}.each do |expected|
-        expect(sim_loop.next_object).to be == expected
+        expect(sim_loop.next_object.name).to be == expected
       end
     end
 
     it "should loop through all objects when adding and removing objects" do
       %w{a b}.each do |expected|
-        expect(sim_loop.next_object).to be == expected
+        expect(sim_loop.next_object.name).to be == expected
       end
-      sim_loop << 'x'
-      sim_loop.remove 'c'
-      sim_loop << 'z'
-      sim_loop.remove 'a'
+      sim_loop << SimulatedObject.new('x')
+      sim_loop.remove sim_objects[2]
+      sim_loop << SimulatedObject.new('z')
+      sim_loop.remove sim_objects[0]
       %w{d e f x z b d e}.each do |expected|
-        expect(sim_loop.next_object).to be == expected
+        expect(sim_loop.next_object.name).to be == expected
       end
+    end
+
+    it "should touch every object" do
+      sim_objects.each {|obj| obj.should_receive(:touch)}
+      sim_loop.wrapped_object.should_receive(:sim).once
+      sim_loop.start
     end
 
   end

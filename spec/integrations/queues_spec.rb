@@ -12,25 +12,26 @@ describe "Sim Queues", focus: true do
 
   it "should process sim objects" do
     sim_objects = %w{a b c d e x y}.map {|n| SimulatedObject.new(n)}
-    Sim::Queue::Master.launch 1, sim_objects[0,5]
+    Sim::Queue::Master.launch 1, sim_objects[0,5] # launch a b c d e
     Sim::Queue::Master.run!
 
     Sim::Queue::Master.start
-    sim_loop << sim_objects[5]
-    sim_loop << sim_objects[6]
-    sim_loop.remove sim_objects[0]
-    sim_loop.remove sim_objects[2]
+    sim_loop << sim_objects[5] # add x
+    sim_loop << sim_objects[6] # add y
+    sim_loop.remove sim_objects[0] # remove a
+    sim_loop.remove sim_objects[2] # remove c
+    # within 1.2 sec all objects should have been simulated
     sleep 1.2
     Sim::Queue::Master.stop
-    # within 1.2 sec all objects should have been simulated
-    sim_objects.delete_at 2 # this object has been removed before simulated
+    sim_objects.delete_at 0 # this object may has been removed before simulated
+    sim_objects.delete_at 1 # this object may has been removed before simulated
     sim_objects.each do |sim_object|
       expect(sim_object.simulated).to be_true
     end
   end
 
   it "should process sim object even if they raise execptions" do
-    Sim::Queue::Master.launch 1, %w{a b c d e}
+    Sim::Queue::Master.launch 1, %w{a b c d e}.map {|n| SimulatedObject.new(n)}
     Sim::Queue::Master.run!
 
     fire_count = 0
