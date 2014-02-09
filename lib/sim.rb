@@ -12,6 +12,7 @@ require_relative './sim/time_unit'
 require_relative './sim/field_properties'
 require_relative './sim/matrix'
 require_relative './sim/level'
+require_relative './sim/player'
 
 require_relative './sim/popen/remote_exception'
 require_relative './sim/popen/message_serializer'
