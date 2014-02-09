@@ -14,6 +14,7 @@ module Sim
         supervise SimLoop,    as: :sim_loop, args: [ config[:sim_loop][:duration], sim_objects ]
         pool      FireWorker, as: :fire_workers
         Celluloid::Actor[:time_unit] = TimeUnit.new config[:time_unit]
+        run!
       end
 
       def self.start

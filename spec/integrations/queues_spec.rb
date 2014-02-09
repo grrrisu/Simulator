@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Sim Queues", focus: true do
+describe "Sim Queues" do
 
   let(:config)        { {time_unit: 1, sim_loop: {duration: 1} } }
   let(:event_queue)   { Celluloid::Actor[:event_queue] }
@@ -14,7 +14,6 @@ describe "Sim Queues", focus: true do
   it "should process sim objects" do
     sim_objects = %w{a b c d e x y}.map {|n| SimulatedObject.new(n)}
     Sim::Queue::Master.launch config, sim_objects[0,5] # launch a b c d e
-    Sim::Queue::Master.run!
 
     Sim::Queue::Master.start
     sim_loop << sim_objects[5] # add x
@@ -33,7 +32,6 @@ describe "Sim Queues", focus: true do
 
   it "should process sim object even if they raise execptions" do
     Sim::Queue::Master.launch config, %w{a b c d e}.map {|n| SimulatedObject.new(n)}
-    Sim::Queue::Master.run!
 
     fire_count = 0
     Sim::Queue::SimEvent.any_instance.stub(:fire) do |arg|

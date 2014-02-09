@@ -18,7 +18,6 @@ module Sim
 
     Master.setup $stderr
     Master.launch 15, [1,2,3,4,5]
-    Master.run!
     Master.start
 
     event_queue = Celluloid::Actor[:event_queue]

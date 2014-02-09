@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sim::Queue::Event, focus: true do
+describe Sim::Queue::Event do
 
   let (:event) { Sim::Queue::Event.new('object') }
 

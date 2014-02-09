@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sim::Queue::SimLoop, focus: true do
+describe Sim::Queue::SimLoop do
 
   let(:sim_objects) { %w{a b c d e f}.map{|n| SimulatedObject.new(n)} }
   let(:sim_loop) { Sim::Queue::SimLoop.new(15, sim_objects) }

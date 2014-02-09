@@ -4,10 +4,6 @@ module Sim
     include Celluloid
     include Celluloid::Logger
 
-    trap_exit :actor_died
-    finalizer :stop_subactors
-
-
     def self.attach
       level = new
       level.listen_to_parent_process
@@ -15,8 +11,8 @@ module Sim
 
     def build config_file
       config = Buildable.load_config(config_file)
-      Sim::TimeUnit.new config[:time_unit]
-      @queue = Sim::Queue.new_link
+      Sim::Queue::Master.setup $stderr
+      Sim::Queue::Master.launch config
       create(config)
     end
 
@@ -62,13 +58,13 @@ module Sim
     end
 
     def start
-      @queue.start
+      Sim::Queue::Master.start
     end
 
 
     def stop
+      Sim::Queue::Master.stop
       @process.stop if @process
-      @queue.stop if @queue
     end
 
     def create config
@@ -88,18 +84,8 @@ module Sim
       raise "implement in subclass"
     end
 
-    def actor_died actor, exception
-      warn "[level] actor #{actor.inspect} died of reason #{exception}"
-    end
-
     def find_player id
       Celluloid::Actor["player_#{id}"]
-    end
-
-    def stop_subactors
-      @queue.terminate if @queue && @queue.alive?
-      Celluloid::Actor[:time_unit].terminate if Celluloid::Actor[:time_unit].alive?
-      debug "level stopped"
     end
 
   end
