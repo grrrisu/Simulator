@@ -20,6 +20,10 @@ module Sim
       @units_since_start = 0
     end
 
+    def stop
+      terminate
+    end
+
     def time_unit= value
       if @started
         @units_since_start = time_elapsed

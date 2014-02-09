@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Sim Queues", focus: true do
 
+  let(:config)        { {time_unit: 1, sim_loop: {duration: 1} } }
   let(:event_queue)   { Celluloid::Actor[:event_queue] }
   let(:sim_loop)      { Celluloid::Actor[:sim_loop] }
   let(:fire_workers)  { Celluloid::Actor[:fire_workers] }
@@ -12,7 +13,7 @@ describe "Sim Queues", focus: true do
 
   it "should process sim objects" do
     sim_objects = %w{a b c d e x y}.map {|n| SimulatedObject.new(n)}
-    Sim::Queue::Master.launch 1, sim_objects[0,5] # launch a b c d e
+    Sim::Queue::Master.launch config, sim_objects[0,5] # launch a b c d e
     Sim::Queue::Master.run!
 
     Sim::Queue::Master.start
@@ -31,7 +32,7 @@ describe "Sim Queues", focus: true do
   end
 
   it "should process sim object even if they raise execptions" do
-    Sim::Queue::Master.launch 1, %w{a b c d e}.map {|n| SimulatedObject.new(n)}
+    Sim::Queue::Master.launch config, %w{a b c d e}.map {|n| SimulatedObject.new(n)}
     Sim::Queue::Master.run!
 
     fire_count = 0

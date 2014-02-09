@@ -8,12 +8,12 @@ module Sim
         #Celluloid.logger = ::Logger.new("mylog.log")
       end
 
-      def self.launch duration, sim_objects, time_unit = 1
+      def self.launch config, sim_objects = []
         # this queues will be restarted automaticaly if they crash
         supervise EventQueue, as: :event_queue  # declare first as sim_loop depends on it
-        supervise SimLoop,    as: :sim_loop,    args: [ duration, sim_objects ]
+        supervise SimLoop,    as: :sim_loop, args: [ config[:sim_loop][:duration], sim_objects ]
         pool      FireWorker, as: :fire_workers
-        Celluloid::Actor[:time_unit] = TimeUnit.new time_unit
+        Celluloid::Actor[:time_unit] = TimeUnit.new config[:time_unit]
       end
 
       def self.start
@@ -25,6 +25,7 @@ module Sim
       def self.stop
         Celluloid::Actor[:sim_loop].stop
         Celluloid::Actor[:event_queue].stop
+        Celluloid::Actor[:time_unit].stop
       end
 
     end
