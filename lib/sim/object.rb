@@ -14,14 +14,6 @@ module Sim
       @last_touched = time
     end
 
-    def parent_guard
-      raise "implement in subclass"
-    end
-
-    def get_key
-      raise "implement in subclass"
-    end
-
     def sim
       raise "implement in subclass"
     end
