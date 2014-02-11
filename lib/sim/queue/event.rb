@@ -6,7 +6,7 @@ module Sim
       attr_reader :object
 
       def initialize object
-        @object = object
+        @object = object or raise ArgumentError, "object must be set"
         @done = false
       end
 

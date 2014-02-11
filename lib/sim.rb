@@ -16,6 +16,7 @@ require_relative './sim/player'
 
 require_relative './sim/popen/remote_exception'
 require_relative './sim/popen/message_serializer'
+require_relative './sim/popen/message_dispatcher'
 require_relative './sim/popen/parent_connection'
 require_relative './sim/popen/sub_process'
 

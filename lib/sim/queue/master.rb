@@ -6,21 +6,23 @@ module Sim
       def self.setup logfile
         Celluloid.logger = ::Logger.new(logfile)
         #Celluloid.logger = ::Logger.new("mylog.log")
-      end
 
-      def self.launch config, sim_objects = []
         # this queues will be restarted automaticaly if they crash
-        supervise EventQueue, as: :event_queue  # declare first as sim_loop depends on it
-        supervise SimLoop,    as: :sim_loop, args: [ config[:sim_loop][:duration], sim_objects ]
+        supervise EventQueue, as: :event_queue
         pool      FireWorker, as: :fire_workers
-        Celluloid::Actor[:time_unit] = TimeUnit.new config[:time_unit]
         run!
       end
 
+      def self.launch config, sim_objects = []
+        # this queues will NOT be restarted automaticaly if they crash
+        Celluloid::Actor[:sim_loop]  = SimLoop.new config[:sim_loop][:duration], sim_objects
+        Celluloid::Actor[:time_unit] = TimeUnit.new config[:time_unit]
+      end
+
       def self.start
-        Celluloid::Actor[:time_unit].async.start
-        Celluloid::Actor[:event_queue].async.start
-        Celluloid::Actor[:sim_loop].async.start
+        Celluloid::Actor[:time_unit].start
+        Celluloid::Actor[:event_queue].start
+        Celluloid::Actor[:sim_loop].start
       end
 
       def self.stop

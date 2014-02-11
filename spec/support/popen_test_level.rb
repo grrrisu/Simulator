@@ -2,16 +2,12 @@ require_relative '../../lib/sim'
 
 class PopenTestLevel < Sim::Level
 
-  def process_message message
-    if message[:action] == 'see all the stars'
-      message[:action].reverse
-    else
-      super
-    end
+  def reverse message
+    message.reverse
   end
 
   def create config
-    debug "creating..."
+    $stderr.puts "creating..."
   end
 
 end

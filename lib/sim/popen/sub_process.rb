@@ -38,7 +38,7 @@ module Sim
       rescue EOFError, Errno::EPIPE
         log "parent closed connection"
         @running = false
-        @receiver.stop
+        @receiver.stop_level
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"
         log e.backtrace.join("\n")
