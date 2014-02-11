@@ -5,7 +5,10 @@ module Sim
       include Celluloid
       include Celluloid::Logger
 
+      TIMEOUT = 5 #sec
+
       def initialize duration, objects = []
+        raise ArgumentError, "duration must be set" unless duration
         @duration = duration.to_f || 1.0
         @objects  = objects
         @counter  = 0
@@ -68,9 +71,13 @@ module Sim
       end
 
       def sim
-        event = create_event(next_object)
-        event_queue.async.fire(event)
-        @timer = after(delay) { sim }
+        if @objects.any?
+          event = create_event(next_object)
+          event_queue.async.fire(event)
+          @timer = after(delay) { sim }
+        else
+          @timer = after(TIMEOUT) { sim }
+        end
       end
 
     end

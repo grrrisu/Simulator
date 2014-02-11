@@ -63,6 +63,13 @@ describe Sim::Queue::SimLoop do
       sim_loop.sim
     end
 
+    it "should not fire any events but reschedule for next sim" do
+      sim_loop = Sim::Queue::SimLoop.new(15, [])
+      sim_loop.wrapped_object.should_receive(:after).once.with(Sim::Queue::SimLoop::TIMEOUT)
+      sim_loop.wrapped_object.should_receive(:create_event).never
+      sim_loop.sim
+    end
+
   end
 
 end
