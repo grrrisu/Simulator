@@ -8,6 +8,7 @@ describe Sim::Queue::SimLoop do
 
   before :each do
     sim_loop.wrapped_object.stub(:event_queue).and_return(event_queue)
+    Sim::TimeUnit.stub_chain(:instance, :time_unit).and_return(1)
   end
 
   describe "objects" do
