@@ -41,7 +41,7 @@ describe Sim::Popen::SubProcess do
     it "should stop receiver if parent connection closed" do
       @process.instance_variable_set('@running', true)
       @process.stub(:receive_data) { raise EOFError }
-      @receiver.should_receive(:stop)
+      @receiver.should_receive(:stop_level)
       $stderr.should_receive(:puts).once # log
       @process.listen_for_messages
     end

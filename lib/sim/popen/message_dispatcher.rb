@@ -61,7 +61,7 @@ module Sim
 
       def forward_message receiver, message
         if receiver.respond_to? message[:action].to_sym
-          receiver.send message[:action].to_sym, *message[:params].values
+          receiver.send message[:action].to_sym, *message[:params].try(:values) || []
           # TOOD Ruby 2
           # receiver.send message[:action].to_sym, **message[:params]
         else

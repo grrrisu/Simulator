@@ -24,16 +24,10 @@ RSpec.configure do |config|
   config.filter_run_excluding :skip => true
   config.run_all_when_everything_filtered = true
 
-  config.around actor_system: :global do |ex|
+  config.before(:each) do
     Celluloid.shutdown
     Celluloid.boot
-    ex.run
-    Celluloid.shutdown
+    Celluloid.logger = nil
   end
 
-  config.before(:each, actor: true) do
-    Celluloid.logger = nil
-    Celluloid.shutdown
-    Celluloid.boot
-  end
 end
