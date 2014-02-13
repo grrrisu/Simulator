@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "Simulator"
-  s.version = "0.0.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alessandro Di Maria"]
-  s.date = "2013-04-01"
+  s.date = "2014-02-13"
   s.description = "A simulation container based on Celluloid"
   s.email = "adm@m42.ch"
   s.extra_rdoc_files = [
@@ -26,38 +26,49 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "Simulator.gemspec",
+    "lib/ext/hash_ext.rb",
     "lib/level.yml",
     "lib/main.rb",
     "lib/sim.rb",
     "lib/sim/buildable.rb",
     "lib/sim/field_properties.rb",
-    "lib/sim/guard.rb",
     "lib/sim/level.rb",
     "lib/sim/matrix.rb",
     "lib/sim/object.rb",
     "lib/sim/player.rb",
+    "lib/sim/popen/message_dispatcher.rb",
     "lib/sim/popen/message_serializer.rb",
     "lib/sim/popen/parent_connection.rb",
     "lib/sim/popen/remote_exception.rb",
     "lib/sim/popen/sub_process.rb",
-    "lib/sim/queue.rb",
+    "lib/sim/queue/event.rb",
+    "lib/sim/queue/event_queue.rb",
+    "lib/sim/queue/fire_worker.rb",
+    "lib/sim/queue/master.rb",
+    "lib/sim/queue/sim_event.rb",
+    "lib/sim/queue/sim_loop.rb",
+    "lib/sim/queue/test.rb",
     "lib/sim/time_unit.rb",
     "lib/sim/version.rb",
-    "lib/sim/worker.rb",
     "log/.gitkeep",
     "spec/integrations/popen_spec.rb",
-    "spec/integrations/sim_spec.rb",
+    "spec/integrations/queues_spec.rb",
     "spec/level.yml",
+    "spec/models/ext/hash_ext_spec.rb",
+    "spec/models/popen/message_dispatcher_spec.rb",
     "spec/models/popen/sub_process_spec.rb",
+    "spec/models/queue/event_queue_spec.rb",
+    "spec/models/queue/event_spec.rb",
+    "spec/models/queue/sim_loop_spec.rb",
     "spec/models/sim_buildable_spec.rb",
     "spec/models/sim_level_spec.rb",
     "spec/models/sim_matrix_spec.rb",
     "spec/models/sim_object_spec.rb",
-    "spec/models/sim_queue_spec.rb",
     "spec/models/sim_time_unit_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/dummy_object.rb",
-    "spec/support/popen_test_level.rb"
+    "spec/support/popen_test_level.rb",
+    "spec/support/simulated_object.rb"
   ]
   s.homepage = "http://github.com/grrrisu/Simulator"
   s.licenses = ["MIT"]
@@ -70,6 +81,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<celluloid>, ["~> 0.13"])
+      s.add_runtime_dependency(%q<activesupport>, ["~> 4.0.2"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
@@ -78,6 +90,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<growl>, [">= 0"])
     else
       s.add_dependency(%q<celluloid>, ["~> 0.13"])
+      s.add_dependency(%q<activesupport>, ["~> 4.0.2"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
@@ -87,6 +100,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<celluloid>, ["~> 0.13"])
+    s.add_dependency(%q<activesupport>, ["~> 4.0.2"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
