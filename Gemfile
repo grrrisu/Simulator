@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'celluloid', '~> 0.13'
 gem 'activesupport', '~> 4.0.2'
+gem 'hashie'
 
 group :development do
   gem 'jeweler'
