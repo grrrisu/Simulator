@@ -47,7 +47,7 @@ describe Sim::Level do
     describe 'stop' do
 
       before :each do
-        @dispatcher = mock('MessageDispatcher')
+        @dispatcher = double('MessageDispatcher')
         level.instance_variable_set('@dispatcher', @dispatcher)
         @dispatcher.stub(:stop)
         Sim::Queue::Master.stub(:stop)

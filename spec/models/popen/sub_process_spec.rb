@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Sim::Popen::SubProcess do
 
   before :each do
-    @receiver = mock('Level')
+    @receiver = double('Level')
     @process = Sim::Popen::SubProcess.new
     @process.instance_variable_set('@receiver', @receiver)
   end

@@ -39,7 +39,7 @@ describe Sim::Popen::MessageDispatcher do
 
     it "should delegate action to player" do
       message = {action: 'view', player: 'abc123'}
-      player = mock(Sim::Player)
+      player = double(Sim::Player)
       player.should_receive(:respond_to?).with(:view).and_return(true)
       player.should_receive(:view).with(nil).never
       player.should_receive(:view).and_return(true)
