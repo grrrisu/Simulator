@@ -2,9 +2,9 @@ module Sim
 
   class Level
 
-    def self.attach
+    def self.attach(socket_path)
       level = new
-      level.listen_to_parent_process
+      level.listen_to_parent_process(socket_path)
     end
 
     def build config_file
@@ -13,8 +13,11 @@ module Sim
       create(config)
     end
 
-    def listen_to_parent_process
+    def listen_to_parent_process socket_path
       Sim::Queue::Master.setup $stderr # TODO log to a file
+
+      @player_server = UnixSocket::PlayerServer.new(self, socket_path)
+
       @dispatcher = Popen::MessageDispatcher.new self
       @dispatcher.listen
     end

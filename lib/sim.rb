@@ -1,6 +1,9 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'socket'
 require 'celluloid'
+require 'celluloid/io'
+require 'celluloid/autostart'
 require 'active_support/core_ext'
 
 require_relative './ext/hash_ext'
@@ -19,6 +22,8 @@ require_relative './sim/popen/message_serializer'
 require_relative './sim/popen/message_dispatcher'
 require_relative './sim/popen/parent_connection'
 require_relative './sim/popen/sub_process'
+
+require_relative './sim/unix_socket/player_server'
 
 require_relative './sim/queue/event.rb'
 require_relative './sim/queue/sim_event.rb'

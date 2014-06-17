@@ -124,6 +124,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (>= 4.0.2)
   celluloid (~> 0.13)
+  celluloid-io (~> 0.15.0)
   growl
   guard
   guard-rspec

@@ -12,9 +12,9 @@ module Sim
 
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 
-      def launch_subprocess sim_library, level_class
+      def launch_subprocess sim_library, level_class, socket_path
         @mutex = Mutex.new
-        cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.attach}
+        cmd = %W{#{RUBY} -r #{sim_library} -e #{level_class}.attach('#{socket_path}')}
         self.output, self.input, wait_thr = popen2(*cmd)
         @pid = wait_thr.pid
         # wait for sub process to be ready

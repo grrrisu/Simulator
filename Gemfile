@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'celluloid', '~> 0.13'
+gem 'celluloid-io', '~> 0.15.0'
 gem 'activesupport', '>= 4.0.2'
 gem 'hashie'
 

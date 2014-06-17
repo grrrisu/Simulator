@@ -1,14 +1,7 @@
 module Sim
 
   class Player
-    include Buildable
-    include Celluloid
-    include Celluloid::Logger
-
-
-    def process_message
-    end
-
+    attr_accessor :socket
   end
 
 end
