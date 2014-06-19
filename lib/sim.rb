@@ -24,6 +24,7 @@ require_relative './sim/popen/parent_connection'
 require_relative './sim/popen/sub_process'
 
 require_relative './sim/unix_socket/player_server'
+require_relative './sim/unix_socket/player_connection'
 
 require_relative './sim/queue/event.rb'
 require_relative './sim/queue/sim_event.rb'
