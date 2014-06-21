@@ -39,8 +39,12 @@ module Sim
       raise "implement in subclass"
     end
 
+    def build_player connection
+      # Player.new(connection, self)
+      raise "implement in subclass"
+    end
+
     def add_player id
-      # player_supervisors_as << Sim::Player.supervise_as "player_#{id}"
       raise "implement in subclass"
     end
 
@@ -49,7 +53,7 @@ module Sim
     end
 
     def find_player id
-      Celluloid::Actor["player_#{id}"]
+      #Celluloid::Actor["player_#{id}"]
     end
 
   end

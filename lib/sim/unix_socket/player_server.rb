@@ -14,7 +14,7 @@ module Sim
       rescue Errno::EADDRINUSE
         # FIME force restart
         FileUtils.rm socket_path if File.exists? socket_path
-        PlayerServer.new(socket_path)
+        PlayerServer.new(level, socket_path)
       end
 
       def shutdown
@@ -28,8 +28,12 @@ module Sim
       end
 
       def handle_connection(socket)
-        #player = @level.build_player
-        PlayerConnection.new(@level, socket)
+        player = @level.build_player(@level)
+        PlayerConnection.new(player, socket)
+      rescue Exception => e
+        $stderr.puts "\e[0;31mconnection for player #{player.try(:id)} crashed!: \n #{e.message}"
+        $stderr.puts e.backtrace.join("\n")
+        $stderr.puts "\e[0m"
       end
 
     end
