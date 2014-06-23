@@ -7,13 +7,10 @@ module Sim
       def initialize player, socket
         self.input, self.output = socket, socket
         @player, player.connection = player, self
-        listen
+        @player.register(receive_data)
       end
 
       def listen
-        data = receive_data
-        $stderr.puts "*** player data received #{data}"
-        @player.register data
       end
 
     end
