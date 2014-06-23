@@ -20,7 +20,7 @@ module Sim
           if player = @level.find_player(message[:player])
             forward_message player, message
           else
-            raise ArgumentError, "no player[#{message[:player]} found in this level"
+            raise ArgumentError, "no player[#{message[:player]}] found in this level"
           end
         else
           process_message message
