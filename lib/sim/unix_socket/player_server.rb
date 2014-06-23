@@ -13,6 +13,7 @@ module Sim
         async.run
       rescue Errno::EADDRINUSE
         # FIME force restart
+        $stderr.puts "\e[0;31maddress in use -> force restart!!!\e[0m"
         FileUtils.rm socket_path if File.exists? socket_path
         PlayerServer.new(level, socket_path)
       end
@@ -30,6 +31,9 @@ module Sim
       def handle_connection(socket)
         player = @level.build_player(@level)
         PlayerConnection.new(player, socket)
+      rescue EOFError
+        $stderr.puts "*** parent process closed connection"
+        socket.close
       rescue Exception => e
         $stderr.puts "\e[0;31mconnection for player #{player.try(:id)} crashed!: \n #{e.message}"
         $stderr.puts e.backtrace.join("\n")
