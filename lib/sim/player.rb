@@ -10,7 +10,9 @@ module Sim
     end
 
     def register data
-      raise "implement in subclass"
+      @id = data[:player_id]
+      level.add_player self
+      connection.send_data(player_id: @id, registered: true)
     end
 
   end
