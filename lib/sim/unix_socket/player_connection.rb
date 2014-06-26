@@ -4,10 +4,16 @@ module Sim
     class PlayerConnection
       include Popen::MessageSerializer
 
-      def initialize player, socket
+      def initialize socket
         self.input, self.output = socket, socket
-        @player, player.connection = player, self
-        @player.register(receive_data)
+      end
+
+      def register level
+        data                = receive_data
+        @player             = level.build_player(data)
+        @player.connection  = self
+
+        send_data(player_id: @player.id, registered: true)
         Reader.new(self).async.listen
         Writer.new(self).async.send_time
       end

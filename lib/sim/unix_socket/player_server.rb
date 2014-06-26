@@ -29,8 +29,8 @@ module Sim
       end
 
       def handle_connection(socket)
-        player = @level.build_player(@level)
-        PlayerConnection.new(player, socket)
+        connection = PlayerConnection.new(socket)
+        connection.register(@level)
       rescue EOFError
         $stderr.puts "*** parent process closed connection"
         socket.close

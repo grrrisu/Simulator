@@ -39,12 +39,12 @@ module Sim
       raise "implement in subclass"
     end
 
-    def build_player connection
-      # Player.new(connection, self)
+    def build_player data
+      # Player.new(id, self)
       raise "implement in subclass"
     end
 
-    def add_player id
+    def add_player player
       raise "implement in subclass"
     end
 
