@@ -35,7 +35,7 @@ module Sim
         $stderr.puts "*** parent process closed connection"
         socket.close
       rescue Exception => e
-        $stderr.puts "\e[0;31mconnection for player #{player.try(:id)} crashed!: \n #{e.message}"
+        $stderr.puts "\e[0;31mconnection for player #{connection.player.try(:id)} crashed!: \n #{e.message}"
         $stderr.puts e.backtrace.join("\n")
         $stderr.puts "\e[0m"
       end

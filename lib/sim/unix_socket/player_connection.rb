@@ -4,6 +4,8 @@ module Sim
     class PlayerConnection
       include Popen::MessageSerializer
 
+      attr_reader :player
+
       def initialize socket
         self.input, self.output = socket, socket
       end
