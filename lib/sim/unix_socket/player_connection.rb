@@ -12,7 +12,7 @@ module Sim
 
       def register level
         data                = receive_data
-        @player             = level.build_player(data)
+        @player             = level.add_player(data)
         @player.connection  = self
 
         send_data(player_id: @player.id, registered: true)
