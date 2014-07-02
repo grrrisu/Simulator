@@ -17,7 +17,31 @@ module Sim
 
         send_data(player_id: @player.id, registered: true)
         Reader.new(self).async.listen
-        Writer.new(self).async.send_time
+        @writer = Writer.new(self)
+        #@writer.send_time
+      end
+
+      def forward_message data
+        $stderr.puts "*** forward_message #{data}"
+        check_permission!(data)
+        action = data.delete(:action)
+        if action && @player.respond_to?(action)
+          answer = @player.send action, *data[:params]
+          send_message(action, answer)
+        else
+          raise ArgumentError, "player does not know how to handle action[#{action}]: #{data}"
+        end
+      end
+
+      def send_message action, message
+        @writer.async.send_message(action, message)
+      end
+
+      def check_permission!(data)
+        # TODO check if player is allowed to execute this action
+        unless data[:player_id] == @player.id
+          raise ArgumentError, "message #{action} for player #{data[:player_id]} was sent to player[#{@player.id}]"
+        end
       end
 
       class Reader
@@ -31,7 +55,7 @@ module Sim
         def listen
           loop do
             data = @connection.receive_data
-            $stderr.puts "**** player received #{data}"
+            @connection.forward_message(data)
           end
         end
 
@@ -43,6 +67,10 @@ module Sim
 
         def initialize connection
           @connection = connection
+        end
+
+        def send_message action, message
+          @connection.send_data action: action, answer: message
         end
 
         def send_time
