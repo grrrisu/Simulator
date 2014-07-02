@@ -26,7 +26,7 @@ module Sim
         check_permission!(data)
         action = data.delete(:action)
         if action && @player.respond_to?(action)
-          answer = @player.send action, *data[:params]
+          answer = @player.send action, *data[:params].values
           send_message(action, answer)
         else
           raise ArgumentError, "player does not know how to handle action[#{action}]: #{data}"
