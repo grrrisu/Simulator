@@ -54,10 +54,6 @@ module Sim
         $stderr.puts "[subprocess] #{message}"
       end
 
-      def p object
-        $stderr.puts object.inspect
-      end
-
     end
 
   end

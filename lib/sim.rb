@@ -28,6 +28,7 @@ require_relative './sim/unix_socket/player_connection'
 
 require_relative './sim/queue/event.rb'
 require_relative './sim/queue/sim_event.rb'
+require_relative './sim/queue/action_event.rb'
 require_relative './sim/queue/fire_worker.rb'
 require_relative './sim/queue/event_queue.rb'
 require_relative './sim/queue/sim_loop.rb'

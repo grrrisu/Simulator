@@ -3,8 +3,15 @@ module Sim
 
     class SimEvent < Event
 
-      def needed_resources
-        [] # none
+      attr_reader :object
+
+      def initialize object
+        @object = object or raise ArgumentError, "sim object must be set"
+        @done = false
+      end
+
+      def to_s
+        "<SimEvent>"
       end
 
       def fire

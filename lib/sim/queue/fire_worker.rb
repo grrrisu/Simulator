@@ -6,7 +6,7 @@ module Sim
       include Celluloid::Logger
 
       def fire event
-        debug "FIRE #{event.object}!"
+        debug "FIRE #{event}!"
         event.fire
       ensure
         # so that the event will be removed from the processing list of the event_queue

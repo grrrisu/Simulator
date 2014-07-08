@@ -3,11 +3,8 @@ module Sim
 
     class Event
 
-      attr_reader :object
-
-      def initialize object
-        @object = object or raise ArgumentError, "object must be set"
-        @done = false
+      def to_s
+        "<#{self.class}>"
       end
 
       def fire
@@ -19,7 +16,7 @@ module Sim
       end
 
       def done?
-        @done
+        @done || false
       end
 
       def needed_resources
