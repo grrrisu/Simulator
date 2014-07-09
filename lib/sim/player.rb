@@ -9,10 +9,6 @@ module Sim
       @level  = level
     end
 
-    def event_queue
-      Celluloid::Actor[:event_queue]
-    end
-
     def direct_actions
       []
     end
@@ -23,12 +19,13 @@ module Sim
         connection.send_message action, send(action, *params.values)
       else
         # actions that need global look and/or be evented, eg move
-        create_action_event(action, params)
+        fire_action_event(action, params)
       end
     end
 
-    def create_action_event action, params
+    def fire_action_event action, params
       event = Queue::ActionEvent.new self, action, params
+      event_queue = Celluloid::Actor[:event_queue]
       event_queue.async.fire(event)
     end
 
