@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Sim::Queue::EventQueue do
 
   let (:event_queue) { Sim::Queue::EventQueue.new }
-  let (:event) { Sim::Queue::Event.new('object') }
-  let (:event_2) { Sim::Queue::Event.new('object_2') }
-  let (:event_3) { Sim::Queue::Event.new('object_3') }
+  let (:event) { Sim::Queue::SimEvent.new('object') }
+  let (:event_2) { Sim::Queue::SimEvent.new('object_2') }
+  let (:event_3) { Sim::Queue::SimEvent.new('object_3') }
   let (:fire_workers) { double(Sim::Queue::FireWorker) }
 
   describe "lock resources" do

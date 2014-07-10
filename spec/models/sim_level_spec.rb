@@ -9,7 +9,7 @@ describe Sim::Level do
 
     it "should create a sim queue" do
       Sim::Popen::MessageDispatcher.stub_chain(:new, :listen)
-      level.listen_to_parent_process
+      level.listen_to_parent_process('tmp/test.sock')
       Celluloid::Actor[:event_queue].should_not be_nil
 
     end

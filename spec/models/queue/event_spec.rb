@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Sim::Queue::Event do
 
-  let (:event) { Sim::Queue::Event.new('object') }
+  let (:event) { Sim::Queue::SimEvent.new('object') }
 
   describe "fire" do
 

@@ -7,7 +7,7 @@ describe "popen" do
     sim_library = File.expand_path('../../support/popen_test_level.rb', __FILE__)
     level_class = 'PopenTestLevel'
     config_file = File.expand_path('../../level.yml', __FILE__)
-    @connection.launch_subprocess(sim_library, level_class)
+    @connection.launch_subprocess(sim_library, level_class, 'tmp/test.sock')
     @connection.send_action :build, config_file: config_file
   end
 
