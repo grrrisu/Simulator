@@ -4,6 +4,7 @@ require 'socket'
 require 'celluloid'
 require 'celluloid/io'
 require 'celluloid/autostart'
+require 'active_support'
 require 'active_support/core_ext'
 
 require_relative './ext/hash_ext'
