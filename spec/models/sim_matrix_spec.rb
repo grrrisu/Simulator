@@ -19,11 +19,11 @@ describe Sim::Matrix do
   end
 
   it "should check boundaries for getter" do
-    expect { @matrix[3,2] }.to raise_error(ArgumentError, "coordinates[3, 2] out of matrix[3, 4]")
+    expect { @matrix[3,2] }.to raise_error(ArgumentError, "coordinates x:3, y:2 out of matrix width:3, height:4")
   end
 
   it "should check boundaries for setter" do
-    expect { @matrix[2,4] = 'foo' }.to raise_error(ArgumentError, "coordinates[2, 4] out of matrix[3, 4]")
+    expect { @matrix[2,4] = 'foo' }.to raise_error(ArgumentError, "coordinates x:2, y:4 out of matrix width:3, height:4")
   end
 
   it "should iterate over the matrix with index" do
