@@ -33,4 +33,4 @@ Player:
 Copyright
 --------
 
-Copyright (c) 2013 Alessandro Di Maria. See LICENSE.txt for further details.
+Copyright (c) 2013-2014 Alessandro Di Maria. See LICENSE.txt for further details.
