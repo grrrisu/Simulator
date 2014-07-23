@@ -18,11 +18,11 @@ describe Sim::Queue::EventQueue do
     end
 
     it "should mark resources of event_2 as locked" do
-      expect(event_queue.needed_resources_free?(event_2)).to be_false
+      expect(event_queue.needed_resources_free?(event_2)).to be false
     end
 
     it "should mark resources of event_3 as free" do
-      expect(event_queue.needed_resources_free?(event_3)).to be_true
+      expect(event_queue.needed_resources_free?(event_3)).to be true
     end
 
   end
@@ -30,8 +30,8 @@ describe Sim::Queue::EventQueue do
   describe "release finished events" do
 
     before :each do
-      event.stub!(:done?).and_return(true)
-      event_3.stub!(:done?).and_return(false)
+      allow(event).to receive(:done?).and_return(true)
+      allow(event_3).to receive(:done?).and_return(false)
       event_queue.instance_variable_set("@processing", [event, event_3])
     end
 
@@ -41,8 +41,8 @@ describe Sim::Queue::EventQueue do
     end
 
     it "should free locked resources" do
-      event.stub(:needed_resources).and_return(['A1', 'B1'])
-      event_3.stub(:needed_resources).and_return(['A2', 'B2'])
+      allow(event).to receive(:needed_resources).and_return(['A1', 'B1'])
+      allow(event_3).to receive(:needed_resources).and_return(['A2', 'B2'])
       event_queue.lock_resources(event)
       event_queue.lock_resources(event_3)
 
@@ -56,12 +56,12 @@ describe Sim::Queue::EventQueue do
   describe "delegate ready events" do
 
     before :each do
-      fire_workers.stub(:idle_size).and_return(2)
-      fire_workers.stub_chain(:async, :fire)
-      event.stub(:needed_resources).and_return(['A1', 'B1'])
-      event_2.stub(:needed_resources).and_return(['A1', 'B2'])
-      event_3.stub(:needed_resources).and_return(['A2', 'B2'])
-      event_queue.wrapped_object.stub(:fire_workers).and_return(fire_workers)
+      allow(fire_workers).to receive(:idle_size).and_return(2)
+      allow(fire_workers).to receive_message_chain(:async, :fire)
+      allow(event).to receive(:needed_resources).and_return(['A1', 'B1'])
+      allow(event_2).to receive(:needed_resources).and_return(['A1', 'B2'])
+      allow(event_3).to receive(:needed_resources).and_return(['A2', 'B2'])
+      allow(event_queue.wrapped_object).to receive(:fire_workers).and_return(fire_workers)
       event_queue.instance_variable_set("@waitings", [event, event_2, event_3])
     end
 
@@ -72,9 +72,9 @@ describe Sim::Queue::EventQueue do
     end
 
     it "should delegate event to fireworker" do
-      fire_workers.stub(:async).and_return(fire_workers)
-      fire_workers.should_receive(:fire).once.with(event)
-      fire_workers.should_receive(:fire).once.with(event_3)
+      allow(fire_workers).to receive(:async).and_return(fire_workers)
+      expect(fire_workers).to receive(:fire).once.with(event)
+      expect(fire_workers).to receive(:fire).once.with(event_3)
       event_queue.delegate_ready_events
     end
 
@@ -91,25 +91,25 @@ describe Sim::Queue::EventQueue do
   describe "run" do
 
     before :each do
-      event_queue.wrapped_object.stub(:fire_workers).and_return(fire_workers)
-      fire_workers.stub(:idle_size).and_return(2)
-      fire_workers.stub_chain(:async, :fire)
+      allow(event_queue.wrapped_object).to receive(:fire_workers).and_return(fire_workers)
+      allow(fire_workers).to receive(:idle_size).and_return(2)
+      allow(fire_workers).to receive_message_chain(:async, :fire)
     end
 
     it "should reschedule if an event was blocked" do
-      event_queue.wrapped_object.should_receive(:after).once
+      expect(event_queue.wrapped_object).to receive(:after).once
       event_queue.instance_variable_set("@waitings", [event, event_2])
       event_queue.run
     end
 
     it "should reschedule for cleanup if an event is processed" do
-      event_queue.wrapped_object.should_receive(:after).once
+      expect(event_queue.wrapped_object).to receive(:after).once
       event_queue.instance_variable_set("@processing", [event])
       event_queue.run
     end
 
     it "should not reschedule if no events have been blocked or are processed" do
-      event_queue.wrapped_object.should_receive(:after).never
+      expect(event_queue.wrapped_object).to receive(:after).never
       event_queue.run
     end
 

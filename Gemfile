@@ -8,7 +8,7 @@ gem 'hashie'
 group :development do
   gem 'jeweler'
 
-  gem 'rspec', '~> 2.99.0'
+  gem 'rspec', '~> 3.0.0'
   gem 'rake'
 
   gem 'guard'

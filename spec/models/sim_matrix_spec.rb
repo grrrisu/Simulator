@@ -62,7 +62,7 @@ describe Sim::Matrix do
     @matrix.set_each_field_with_index do |x, y|
       {:x => x, :y => y}
     end
-    @matrix.flatten.should have(12).items
+    expect(@matrix.flatten.size).to be == 12
   end
 
   it "should convert to json" do

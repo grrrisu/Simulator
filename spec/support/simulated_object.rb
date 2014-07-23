@@ -1,9 +1,11 @@
 class SimulatedObject < Sim::Object
   attr_reader :name, :simulated
 
-  def initialize name
+  def initialize name, crash = false
     super()
+    @simulated = 0
     @name = name
+    @crash = crash
   end
 
   def to_s
@@ -11,6 +13,7 @@ class SimulatedObject < Sim::Object
   end
 
   def sim
-    @simulated = true
+    @simulated += 1
+    raise "*** CRASH ***" if @crash
   end
 end

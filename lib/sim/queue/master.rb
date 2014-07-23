@@ -5,7 +5,6 @@ module Sim
 
       def self.setup logfile
         Celluloid.logger = ::Logger.new(logfile)
-        #Celluloid.logger = ::Logger.new("mylog.log")
 
         # this queues will be restarted automaticaly if they crash
         supervise EventQueue, as: :event_queue

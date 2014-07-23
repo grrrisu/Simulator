@@ -26,23 +26,20 @@ describe "Sim Queues" do
     sim_objects.delete_at 0 # this object may has been removed before simulated
     sim_objects.delete_at 1 # this object may has been removed before simulated
     sim_objects.each do |sim_object|
-      expect(sim_object.simulated).to be_true
+      expect(sim_object.simulated).to be > 0
     end
   end
 
   it "should process sim object even if they raise execptions" do
-    Sim::Queue::Master.launch config, %w{a b c d e}.map {|n| SimulatedObject.new(n)}
-
-    fire_count = 0
-    Sim::Queue::SimEvent.any_instance.stub(:fire) do |arg|
-      fire_count += 1
-      raise "*** CRASH ***"
-    end
+    sim_objects = %w{a b c d e}.map {|n| SimulatedObject.new(n, true)}
+    Sim::Queue::Master.launch config, sim_objects
 
     Sim::Queue::Master.start
     sleep 1
     sim_loop.stop
-    expect(fire_count).to be >= 5
+    sim_objects.each do |sim_object|
+      expect(sim_object.simulated).to be > 0
+    end
     expect(event_queue.instance_variable_get("@waitings")).to be_empty
     sleep 0.1
     expect(event_queue.instance_variable_get("@processing")).to be_empty
