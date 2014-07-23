@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Sim::Popen::MessageDispatcher do
+describe Sim::Net::MessageDispatcher do
 
   let(:level)       { double(Sim::Level) }
-  let(:dispatcher)  { Sim::Popen::MessageDispatcher.new(level) }
+  let(:dispatcher)  { Sim::Net::MessageDispatcher.new(level) }
 
   describe 'dispatch message' do
 

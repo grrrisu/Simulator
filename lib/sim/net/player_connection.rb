@@ -1,8 +1,8 @@
 module Sim
-  module UnixSocket
+  module Net
 
     class PlayerConnection
-      include Popen::MessageSerializer
+      include MessageSerializer
 
       attr_reader :player
 

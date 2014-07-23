@@ -1,5 +1,5 @@
 module Sim
-  module UnixSocket
+  module Net
     # accpets a connection for each player
     # does async communication
     class PlayerServer
@@ -12,7 +12,6 @@ module Sim
         @level = level
         async.run
       rescue Errno::EADDRINUSE
-        # FIME force restart
         $stderr.puts "\e[0;31maddress in use -> force restart!!!\e[0m"
         FileUtils.rm socket_path if File.exists? socket_path
         PlayerServer.new(level, socket_path)

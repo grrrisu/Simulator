@@ -16,9 +16,9 @@ module Sim
     def listen_to_parent_process socket_path
       Sim::Queue::Master.setup $stderr # TODO log to a file
 
-      @player_server = UnixSocket::PlayerServer.new(self, socket_path)
+      @player_server = Net::PlayerServer.new(self, socket_path)
 
-      @dispatcher = Popen::MessageDispatcher.new self
+      @dispatcher = Net::MessageDispatcher.new self
       @dispatcher.listen
     end
 

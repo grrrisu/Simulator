@@ -2,7 +2,7 @@ require "open3"
 require "thread"
 
 module Sim
-  module Popen
+  module Net
 
     class ParentConnection
       include Open3
@@ -32,14 +32,6 @@ module Sim
 
       def send_action action, params = {}
         message = {}
-        message[:action] = action
-        message[:params] = params if params.try(:any?)
-        send_message message
-      end
-
-      def send_player_action player_id, action, params = nil
-        message = {}
-        message[:player] = player_id
         message[:action] = action
         message[:params] = params if params.try(:any?)
         send_message message

@@ -1,5 +1,5 @@
 module Sim
-  module Popen
+  module Net
 
     class SubProcess
       include MessageSerializer

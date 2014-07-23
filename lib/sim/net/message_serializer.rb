@@ -1,7 +1,7 @@
 require 'json'
 
 module Sim
-  module Popen
+  module Net
 
     module MessageSerializer
 

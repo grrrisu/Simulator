@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Sim::Popen::SubProcess do
+describe Sim::Net::SubProcess do
 
   before :each do
     @receiver = double('Level')
-    @process = Sim::Popen::SubProcess.new
+    @process = Sim::Net::SubProcess.new
     @process.instance_variable_set('@receiver', @receiver)
   end
 
