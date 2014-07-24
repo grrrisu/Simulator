@@ -10,8 +10,6 @@ group :development do
   gem 'jeweler'
 
   gem 'rspec', '~> 3.0.0'
-  gem 'rake'
-
   gem 'guard'
   gem 'guard-rspec'
   gem 'growl'
