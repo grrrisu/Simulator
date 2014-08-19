@@ -9,6 +9,6 @@ before_script:
 addons:
   code_climate:
     repo_token:
-      secure: "ArhwSUxvZFVmLDMJNYO/bTPkztBaGppHQFoHxHilY3zDx5Oyonx0M1h5zF08eVDOGWbCNm0ssJVVhbLxokVSqah0osFue9WrkYMd3VXVKFDLUujHWVTM+pUBKr3/VgS7yv8jV5vdocwPlGY53VIOb1Zi4VadPQl5UVqwFVJ+RT4="
+      secure: "AGSaueR2sidnTHEWwx+3LgeK543yHn0YJECst4gMJHHC0BElwbvceCWixXiLDaS2SIAiL/m7TckBXxRyXAlRIEUXYiNNeRKxEUCtCHmhkqKjpaPegXo/ogKiejm1dfsuIYwXiAvsMu+G+xIVXhd5szxxtV/A+RtKHJ+HJp0AZOY="
 
 
