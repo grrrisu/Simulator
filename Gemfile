@@ -18,4 +18,5 @@ end
 group :test do
   gem 'rb-fsevent'
   gem 'timecop'
+  gem "codeclimate-test-reporter", :require => false
 end

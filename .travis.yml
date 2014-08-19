@@ -5,3 +5,10 @@ rvm:
 
 before_script:
   - mkdir tmp
+
+addons:
+  code_climate:
+    repo_token:
+      secure: "ArhwSUxvZFVmLDMJNYO/bTPkztBaGppHQFoHxHilY3zDx5Oyonx0M1h5zF08eVDOGWbCNm0ssJVVhbLxokVSqah0osFue9WrkYMd3VXVKFDLUujHWVTM+pUBKr3/VgS7yv8jV5vdocwPlGY53VIOb1Zi4VadPQl5UVqwFVJ+RT4="
+
+
