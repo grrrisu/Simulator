@@ -4,8 +4,8 @@ describe "popen" do
 
   before :each do
     @connection  = Sim::Net::ParentConnection.new
-    sim_library = File.expand_path('../../support/popen_test_level.rb', __FILE__)
-    level_class = 'PopenTestLevel'
+    sim_library = File.expand_path('../../support/dummy_level.rb', __FILE__)
+    level_class = 'DummyLevel'
     config_file = File.expand_path('../../level.yml', __FILE__)
     @connection.launch_subprocess(sim_library, level_class, 'tmp/test.sock')
     @connection.send_action :build, config_file: config_file
@@ -23,7 +23,7 @@ describe "popen" do
   it "should get exception" do
     lambda {
       answer = @connection.send_action :foo
-    }.should raise_error(Sim::Net::RemoteException, 'ArgumentError: unknown message {:action=>"foo"} for PopenTestLevel')
+    }.should raise_error(Sim::Net::RemoteException, 'ArgumentError: unknown message {:action=>"foo"} for DummyLevel')
     answer = @connection.send_action :reverse, msg: 'see all the stars'
     answer.should == 'see all the stars'.reverse
   end

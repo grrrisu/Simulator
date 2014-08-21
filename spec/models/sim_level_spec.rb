@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Sim::Level do
 
   let(:config_file) { File.expand_path('../../level.yml', __FILE__) }
-  let(:level)       { PopenTestLevel.new }
+  let(:level)       { DummyLevel.new }
 
   describe 'listen_to_parent_process' do
 

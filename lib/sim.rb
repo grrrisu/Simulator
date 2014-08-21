@@ -6,6 +6,7 @@ require 'celluloid/io'
 require 'celluloid/autostart'
 require 'active_support'
 require 'active_support/core_ext'
+require 'eventmachine'
 
 require_relative './ext/hash_ext'
 
@@ -23,6 +24,7 @@ require_relative './sim/net/message_serializer'
 require_relative './sim/net/message_dispatcher'
 require_relative './sim/net/parent_connection'
 require_relative './sim/net/sub_process'
+require_relative './sim/net/player_proxy'
 require_relative './sim/net/player_server'
 require_relative './sim/net/player_connection'
 
