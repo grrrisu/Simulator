@@ -4,7 +4,9 @@ require 'bundler/setup'
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/spec/"
+end
 
 require 'celluloid'
 require 'celluloid/rspec'
