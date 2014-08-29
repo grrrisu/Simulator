@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Alessandro Di Maria"]
-  s.date = "2014-07-23"
+  s.date = "2014-08-29"
   s.description = "A simulation container based on Celluloid"
   s.email = "adm@m42.ch"
   s.extra_rdoc_files = [
@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".rspec",
-    ".rvmrc",
+    ".ruby-version",
+    ".travis.yml",
     "Gemfile",
     "Gemfile.lock",
     "Guardfile",
@@ -40,6 +41,7 @@ Gem::Specification.new do |s|
     "lib/sim/net/message_serializer.rb",
     "lib/sim/net/parent_connection.rb",
     "lib/sim/net/player_connection.rb",
+    "lib/sim/net/player_proxy.rb",
     "lib/sim/net/player_server.rb",
     "lib/sim/net/remote_exception.rb",
     "lib/sim/net/sub_process.rb",
@@ -56,6 +58,7 @@ Gem::Specification.new do |s|
     "lib/sim/time_unit.rb",
     "lib/sim/version.rb",
     "log/.gitkeep",
+    "spec/integrations/player_server_spec.rb",
     "spec/integrations/popen_spec.rb",
     "spec/integrations/queues_spec.rb",
     "spec/level.yml",
@@ -63,6 +66,7 @@ Gem::Specification.new do |s|
     "spec/models/field_properties_spec.rb",
     "spec/models/net/message_dispatcher_spec.rb",
     "spec/models/net/sub_process_spec.rb",
+    "spec/models/player_spec.rb",
     "spec/models/queue/event_queue_spec.rb",
     "spec/models/queue/event_spec.rb",
     "spec/models/queue/sim_loop_spec.rb",
@@ -72,8 +76,9 @@ Gem::Specification.new do |s|
     "spec/models/sim_object_spec.rb",
     "spec/models/sim_time_unit_spec.rb",
     "spec/spec_helper.rb",
+    "spec/support/dummy_level.rb",
     "spec/support/dummy_object.rb",
-    "spec/support/popen_test_level.rb",
+    "spec/support/dummy_player.rb",
     "spec/support/simulated_object.rb"
   ]
   s.homepage = "http://github.com/grrrisu/Simulator"
@@ -85,36 +90,39 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<celluloid>, ["~> 0.13"])
       s.add_runtime_dependency(%q<celluloid-io>, ["~> 0.15.0"])
       s.add_runtime_dependency(%q<activesupport>, [">= 4.0.2"])
       s.add_runtime_dependency(%q<hashie>, [">= 0"])
+      s.add_runtime_dependency(%q<eventmachine>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 3.0.0"])
-      s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<guard>, [">= 0"])
       s.add_development_dependency(%q<guard-rspec>, [">= 0"])
       s.add_development_dependency(%q<growl>, [">= 0"])
     else
+      s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<celluloid>, ["~> 0.13"])
       s.add_dependency(%q<celluloid-io>, ["~> 0.15.0"])
       s.add_dependency(%q<activesupport>, [">= 4.0.2"])
       s.add_dependency(%q<hashie>, [">= 0"])
+      s.add_dependency(%q<eventmachine>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 3.0.0"])
-      s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<guard>, [">= 0"])
       s.add_dependency(%q<guard-rspec>, [">= 0"])
       s.add_dependency(%q<growl>, [">= 0"])
     end
   else
+    s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<celluloid>, ["~> 0.13"])
     s.add_dependency(%q<celluloid-io>, ["~> 0.15.0"])
     s.add_dependency(%q<activesupport>, [">= 4.0.2"])
     s.add_dependency(%q<hashie>, [">= 0"])
+    s.add_dependency(%q<eventmachine>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 3.0.0"])
-    s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<guard>, [">= 0"])
     s.add_dependency(%q<guard-rspec>, [">= 0"])
     s.add_dependency(%q<growl>, [">= 0"])
