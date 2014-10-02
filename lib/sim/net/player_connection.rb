@@ -42,6 +42,10 @@ module Sim
         end
       end
 
+      def close
+        input.close
+      end
+
       # ----- Reader and Writer classes -----
 
       class Reader
@@ -57,8 +61,8 @@ module Sim
             data = @connection.receive_data
             @connection.forward_message(data)
           end
-        rescue EOFError, Errno::EPIPE
-          @connection.input.close
+        rescue EOFError
+          @connection.close
         end
 
       end
