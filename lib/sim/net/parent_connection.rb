@@ -15,7 +15,7 @@ module Sim
       def launch_subprocess sim_library, level_class, socket_path
         @mutex = Mutex.new
         cmd = %W{bundle exec #{RUBY} -r #{sim_library} -e #{level_class}.attach('#{socket_path}')}
-        self.output, self.input, wait_thr = popen2(*cmd)
+        self.output, self.input, wait_thr = popen2({"SIM_ENV" => Rails.env}, *cmd)
         @pid = wait_thr.pid
         # wait for sub process to be ready
         receive_message
