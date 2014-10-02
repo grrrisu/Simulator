@@ -2,8 +2,6 @@ module Sim
   module Net
 
     class MessageDispatcher
-      #include Celluloid
-      #include Celluloid::Logger
 
       def initialize level
         @level = level
@@ -44,7 +42,6 @@ module Sim
           when 'load'
             @level.load
           when 'start'
-            #@level.async.start
             @level.start
             true
           when 'stop'

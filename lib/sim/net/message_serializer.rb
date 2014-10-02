@@ -24,7 +24,7 @@ module Sim
           data = @input.read(size)
           JSON.parse(data, symbolize_names: true)
         else
-          raise EOFError
+          raise EOFError, "received size data #{size_data.inspect}"
         end
       end
 
