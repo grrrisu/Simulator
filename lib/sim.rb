@@ -35,3 +35,5 @@ require_relative './sim/queue/fire_worker.rb'
 require_relative './sim/queue/event_queue.rb'
 require_relative './sim/queue/sim_loop.rb'
 require_relative './sim/queue/master.rb'
+
+RAILS_ENV = 'development' unless defined? RAILS_ENV
