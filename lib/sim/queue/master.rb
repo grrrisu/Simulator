@@ -3,12 +3,13 @@ module Sim
 
     class Master < Celluloid::SupervisionGroup
 
-      def self.setup logfile
+      def self.setup logfile, level
         Celluloid.logger = ::Logger.new(logfile)
 
         # this queues will be restarted automaticaly if they crash
-        supervise EventQueue, as: :event_queue
-        pool      FireWorker, as: :fire_workers
+        supervise EventQueue,        as: :event_queue
+        pool      FireWorker,        as: :fire_workers
+        supervise EventBroadcaster,  as: :event_broadcaster, args: level
         run!
       end
 
@@ -28,6 +29,7 @@ module Sim
         Celluloid::Actor[:sim_loop].try(:stop)
         Celluloid::Actor[:event_queue].try(:stop)
         Celluloid::Actor[:time_unit].try(:stop)
+        Celluloid::Actor[:event_broadcaster].try(:stop)
       end
 
     end

@@ -2,9 +2,15 @@ module Sim
 
   class Level
 
+    attr_accessor :players
+
     def self.attach(socket_path)
       level = new
       level.listen_to_parent_process(socket_path)
+    end
+
+    def initialize
+      @players = {}       # maps player_id to player obj
     end
 
     def build config_file
@@ -14,7 +20,7 @@ module Sim
     end
 
     def listen_to_parent_process socket_path
-      Sim::Queue::Master.setup $stderr # TODO log to a file
+      Sim::Queue::Master.setup $stderr, self # TODO log to a file
 
       @player_server = Net::PlayerServer.new(self, socket_path)
 

@@ -1,7 +1,7 @@
 module Sim
 
   class Player
-    attr_accessor :connection
+    attr_accessor :connection, :current_view_dimension
     attr_reader   :level, :id
 
     def initialize id, level

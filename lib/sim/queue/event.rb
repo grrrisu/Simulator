@@ -23,6 +23,10 @@ module Sim
         [] # none
       end
 
+      def event_broadcaster
+        Celluloid::Actor[:event_broadcaster]
+      end
+
     end
 
   end
