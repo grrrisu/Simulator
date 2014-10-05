@@ -15,7 +15,7 @@ describe "player server" do
       EM.add_timer(2) { EM.stop }
     end
     expect(level.players).to_not be_empty
-    expect(level.players.first.id).to be == '123'
+    expect(level.players['123']).to_not be_nil
   end
 
 

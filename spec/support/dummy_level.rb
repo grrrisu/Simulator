@@ -2,8 +2,6 @@ require_relative '../../lib/sim'
 
 class DummyLevel < Sim::Level
 
-  attr_reader :players
-
   def reverse message
     message.reverse
   end
@@ -18,8 +16,7 @@ class DummyLevel < Sim::Level
 
   def add_player data
     player = build_player(data)
-    (@players ||= []) << player
-    player
+    @players[player.id] = player
   end
 
   def remove_player id
@@ -27,7 +24,7 @@ class DummyLevel < Sim::Level
   end
 
   def find_player id
-    @players.find {|player| player.id == id }
+    @players.values.find {|player| player.id == id }
   end
 
 end

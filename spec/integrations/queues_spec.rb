@@ -8,7 +8,7 @@ describe "Sim Queues" do
   let(:fire_workers)  { Celluloid::Actor[:fire_workers] }
 
   before :each do
-    Sim::Queue::Master.setup nil
+    Sim::Queue::Master.setup nil, 'level'
   end
 
   it "should process sim objects" do
