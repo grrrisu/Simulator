@@ -13,6 +13,11 @@ module Sim
       []
     end
 
+    # TODO this method can be called by different threads
+    # by the player_connection for incoming messages
+    # and by the event_broadcaster to update the view
+    # -> should therefore Player become an Actor?
+    # -> if yes how handle errors?
     def process_message action, params
       if direct_actions.include? action
         # actions like init_map, view
