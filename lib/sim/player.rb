@@ -34,6 +34,11 @@ module Sim
       event_queue.async.fire(event)
     end
 
+    # override in sub class
+    def overlap_current_view?
+      true
+    end
+
   end
 
 end
