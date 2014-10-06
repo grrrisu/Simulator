@@ -14,8 +14,13 @@ module Sim
       @last_touched = time
     end
 
-    def sim
+    def calculate
       raise "implement in subclass"
+    end
+
+    def sim
+      touch
+      calculate
     end
 
   end

@@ -16,6 +16,7 @@ module Sim
 
       def fire
         object.sim
+        # TODO notify
       end
 
     end
