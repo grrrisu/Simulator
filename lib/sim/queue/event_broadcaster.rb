@@ -12,10 +12,12 @@ module Sim
       end
 
       # notifies all players to renew their views
-      def notify(view_dimension)
+      def notify(origin_player, area)
         level.players.values.each do |player|
-          if player.overlap_current_view? view_dimension
-            player.process_message(:view, player.current_view_dimension)
+          unless origin_player == player
+            if player.overlap_current_view? area
+              player.process_message(:view, player.current_view_dimension)
+            end
           end
         end
       end

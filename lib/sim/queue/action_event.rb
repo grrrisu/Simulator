@@ -16,15 +16,17 @@ module Sim
         "<ActionEvent action=#{@action} player_id=#{@player.id} params=#{@params}>"
       end
 
-      def notify_listners
-        event_broadcaster.async.notify(player.current_view_dimension)
+      def notify_listners area
+        if area
+          event_broadcaster.async.notify(player, area)
+        end
       end
 
       def fire
         answer = player.send(action, *params.values)
         $stderr.puts("*** event sending back answer after #{Time.now - @start}")
         player.connection.send_message(action, answer)
-        notify_listners
+        notify_listners(answer[:notify])
       end
 
     end

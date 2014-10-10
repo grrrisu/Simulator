@@ -8,10 +8,11 @@ describe Sim::Queue::ActionEvent do
     let(:connection)        { double(Sim::Net::PlayerConnection) }
     let(:event_broadcaster) { double(Sim::Queue::EventBroadcaster) }
     let(:event)             { Sim::Queue::ActionEvent.new(player, :action, param: 'one') }
+    let(:answer)            { {answer: 42, notify: 'me'} }
 
     before(:each) do
       allow(Celluloid::Actor).to receive(:[]).with(:event_broadcaster).and_return(event_broadcaster)
-      allow(player).to receive(:action).and_return('answer')
+      allow(player).to receive(:action).and_return(answer)
       allow(player).to receive(:connection).and_return(connection)
       allow(player).to receive(:current_view_dimension).and_return('current_view_dimension')
       allow(connection).to receive(:send_message)
@@ -25,12 +26,12 @@ describe Sim::Queue::ActionEvent do
     end
 
     it "should send answer to player" do
-      expect(connection).to receive(:send_message).with(:action, 'answer')
+      expect(connection).to receive(:send_message).with(:action, answer)
       event.fire
     end
 
     it "should notify listeners" do
-      expect(event_broadcaster).to receive(:notify).with('current_view_dimension')
+      expect(event_broadcaster).to receive(:notify).with(player, 'me')
       event.fire
     end
 
