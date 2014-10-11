@@ -12,7 +12,7 @@ class SimulatedObject < Sim::Object
     "SimObject #{@name}"
   end
 
-  def sim
+  def calculate
     @simulated += 1
     raise "*** CRASH ***" if @crash
   end

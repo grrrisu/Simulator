@@ -6,7 +6,7 @@ describe Sim::Object do
     @now = Time.now
     Timecop.freeze(@now)
     Sim::TimeUnit.new(2)
-    @object = Sim::Object.new
+    @object = DummyObject.new
   end
 
   describe 'touch' do
@@ -15,6 +15,16 @@ describe Sim::Object do
       Timecop.freeze(@now + 8)
       @object.touch
       @object.delay.should == 4
+    end
+
+  end
+
+  describe 'sim' do
+
+    it "should calcualte new size" do
+      Timecop.freeze(@now + 8)
+      @object.sim
+      expect(@object.size).to eq(40)
     end
 
   end
