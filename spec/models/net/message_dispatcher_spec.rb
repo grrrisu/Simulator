@@ -37,16 +37,6 @@ describe Sim::Net::MessageDispatcher do
       dispatcher.dispatch(action: 'remove_player', params: {id: 'abc123'}).should be true
     end
 
-    it "should delegate action to player" do
-      message = {action: 'view', player: 'abc123'}
-      player = double(Sim::Player)
-      player.should_receive(:respond_to?).with(:view).and_return(true)
-      player.should_receive(:view).with(nil).never
-      player.should_receive(:view).and_return(true)
-      level.should_receive(:find_player).with('abc123').and_return(player)
-      dispatcher.dispatch(message)
-    end
-
     it "should raise error if it doesn't understand the message", skip: true do
       lambda {
         dispatcher.dispatch(action: 'foo')

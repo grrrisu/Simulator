@@ -12,19 +12,6 @@ module Sim
         @process.listen(self)
       end
 
-      # dispatches a message either to a player or this level
-      def dispatch message
-        if message.key? :player
-          if player = @level.find_player(message[:player])
-            forward_message player, message
-          else
-            raise ArgumentError, "no player[#{message[:player]}] found in this level"
-          end
-        else
-          process_message message
-        end
-      end
-
       def stop
         @process.stop if @process
       end
@@ -34,7 +21,7 @@ module Sim
       end
 
       # process a message and returns an answer
-      def process_message message
+      def dispatch message
         case message[:action]
           when 'build'
             @level.build message[:params][:config_file]
@@ -57,7 +44,7 @@ module Sim
       end
 
       def forward_message receiver, message
-        if receiver.respond_to? message[:action].to_sym
+        if message[:action].present? && receiver.respond_to?(message[:action].to_sym)
           receiver.send message[:action].to_sym, *message[:params].try(:values) || []
           # TOOD Ruby 2
           # receiver.send message[:action].to_sym, **message[:params]
