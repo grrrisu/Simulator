@@ -34,8 +34,6 @@ module Sim
           when 'stop'
             @level.stop
             true
-          when 'add_player'
-            @level.add_player(message[:params][:id])
           when 'remove_player'
             @level.remove_player(message[:params][:id])
           else
