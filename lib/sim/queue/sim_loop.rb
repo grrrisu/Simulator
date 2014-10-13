@@ -7,6 +7,8 @@ module Sim
 
       TIMEOUT = 5 #sec
 
+      attr_reader :objects
+
       def initialize duration, objects = []
         raise ArgumentError, "duration must be set" unless duration
         @duration = duration.to_f || 1.0
@@ -15,7 +17,6 @@ module Sim
       end
 
       def add object
-        debug "add #{object} #{@objects}"
         object.touch
         @objects << object
       end
