@@ -18,7 +18,7 @@ module Sim
 
       def notify_listners area
         if area
-          event_broadcaster.async.notify(player, area)
+          event_broadcaster.async.notify(area, player)
         end
       end
 

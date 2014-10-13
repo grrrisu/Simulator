@@ -14,9 +14,13 @@ module Sim
         "<SimEvent>"
       end
 
+      def notify area
+        event_broadcaster.async.notify(area)
+      end
+
       def fire
-        object.sim
-        # TODO notify
+        area = object.sim
+        notify(area)
       end
 
     end
