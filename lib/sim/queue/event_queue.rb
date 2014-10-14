@@ -64,7 +64,7 @@ module Sim
       def run
         release_finished_events
         delegate_ready_events
-        debug "waitings: #{@waitings.size} processing: #{@processing.size}"
+        #debug "waitings: #{@waitings.size} processing: #{@processing.size}"
         # if we have any blocked or running events, we run this again
         @timer = after(DELAY) { run } if @waitings.any? || @processing.any?
       end

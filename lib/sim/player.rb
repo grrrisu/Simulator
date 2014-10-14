@@ -39,6 +39,10 @@ module Sim
       true
     end
 
+    def needed_resources_for action, params
+      [] # none
+    end
+
   end
 
 end

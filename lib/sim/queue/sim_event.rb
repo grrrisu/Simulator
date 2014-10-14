@@ -11,7 +11,7 @@ module Sim
       end
 
       def to_s
-        "<SimEvent>"
+        "<SimEvent obeject=#{object.class} x: #{object.field.x} y: #{object.field.y}>"
       end
 
       def notify area
@@ -21,6 +21,10 @@ module Sim
       def fire
         area = object.sim
         notify(area)
+      end
+
+      def needed_resources
+        [@object.field]
       end
 
     end
