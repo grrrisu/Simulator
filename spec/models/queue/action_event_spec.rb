@@ -31,7 +31,7 @@ describe Sim::Queue::ActionEvent do
     end
 
     it "should notify listeners" do
-      expect(event_broadcaster).to receive(:notify).with(player, 'me')
+      expect(event_broadcaster).to receive(:notify).with('me', player)
       event.fire
     end
 

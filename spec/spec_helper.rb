@@ -26,7 +26,7 @@ Dir['./spec/support/*.rb'].map {|f| require f }
 RSpec.configure do |config|
   config.mock_with :rspec
 
-  config.fail_fast = true
+  config.fail_fast = false
 
   config.filter_run :focus => true
   config.filter_run_excluding :skip => true
