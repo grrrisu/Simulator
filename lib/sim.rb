@@ -16,6 +16,7 @@ require_relative './sim/object'
 require_relative './sim/time_unit'
 require_relative './sim/field_properties'
 require_relative './sim/matrix'
+require_relative './sim/globe'
 require_relative './sim/level'
 require_relative './sim/player'
 
