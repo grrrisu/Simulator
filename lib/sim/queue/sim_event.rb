@@ -23,10 +23,6 @@ module Sim
         notify(area)
       end
 
-      def needed_resources
-        [@object.field]
-      end
-
     end
 
   end
