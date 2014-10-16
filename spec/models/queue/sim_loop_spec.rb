@@ -47,13 +47,9 @@ describe Sim::Queue::SimLoop do
 
   describe "sim" do
 
-    before :each do
-      sim_loop.wrapped_object.stub(:create_event).and_return('event')
-    end
-
     it "should add object to event queue" do
       event_queue.should_receive(:async).once.and_return(event_queue)
-      event_queue.should_receive(:fire).once.with('event')
+      event_queue.should_receive(:fire).once.with(instance_of(Sim::Queue::SimEvent))
       sim_loop.sim
     end
 

@@ -67,13 +67,9 @@ module Sim
         object
       end
 
-      def create_event object
-        SimEvent.new(object)
-      end
-
       def sim
         if @objects.any?
-          event = create_event(next_object)
+          event = next_object.create_event
           event_queue.async.fire(event)
           @timer = after(delay) { sim }
         else

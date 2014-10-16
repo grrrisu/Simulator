@@ -20,13 +20,12 @@ describe Sim::Player do
   it "should bypass queue" do
     expect(connection).to receive(:send_message).with(:subito, 'subito result').once
     expect(player).to receive(:subito).with(1, 2, 3).and_return('subito result').once
-    expect(event_queue).to receive(:async).never
     player.process_message(:subito, a: 1, b: 2, c: 3)
   end
 
   it "should action event to queue" do
-    expect(event_queue).to receive(:async).once
     expect(connection).to receive(:send_message).never
+    expect(player).to receive(:later).with(5, 4, 3).once
     player.process_message(:later, a: 5, b: 4, c: 3)
   end
 

@@ -19,17 +19,14 @@ module Sim
     # -> should therefore Player become an Actor?
     # -> if yes how handle errors?
     def process_message action, params
+      answer = send(action, *params.values)
       if direct_actions.include? action
         # actions like init_map, view
-        connection.send_message action, send(action, *params.values)
-      else
-        # actions that need global look and/or be evented, eg move
-        fire_action_event(action, params)
+        connection.send_message action, answer
       end
     end
 
-    def fire_action_event action, params
-      event = Queue::ActionEvent.new self, action, params
+    def fire_action_event event
       event_queue = Celluloid::Actor[:event_queue]
       event_queue.async.fire(event)
     end
@@ -37,10 +34,6 @@ module Sim
     # override in sub class
     def overlap_current_view?
       true
-    end
-
-    def needed_resources_for action, params
-      [] # none
     end
 
   end

@@ -23,6 +23,10 @@ module Sim
       calculate
     end
 
+    def create_event
+      Queue::SimEvent.new(self)
+    end
+
   end
 
 end

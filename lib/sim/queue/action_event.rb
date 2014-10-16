@@ -29,10 +29,6 @@ module Sim
         notify_listners(answer[:notify])
       end
 
-      def needed_resources
-        [@player.needed_resources_for(@action, @params)]
-      end
-
     end
 
   end
