@@ -28,6 +28,10 @@ module Sim
 
     module ClassMethods
 
+      def load_config file_name
+        Buildable.load_config file_name
+      end
+
       def default_attr name, value = nil
         attr_accessor name.to_sym
         @defaults ||= {}
