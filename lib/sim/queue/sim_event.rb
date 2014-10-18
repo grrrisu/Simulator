@@ -19,8 +19,8 @@ module Sim
       end
 
       def fire
-        area = object.sim
-        notify(area)
+        changed_area = object.sim
+        notify(changed_area)
       end
 
     end

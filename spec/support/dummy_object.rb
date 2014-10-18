@@ -6,7 +6,7 @@ class DummyObject < Sim::Object
     @size = 0
   end
 
-  def calculate
+  def calculate delay
     @size += delay * 10
   end
 

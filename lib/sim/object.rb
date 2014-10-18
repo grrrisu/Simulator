@@ -1,8 +1,11 @@
 module Sim
 
   class Object
+    include Buildable
 
     attr_reader :delay
+
+    default_attr :sim_threshold, 0.25
 
     def initialize
       # just in order that @last_touched is not nil
@@ -14,13 +17,27 @@ module Sim
       @last_touched = time
     end
 
-    def calculate
+    def calculate delay
       raise "implement in subclass"
     end
 
     def sim
       touch
-      calculate
+      if delay >= sim_threshold
+        calculate_steps
+      end
+      changed_area
+    end
+
+    def calculate_steps
+      delay.floor.times do
+        calculate(1.0)
+      end
+      calculate(delay % 1.0)
+    end
+
+    def changed_area
+      nil # nothing changed
     end
 
     def create_event

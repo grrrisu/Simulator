@@ -46,7 +46,7 @@ module Sim
         default_attributes
       end
 
-      def build config, options = {}
+      def build config = {}, options = {}
         attributes = defaults.merge(config).merge(options.symbolize_keys)
         buildable = new *initialize_parameters(attributes)
         attributes.each do |key, value|

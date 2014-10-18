@@ -6,7 +6,7 @@ describe Sim::Object do
     @now = Time.now
     Timecop.freeze(@now)
     Sim::TimeUnit.new(2)
-    @object = DummyObject.new
+    @object = DummyObject.build
   end
 
   describe 'touch' do
