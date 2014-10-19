@@ -19,6 +19,8 @@ module Sim
         @done || false
       end
 
+      # must return before and after the event, the same resources
+      # see dawning move event
       def needed_resources
         [] # none
       end

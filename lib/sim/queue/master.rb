@@ -28,6 +28,7 @@ module Sim
       def self.stop
         Celluloid::Actor[:sim_loop].try(:stop)
         Celluloid::Actor[:event_queue].try(:stop)
+        Celluloid::Actor[:fire_workers].try(:terminate)
         Celluloid::Actor[:time_unit].try(:stop)
         Celluloid::Actor[:event_broadcaster].try(:stop)
       end
