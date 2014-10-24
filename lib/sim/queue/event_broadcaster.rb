@@ -16,7 +16,7 @@ module Sim
         level.players.values.each do |player|
           unless origin_player == player
             if player.overlap_current_view? area
-              player.process_message(:view, player.current_view_dimension)
+              player.process_message(:update_view, area)
             end
           end
         end
