@@ -9,6 +9,8 @@ module Sim
 
       DELAY   = 0.1 #sec
 
+      WAITING_TRESHOLD = 10
+
       def initialize
         @locks      = Set.new
         @waitings   = []
@@ -63,10 +65,16 @@ module Sim
 
       def run
         release_finished_events
+        check_queue
         delegate_ready_events
-        #debug "waitings: #{@waitings.size} processing: #{@processing.size}"
         # if we have any blocked or running events, we run this again
         @timer = after(DELAY) { run } if @waitings.any? || @processing.any?
+      end
+
+      def check_queue
+        if @waitings.size > WAITING_TRESHOLD
+          warn "#{@waitings.size} in waiting queue, #{@processing.size} processing, #{@locks.size} locks"
+        end
       end
 
       # removes all events belonging to the object
