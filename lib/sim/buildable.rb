@@ -4,15 +4,29 @@ module Sim
 
   # usage:
   #
+  # class Animal
+  #   default_attr :max, 8
+  # end
+  #
+  # class Wolf
+  #   default_attr :size, 7
+  # end
+  #
   # config = Wolf.load_config('wolf.yml')
   # wolf = Wolf.build(config, :min => 3)
   #
   # values are set in the following priority:
   #
-  # wolf.min == 3 # options
-  # wolf.hunger == 6 # yaml config
-  # wolf.size == 7 # default class
-  # wolf.max == 8 # default superclass
+  # wolf.min     # => 3  from options
+  # wolf.hunger  # => 6  from yaml config
+  # wolf.size    # => 7  from default class
+  # wolf.max     # => 8  from default superclass
+  #
+  # WereWolf = Class.new(Wolf)
+  # WereWolf.set_defaults size: 10, strenght: 20
+  # werewolf = WereWolf.build
+  # werewolf.size     # => 10
+  # werewolf.strength # => 20
   module Buildable
 
     def self.load_config file_name
@@ -36,6 +50,12 @@ module Sim
         attr_accessor name.to_sym
         @defaults ||= {}
         @defaults[name.to_sym] = value
+      end
+
+      def set_defaults values = {}
+        @defaults ||= {}
+        values.keys.each {|a| attr_accessor a.to_sym }
+        @defaults.merge!(values)
       end
 
       def defaults

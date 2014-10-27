@@ -41,6 +41,17 @@ describe Sim::Buildable do
     buildable.should respond_to(:hunger)
   end
 
+  describe "mass set defaults" do
+    it "should be build" do
+      BuildableThree = Class.new(BuildableTest)
+      BuildableThree.set_defaults size: 10, max: 15
+      buildable = BuildableThree.build
+
+      expect(buildable.size).to eq(10)
+      expect(buildable.max).to eq(15)
+    end
+  end
+
   describe "build" do
 
     before :each do
