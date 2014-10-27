@@ -1,11 +1,12 @@
 module Sim
 
   class Level
+    include Singleton
 
     attr_accessor :players
 
     def self.attach(socket_path)
-      level = new
+      level = instance
       level.listen_to_parent_process(socket_path)
     end
 

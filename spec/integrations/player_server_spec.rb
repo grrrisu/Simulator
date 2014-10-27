@@ -4,7 +4,7 @@ describe "player server" do
 
   let(:socket_path) { 'tmp/player_server.sock' }
   let(:client)      { Sim::Net::PlayerProxy.new('123', :player) }
-  let(:level)       { DummyLevel.new() }
+  let(:level)       { DummyLevel.instance }
   let!(:server)     { Sim::Net::PlayerServer.new(level, socket_path)}
 
   it "should register a new player" do

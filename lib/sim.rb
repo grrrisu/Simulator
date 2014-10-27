@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'singleton'
 require 'socket'
 require 'celluloid'
 require 'celluloid/io'
