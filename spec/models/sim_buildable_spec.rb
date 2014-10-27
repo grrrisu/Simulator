@@ -35,10 +35,10 @@ describe Sim::Buildable do
 
   it "should create accessors" do
     buildable = BuildableTest.build @config
-    buildable.should respond_to(:size)
-    buildable.should respond_to(:min)
-    buildable.should respond_to(:max)
-    buildable.should respond_to(:hunger)
+    expect(buildable).to respond_to(:size)
+    expect(buildable).to respond_to(:min)
+    expect(buildable).to respond_to(:max)
+    expect(buildable).to respond_to(:hunger)
   end
 
   describe "mass set defaults" do
@@ -59,19 +59,19 @@ describe Sim::Buildable do
     end
 
     it "should overwrite all defaults if option is set" do
-      @buildable.min.should == 3
+      expect(@buildable.min).to be == 3
     end
 
     it "should overwrite defaults if set in config" do
-      @buildable.hunger.should == 6
+      expect(@buildable.hunger).to be == 6
     end
 
     it "should overwrite defaults from superclass" do
-      @buildable.size.should == 7
+      expect(@buildable.size).to be == 7
     end
 
     it "should take defaults from superclass" do
-      @buildable.max.should == 8
+      expect(@buildable.max).to be == 8
     end
 
   end
@@ -81,13 +81,13 @@ describe Sim::Buildable do
     let(:buildable) { BuildableTwo.build(config) }
 
     it "should initialize with parameters" do
-      buildable.x.should == 1
-      buildable.y.should == 2
-      buildable.z.should be_nil
+      expect(buildable.x).to be == 1
+      expect(buildable.y).to be == 2
+      expect(buildable.z).to be_nil
     end
 
     it "should do post build process" do
-      buildable.a.should == 5
+      expect(buildable.a).to be == 5
     end
   end
 
@@ -99,7 +99,7 @@ describe Sim::Buildable do
 
     it "should set value within range" do
       value = BuildableTest.convert_build_value(10..20)
-      value.should == 15
+      expect(value).to be == 15
     end
 
   end
