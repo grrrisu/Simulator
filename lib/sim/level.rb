@@ -20,8 +20,15 @@ module Sim
       create(config)
     end
 
+    def log_file
+      logfile = File.open(File.expand_path("../../../log/level.log", __FILE__), 'a')
+      logfile.sync = true
+      logfile
+      #$stderr
+    end
+
     def listen_to_parent_process socket_path
-      Sim::Queue::Master.setup $stderr, self # TODO log to a file
+      Sim::Queue::Master.setup log_file, self
 
       @player_server = Net::PlayerServer.new(self, socket_path)
 

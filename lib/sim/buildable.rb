@@ -12,7 +12,7 @@ module Sim
   #   default_attr :size, 7
   # end
   #
-  # config = Wolf.load_config('wolf.yml')
+  # config = Wolf.load_config('wolf.yml')  # hunger: 6
   # wolf = Wolf.build(config, :min => 3)
   #
   # values are set in the following priority:
