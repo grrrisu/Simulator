@@ -46,7 +46,6 @@ module Sim
       end
 
       def send_message message
-        log "send #{message}"
         send_data message
       end
 
