@@ -11,7 +11,7 @@ module Sim
       end
 
       def to_s
-        "<SimEvent obeject=#{object.class} x: #{object.field.x} y: #{object.field.y}>"
+        "<#{self.class} object=#{object.class} x: #{object.field.x} y: #{object.field.y}>"
       end
 
       def notify area
