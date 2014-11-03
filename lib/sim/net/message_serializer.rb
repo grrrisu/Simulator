@@ -13,6 +13,7 @@ module Sim
 
       def send_data object
         data = JSON.dump(object)
+        data = data.force_encoding('UTF-8')
         @output.write [data.respond_to?(:bytesize) ? data.bytesize : data.size, data].pack('Na*')
         @output.flush
       end
