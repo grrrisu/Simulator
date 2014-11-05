@@ -2,6 +2,7 @@ module Sim
 
   class TimeUnit
     include Celluloid
+    include Celluloid::Logger
 
     attr_reader :time_unit
 
@@ -11,13 +12,14 @@ module Sim
 
     def initialize time_unit
       @time_unit = time_unit # secs representing 1 time unit
-      Celluloid::Actor[:time_unit] = current_actor
+      info "1 time unit = #{time_unit} secs"
     end
 
     def start
       now = Time.now
       @started, @time_last_change = now, now
       @units_since_start = 0
+      info "time unit started at #{now}"
     end
 
     def stop

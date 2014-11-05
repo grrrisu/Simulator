@@ -22,6 +22,7 @@ module Sim
       end
 
       def start
+        info "sim event queue started..."
       end
 
       def stop

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Sim::Level do
 
+  let(:root_path)   { File.expand_path('../../../', __FILE__)}
   let(:config_file) { File.expand_path('../../level.yml', __FILE__) }
   let(:level)       { DummyLevel.instance }
 
@@ -9,7 +10,7 @@ describe Sim::Level do
 
     it "should create a sim queue" do
       Sim::Net::MessageDispatcher.stub_chain(:new, :listen)
-      level.listen_to_parent_process('tmp/test.sock')
+      level.listen_to_parent_process(root_path)
       Celluloid::Actor[:event_queue].should_not be_nil
 
     end

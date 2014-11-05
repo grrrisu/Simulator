@@ -39,6 +39,7 @@ module Sim
       def start
         @objects.each {|obj| obj.touch}
         @start_time = Time.now
+        info "sim loop started..."
         sim
       end
 

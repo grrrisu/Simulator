@@ -6,8 +6,9 @@ describe "popen" do
     @connection  = Sim::Net::ParentConnection.new
     sim_library = File.expand_path('../../support/dummy_level.rb', __FILE__)
     level_class = 'DummyLevel'
+    root_path   = File.expand_path('../../../', __FILE__)
     config_file = File.expand_path('../../level.yml', __FILE__)
-    @connection.launch_subprocess(sim_library, level_class, 'tmp/test.sock')
+    @connection.launch_subprocess(sim_library, level_class, root_path, 'test')
     @connection.send_action :build, config_file: config_file
   end
 

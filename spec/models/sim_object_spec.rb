@@ -5,7 +5,7 @@ describe Sim::Object do
   before :each do
     @now = Time.now
     Timecop.freeze(@now)
-    Sim::TimeUnit.new(2)
+    Celluloid::Actor[:time_unit] = Sim::TimeUnit.new(2)
     @object = DummyObject.build
   end
 

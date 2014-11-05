@@ -14,7 +14,8 @@ module Sim
         @sim_connection.send_object player_id: id, action: action, params: params
       end
 
-      def connect_to_players_server(socket_path)
+      def connect_to_players_server(root_path)
+        socket_path = File.expand_path('tmp/sockets/players.sock', root_path)
         EM.connect_unix_domain(socket_path, Handler) do |handler|
           handler.player_proxy = self
           @sim_connection = handler

@@ -3,11 +3,11 @@ module Sim
   class Level
     include Singleton
 
-    attr_accessor :players
+    attr_accessor :root_path, :players
 
-    def self.attach(socket_path)
+    def self.attach(root_path)
       level = instance
-      level.listen_to_parent_process(socket_path)
+      level.listen_to_parent_process(root_path)
     end
 
     def initialize
@@ -21,16 +21,17 @@ module Sim
     end
 
     def log_file
-      logfile = File.open(File.expand_path("../../../log/level.log", __FILE__), 'a')
+      logfile = File.open(File.expand_path("log/level.log", root_path), 'a')
       logfile.sync = true
       logfile
       #$stderr
     end
 
-    def listen_to_parent_process socket_path
+    def listen_to_parent_process root_path
+      @root_path = root_path
       Sim::Queue::Master.setup log_file, self
 
-      @player_server = Net::PlayerServer.new(self, socket_path)
+      @player_server = Net::PlayerServer.new(self, root_path)
 
       @dispatcher = Net::MessageDispatcher.new self
       @dispatcher.listen

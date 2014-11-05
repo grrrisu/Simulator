@@ -4,6 +4,7 @@ describe Sim::TimeUnit do
 
   before :each do
     @time_unit = Sim::TimeUnit.new(2)
+    Celluloid::Actor[:time_unit] = @time_unit
     @now = Time.now
     Timecop.freeze(@now)
     @time_unit.start

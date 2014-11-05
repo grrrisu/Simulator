@@ -4,9 +4,11 @@ module Sim
     # does async communication
     class PlayerServer
       include Celluloid::IO
+      include Celluloid::Logger
       finalizer :shutdown
 
-      def initialize(level, socket_path)
+      def initialize(level, root_path)
+        socket_path = File.expand_path("tmp/sockets/players.sock", root_path)
         @listener = UNIXServer.new(socket_path)
         @socket_path = socket_path
         @level = level
@@ -23,7 +25,7 @@ module Sim
       end
 
       def run
-        $stderr.puts "*** Player server ready to accept clients"
+        info "Player server ready to accept clients"
         loop { async.handle_connection(@listener.accept) }
       end
 
