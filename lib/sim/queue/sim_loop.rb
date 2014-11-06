@@ -24,7 +24,7 @@ module Sim
 
       def remove object
         return unless @objects.include?(object)
-        debug "remove #{object} #{@objects}"
+        debug "remove #{object}"
         if @objects.index(object) < @counter
           @counter -= 1
         end
