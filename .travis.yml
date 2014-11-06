@@ -5,6 +5,7 @@ rvm:
 
 before_script:
   - mkdir tmp
+  - mv config/level_example.yml config/level.yml
 
 addons:
   code_climate:
