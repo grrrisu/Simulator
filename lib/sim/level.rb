@@ -1,40 +1,62 @@
+require 'yaml'
+
 module Sim
 
   class Level
     include Singleton
 
-    attr_accessor :root_path, :players
+    SIM_ENV = ENV['SIM_ENV'] unless defined? SIM_ENV
 
-    def self.attach(root_path)
+    attr_accessor :config, :players
+
+    def self.attach config_file
       level = instance
-      level.listen_to_parent_process(root_path)
+      level.load_config(config_file)
+      level.setup
     end
 
     def initialize
-      @players = {}       # maps player_id to player obj
+      @players = {}   # maps player_id to player obj
+    end
+
+    def setup
+      setup_logger
+      setup_queue
+      setup_server
+      setup_dispatcher
+    end
+
+    def load_config config_file
+      @config = YAML.load(File.open(config_file)).deep_symbolize_keys
+      @config = @config[SIM_ENV.to_sym]
+    end
+
+    def setup_logger
+      logfile = File.open(File.expand_path(config[:log_file], config[:root_path]), 'a')
+      logfile.sync = true
+      #logfile = $stderr
+      Celluloid.logger = ::Logger.new(logfile)
+      Celluloid.logger.level = Logger::SEV_LABEL.index(config[:log_level])
+    end
+
+    def setup_queue
+      Sim::Queue::Master.setup self
+    end
+
+    def setup_server
+      socket_path = File.expand_path(config[:socket_file], config[:root_path])
+      @player_server = Net::PlayerServer.new(self, socket_path)
+    end
+
+    def setup_dispatcher
+      @dispatcher = Net::MessageDispatcher.new self
+      @dispatcher.listen
     end
 
     def build config_file
       config = Buildable.load_config(config_file)
       Sim::Queue::Master.launch config
       create(config)
-    end
-
-    def log_file
-      logfile = File.open(File.expand_path("log/level.log", root_path), 'a')
-      logfile.sync = true
-      logfile
-      #$stderr
-    end
-
-    def listen_to_parent_process root_path
-      @root_path = root_path
-      Sim::Queue::Master.setup log_file, self
-
-      @player_server = Net::PlayerServer.new(self, root_path)
-
-      @dispatcher = Net::MessageDispatcher.new self
-      @dispatcher.listen
     end
 
     def start
