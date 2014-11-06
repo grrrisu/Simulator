@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "player server" do
 
-  let(:socket_path)   { File.expand_path('../../../tmp/sockets/players.sock', __FILE__) }
+  let(:socket_path)   { File.expand_path('../../../tmp/players.sock', __FILE__) }
   let(:client)        { Sim::Net::PlayerProxy.new('123', :player) }
   let(:level)         { DummyLevel.instance }
   let!(:server)       { Sim::Net::PlayerServer.new(level, socket_path)   }
