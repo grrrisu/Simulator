@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rake'
 gem 'celluloid', '~> 0.13'
-gem 'celluloid-io', '~> 0.15.0'
+gem 'celluloid-io', '~> 0.15'
 gem 'activesupport', '>= 4.0.2'
 gem 'hashie'
 gem 'eventmachine'
@@ -10,7 +10,7 @@ gem 'eventmachine'
 group :development do
   gem 'jeweler'
 
-  gem 'rspec', '~> 3.0.0'
+  gem 'rspec'
   gem 'guard'
   gem 'guard-rspec'
   gem 'growl'
