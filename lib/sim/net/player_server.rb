@@ -7,8 +7,7 @@ module Sim
       include Celluloid::Logger
       finalizer :shutdown
 
-      def initialize(level, root_path)
-        socket_path = File.expand_path("tmp/sockets/players.sock", root_path)
+      def initialize(level, socket_path)
         @listener = UNIXServer.new(socket_path)
         @socket_path = socket_path
         @level = level

@@ -1,0 +1,15 @@
+development:
+  root_path: fixme
+  log_file: log/level.log
+  log_level: DEBUG
+  socket_file: tmp/players.sock
+test:
+  root_path: fixme
+  log_file: log/level_test.log
+  log_level: DEBUG
+  socket_file: tmp/players.sock
+production:
+  root_path: fixme
+  log_file: log/level.log
+  log_level: WARN
+  socket_file: tmp/players.sock

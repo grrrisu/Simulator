@@ -3,10 +3,7 @@ module Sim
 
     class Master < Celluloid::SupervisionGroup
 
-      def self.setup logfile, level
-        Celluloid.logger = ::Logger.new(logfile)
-        Celluloid.logger.level = ::Logger::DEBUG
-
+      def self.setup level
         # this queues will be restarted automaticaly if they crash
         supervise EventQueue,        as: :event_queue
         pool      FireWorker,        as: :fire_workers
