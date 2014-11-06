@@ -7,15 +7,15 @@ describe Sim::Queue::SimLoop do
   let (:event_queue) { double(Sim::Queue::EventQueue) }
 
   before :each do
-    sim_loop.wrapped_object.stub(:event_queue).and_return(event_queue)
-    Sim::TimeUnit.stub_chain(:instance, :time_unit).and_return(1)
+    allow(sim_loop.wrapped_object).to receive(:event_queue).and_return(event_queue)
+    allow(Sim::TimeUnit).to receive_message_chain(:instance, time_unit: 1)
   end
 
   describe "objects" do
 
     before :each do
-      event_queue.stub(:remove_events)
-      sim_loop.wrapped_object.stub(:stop_time)
+      allow(event_queue).to receive(:remove_events)
+      allow(sim_loop.wrapped_object).to receive(:stop_time)
     end
 
     it "should loop through all objects and start again" do
@@ -38,8 +38,8 @@ describe Sim::Queue::SimLoop do
     end
 
     it "should touch every object" do
-      sim_objects.each {|obj| obj.should_receive(:touch)}
-      sim_loop.wrapped_object.should_receive(:sim).once
+      sim_objects.each {|obj| expect(obj).to receive(:touch)}
+      expect(sim_loop.wrapped_object).to receive(:sim).once
       sim_loop.start
     end
 
@@ -48,21 +48,21 @@ describe Sim::Queue::SimLoop do
   describe "sim" do
 
     it "should add object to event queue" do
-      event_queue.should_receive(:async).once.and_return(event_queue)
-      event_queue.should_receive(:fire).once.with(instance_of(Sim::Queue::SimEvent))
+      expect(event_queue).to receive(:async).once.and_return(event_queue)
+      expect(event_queue).to receive(:fire).once.with(instance_of(Sim::Queue::SimEvent))
       sim_loop.sim
     end
 
     it "should schedule next sim call" do
-      event_queue.stub_chain(:async, :fire)
-      sim_loop.wrapped_object.should_receive(:after).once.with(15 / 6.0)
+      allow(event_queue).to receive_message_chain(:async, :fire)
+      expect(sim_loop.wrapped_object).to receive(:after).once.with(15 / 6.0)
       sim_loop.sim
     end
 
     it "should not fire any events but reschedule for next sim" do
       sim_loop = Sim::Queue::SimLoop.new(15, [])
-      sim_loop.wrapped_object.should_receive(:after).once.with(Sim::Queue::SimLoop::TIMEOUT)
-      sim_loop.wrapped_object.should_receive(:create_event).never
+      expect(sim_loop.wrapped_object).to receive(:after).once.with(Sim::Queue::SimLoop::TIMEOUT)
+      expect(sim_loop.wrapped_object).to receive(:create_event).never
       sim_loop.sim
     end
 

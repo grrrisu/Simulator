@@ -7,9 +7,9 @@ describe Sim::Queue::Event do
   describe "fire" do
 
     it "should be done" do
-      event.should_not be_done
+      expect(event).to_not be_done
       event.done!
-      event.should be_done
+      expect(event).to be_done
     end
 
   end

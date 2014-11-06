@@ -18,24 +18,24 @@ describe "popen" do
 
   it "should send a message" do
     answer = @connection.send_action :reverse, msg: 'see all the stars'
-    answer.should == 'see all the stars'.reverse
+    expect(answer).to be == 'see all the stars'.reverse
   end
 
   it "should get exception" do
-    lambda {
+    expect {
       answer = @connection.send_action :foo
-    }.should raise_error(Sim::Net::RemoteException, 'ArgumentError: unknown message {:action=>"foo"} for DummyLevel')
+    }.to raise_error(Sim::Net::RemoteException, 'ArgumentError: unknown message {:action=>"foo"} for DummyLevel')
     answer = @connection.send_action :reverse, msg: 'see all the stars'
-    answer.should == 'see all the stars'.reverse
+    expect(answer).to be == 'see all the stars'.reverse
   end
 
   it "should start and stop level" do
     answer = @connection.send_action :start
-    answer.should == true
+    expect(answer).to be == true
     answer = @connection.send_action :reverse, msg: 'see all the stars'
-    answer.should == 'see all the stars'.reverse
+    expect(answer).to be == 'see all the stars'.reverse
     answer = @connection.send_action :stop
-    answer.should == true
+    expect(answer).to be == true
   end
 
 end

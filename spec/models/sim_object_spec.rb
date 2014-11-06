@@ -14,7 +14,7 @@ describe Sim::Object do
     it "should calcuate delay in time units" do
       Timecop.freeze(@now + 8)
       @object.touch
-      @object.delay.should == 4
+      expect(@object.delay).to be == 4
     end
 
   end

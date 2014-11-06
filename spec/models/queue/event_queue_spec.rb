@@ -11,9 +11,9 @@ describe Sim::Queue::EventQueue do
   describe "lock resources" do
 
     before :each do
-      event.stub(:needed_resources).and_return(['A1', 'B1'])
-      event_2.stub(:needed_resources).and_return(['A1', 'B2'])
-      event_3.stub(:needed_resources).and_return(['A2', 'B2'])
+      allow(event).to receive(:needed_resources).and_return(['A1', 'B1'])
+      allow(event_2).to receive(:needed_resources).and_return(['A1', 'B2'])
+      allow(event_3).to receive(:needed_resources).and_return(['A2', 'B2'])
       event_queue.lock_resources(event)
     end
 

@@ -8,33 +8,39 @@ describe Sim::Net::MessageDispatcher do
   describe 'dispatch message' do
 
     it "should understand start" do
-      level.should_receive(:start)
-      dispatcher.dispatch(action: 'start').should be true
+      expect(level).to receive(:start)
+      answer = dispatcher.dispatch(action: 'start')
+      expect(answer).to eq(true)
     end
 
     it "should understand stop" do
-      level.should_receive(:stop)
-      dispatcher.dispatch(action: 'stop').should be true
+      expect(level).to receive(:stop)
+      answer = dispatcher.dispatch(action: 'stop')
+      expect(answer).to eq(true)
     end
 
     it "should understand create" do
-      level.should_receive(:build).and_return(true)
-      dispatcher.dispatch(action: 'build', params: {config_file: @config_file}).should be true
+      expect(level).to receive(:build).and_return(true)
+      answer = dispatcher.dispatch(action: 'build', params: {config_file: @config_file})
+      expect(answer).to eq(true)
     end
 
     it "should understand load" do
-      level.should_receive(:load).and_return(true)
-      dispatcher.dispatch(action: 'load').should be true
+      expect(level).to receive(:load).and_return(true)
+      answer = dispatcher.dispatch(action: 'load')
+      expect(answer).to eq(true)
     end
 
     it "should understand add_player" do
-      level.should_receive(:add_player).with("abc123").and_return(true)
-      dispatcher.dispatch(action: 'add_player', params: {id: 'abc123'}).should be true
+      expect(level).to receive(:add_player).with("abc123").and_return(true)
+      answer = dispatcher.dispatch(action: 'add_player', params: {id: 'abc123'})
+      expect(answer).to eq(true)
     end
 
     it "should understand remove_player" do
-      level.should_receive(:remove_player).with("abc123").and_return(true)
-      dispatcher.dispatch(action: 'remove_player', params: {id: 'abc123'}).should be true
+      expect(level).to receive(:remove_player).with("abc123").and_return(true)
+      answer = dispatcher.dispatch(action: 'remove_player', params: {id: 'abc123'})
+      expect(answer).to eq(true)
     end
 
     it "should raise error if it doesn't understand the message", skip: true do

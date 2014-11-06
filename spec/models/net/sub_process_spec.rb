@@ -11,20 +11,20 @@ describe Sim::Net::SubProcess do
   describe 'receive_message' do
 
     before :each do
-      @process.stub(:receive_data).and_return({action: 'foo'})
+      allow(@process).to receive(:receive_data).and_return({action: 'foo'})
     end
 
     it "should forward message to receiver" do
-      @receiver.should_receive(:dispatch).with({action: 'foo'}).and_return('bar')
-      @process.should_receive(:send_message).with({answer: 'bar'})
+      expect(@receiver).to receive(:dispatch).with({action: 'foo'}).and_return('bar')
+      expect(@process).to receive(:send_message).with({answer: 'bar'})
       @process.receive_message
     end
 
     it "should send the exception message back" do
-      @receiver.should_receive(:dispatch).with({action: 'foo'}).and_raise("process error")
-      @process.should_receive(:send_message).with(exception: 'RuntimeError: process error')
-      $stderr.should_receive(:puts).with('[subprocess] ERROR: RuntimeError process error').once
-      $stderr.should_receive(:puts).once # stacetrack
+      expect(@receiver).to receive(:dispatch).with({action: 'foo'}).and_raise("process error")
+      expect(@process).to receive(:send_message).with(exception: 'RuntimeError: process error')
+      expect($stderr).to receive(:puts).with('[subprocess] ERROR: RuntimeError process error').once
+      expect($stderr).to receive(:puts).once # stacetrack
       @process.receive_message
     end
 
@@ -34,15 +34,15 @@ describe Sim::Net::SubProcess do
 
     it "should not listen if not running" do
       @process.instance_variable_set('@running', false)
-      @process.should_receive(:receive_message).never
+      expect(@process).to receive(:receive_message).never
       @process.listen_for_messages
     end
 
     it "should stop receiver if parent connection closed" do
       @process.instance_variable_set('@running', true)
-      @process.stub(:receive_data) { raise EOFError }
-      @receiver.should_receive(:stop_level)
-      $stderr.should_receive(:puts).once # log
+      allow(@process).to receive(:receive_data) { raise EOFError }
+      expect(@receiver).to receive(:stop_level)
+      expect($stderr).to receive(:puts).once # log
       @process.listen_for_messages
     end
 
@@ -51,8 +51,7 @@ describe Sim::Net::SubProcess do
   describe 'send_message' do
 
     it "should send message through stdout" do
-      @process.should_receive(:send_data).with('foo')
-      #$stderr.should_receive(:puts).once # log
+      expect(@process).to receive(:send_data).with('foo')
       @process.send_message('foo')
     end
 

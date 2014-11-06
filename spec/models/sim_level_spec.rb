@@ -2,17 +2,17 @@ require 'spec_helper'
 
 describe Sim::Level do
 
-  let(:root_path)   { File.expand_path('../../../', __FILE__)}
-  let(:config_file) { File.expand_path('../../level.yml', __FILE__) }
-  let(:level)       { DummyLevel.instance }
+  let(:level_config)  { File.expand_path('../../../config/level.yml', __FILE__)}
+  let(:config_file)   { File.expand_path('../../level.yml', __FILE__) }
+  let(:level)         { DummyLevel.instance }
 
   describe 'listen_to_parent_process' do
 
     it "should create a sim queue" do
-      Sim::Net::MessageDispatcher.stub_chain(:new, :listen)
-      level.listen_to_parent_process(root_path)
-      Celluloid::Actor[:event_queue].should_not be_nil
-
+      allow(Sim::Net::MessageDispatcher).to receive_message_chain(:new, :listen)
+      level.load_config(level_config)
+      level.setup
+      expect(Celluloid::Actor[:event_queue]).to_not be_nil
     end
   end
 
@@ -20,12 +20,12 @@ describe Sim::Level do
 
     it "should set time unit" do
       level.build(config_file)
-      Celluloid::Actor[:time_unit].should_not be_nil
+      expect(Celluloid::Actor[:time_unit]).to_not be_nil
     end
 
     it "should create an event queue" do
       level.build(config_file)
-      Celluloid::Actor[:sim_loop].should_not be_nil
+      expect(Celluloid::Actor[:sim_loop]).to_not be_nil
     end
 
   end
@@ -39,7 +39,7 @@ describe Sim::Level do
     describe 'start' do
 
       it "should start queue" do
-        Sim::Queue::Master.should_receive(:start)
+        expect(Sim::Queue::Master).to receive(:start)
         level.start
       end
 
@@ -50,17 +50,17 @@ describe Sim::Level do
       before :each do
         @dispatcher = double('MessageDispatcher')
         level.instance_variable_set('@dispatcher', @dispatcher)
-        @dispatcher.stub(:stop)
-        Sim::Queue::Master.stub(:stop)
+        allow(@dispatcher).to receive(:stop)
+        allow(Sim::Queue::Master).to receive(:stop)
       end
 
       it "should stop queue" do
-        Sim::Queue::Master.should_receive(:stop)
+        expect(Sim::Queue::Master).to receive(:stop)
         level.stop
       end
 
       it "should stop listing to parent process" do
-        @dispatcher.should_receive(:stop)
+        expect(@dispatcher).to receive(:stop)
         level.stop
       end
 
