@@ -8,13 +8,19 @@ module Sim
     default_attr :sim_threshold, 0.25
 
     def initialize
-      # just in order that @last_touched is not nil
-      @last_touched = Time.now
+      touch # just in order that @last_touched is not nil
     end
 
     def touch time = Time.now
-      @delay =  (time - @last_touched) / TimeUnit.instance.time_unit
       @last_touched = time
+    end
+
+    def update_simulation time = Time.now
+      @delay =  (time - @last_touched) / TimeUnit.instance.time_unit
+      if @delay >= sim_threshold
+        touch(time)
+        sim
+      end
     end
 
     def calculate delay
@@ -22,10 +28,7 @@ module Sim
     end
 
     def sim
-      touch
-      if delay >= sim_threshold
-        calculate_steps
-      end
+      calculate_steps
       changed_area
     end
 

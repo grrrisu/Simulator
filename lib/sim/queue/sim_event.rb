@@ -15,11 +15,13 @@ module Sim
       end
 
       def notify area
-        event_broadcaster.async.notify(area)
+        if area
+          event_broadcaster.async.notify(area)
+        end
       end
 
       def fire
-        changed_area = object.sim
+        changed_area = object.update_simulation
         notify(changed_area)
       end
 
