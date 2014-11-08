@@ -13,7 +13,8 @@ describe Sim::Object do
 
     it "should calcuate delay in time units" do
       Timecop.freeze(@now + 8)
-      @object.touch
+      expect(@object).to receive(:sim)
+      @object.update_simulation
       expect(@object.delay).to be == 4
     end
 
@@ -23,7 +24,7 @@ describe Sim::Object do
 
     it "should calcualte new size" do
       Timecop.freeze(@now + 8)
-      @object.sim
+      @object.update_simulation
       expect(@object.size).to eq(40)
     end
 
