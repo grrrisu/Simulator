@@ -89,6 +89,15 @@ module Sim
         run
       end
 
+      def as_json
+        {
+          waitings: @waitings.size,
+          processing: @processing.size,
+          locks: @locks.size,
+          workers: Celluloid::Actor[:fire_workers].size
+        }
+      end
+
     end
 
   end

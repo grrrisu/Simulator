@@ -38,6 +38,14 @@ module Sim
       @units_since_start + (Time.now - @time_last_change) / @time_unit
     end
 
+    def as_json
+      {
+        time_unit: time_unit,
+        time_elapsed: @started && time_elapsed,
+        started: @started
+      }
+    end
+
   end
 
 end

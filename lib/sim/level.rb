@@ -93,6 +93,15 @@ module Sim
       #Celluloid::Actor["player_#{id}"]
     end
 
+    def as_json
+      {
+        players: players.size,
+        time_unit: Celluloid::Actor[:time_unit].try(:as_json),
+        sim_loop: Celluloid::Actor[:sim_loop].try(:as_json),
+        event_queue: Celluloid::Actor[:event_queue].try(:as_json)
+      }
+    end
+
   end
 
 end

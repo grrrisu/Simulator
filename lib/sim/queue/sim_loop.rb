@@ -78,6 +78,13 @@ module Sim
         end
       end
 
+      def as_json
+        {
+          duration: @duration,
+          objects: @objects.size
+        }
+      end
+
     end
 
   end
