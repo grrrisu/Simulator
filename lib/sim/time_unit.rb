@@ -42,7 +42,7 @@ module Sim
       {
         time_unit: time_unit,
         time_elapsed: @started && time_elapsed,
-        started: @started
+        started: @started.try(:iso8601)
       }
     end
 
