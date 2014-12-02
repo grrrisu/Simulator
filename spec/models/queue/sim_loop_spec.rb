@@ -68,4 +68,17 @@ describe Sim::Queue::SimLoop do
 
   end
 
+  describe "detail_json" do
+
+    it "should count objects", focus: true do
+      sim_loop << Sim::Object.new
+      sim_loop << DummyObject.new
+      sim_loop << Sim::Object.new
+      json = sim_loop.detail_json
+      expect(json.keys).to be == ['SimulatedObject', 'Sim::Object', 'DummyObject']
+      expect(json.values).to be == [6, 2, 1]
+    end
+
+  end
+
 end

@@ -85,6 +85,15 @@ module Sim
         }
       end
 
+      def detail_json
+        @objects.inject({}) do |klasses, obj|
+          klasses.tap do
+            klasses[obj.class.to_s] ||= 0
+            klasses[obj.class.to_s] += 1
+          end
+        end
+      end
+
     end
 
   end

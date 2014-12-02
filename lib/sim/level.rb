@@ -102,6 +102,10 @@ module Sim
       }
     end
 
+    def sim_loop_details
+      Celluloid::Actor[:sim_loop].try(:detail_json)
+    end
+
   end
 
 end
