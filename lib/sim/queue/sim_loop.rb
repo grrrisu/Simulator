@@ -85,7 +85,7 @@ module Sim
         }
       end
 
-      def detail_json
+      def objects_count
         @objects.inject({}) do |klasses, obj|
           klasses.tap do
             klasses[obj.class.to_s] ||= 0
