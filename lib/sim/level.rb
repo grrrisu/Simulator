@@ -103,7 +103,9 @@ module Sim
     end
 
     def objects_count
-      Celluloid::Actor[:sim_loop].try(:objects_count)
+      objects = Celluloid::Actor[:sim_loop].try(:objects_count)
+      time_elapsed = Celluloid::Actor[:time_unit].try(:zero_or_time_elapsed)
+      objects.merge(time: time_elapsed.round)
     end
 
   end

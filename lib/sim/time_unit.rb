@@ -38,10 +38,14 @@ module Sim
       @units_since_start + (Time.now - @time_last_change) / @time_unit
     end
 
+    def zero_or_time_elapsed
+      @started ? time_elapsed : 0.0
+    end
+
     def as_json
       {
         time_unit: time_unit,
-        time_elapsed: @started && time_elapsed,
+        time_elapsed: zero_or_time_elapsed.round,
         started: @started.try(:iso8601)
       }
     end
