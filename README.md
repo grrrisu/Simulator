@@ -29,6 +29,16 @@ Player:
 {"action": "move", "player": "123", "params": {"x": "-1", "y": "0"}}
 ```
 
+Level Config
+-------------
+```json
+time_unit: 5   # in secs
+sim_loop:
+  duration: 3  # duration in time units
+world:
+  width: 50    # number of fields
+  height: 100  # number of fields
+```
 
 Copyright
 --------

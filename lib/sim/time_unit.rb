@@ -45,7 +45,7 @@ module Sim
     def as_json
       {
         time_unit: time_unit,
-        time_elapsed: zero_or_time_elapsed.round,
+        time_elapsed: zero_or_time_elapsed.round(2),
         started: @started.try(:iso8601)
       }
     end

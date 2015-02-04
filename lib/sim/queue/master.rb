@@ -13,8 +13,10 @@ module Sim
 
       def self.launch config, sim_objects = []
         # this queues will NOT be restarted automaticaly if they crash
-        Celluloid::Actor[:sim_loop]  = SimLoop.new config[:sim_loop][:duration], sim_objects
         Celluloid::Actor[:time_unit] = TimeUnit.new config[:time_unit]
+        
+        duration = config[:time_unit] * config[:sim_loop][:duration]
+        Celluloid::Actor[:sim_loop]  = SimLoop.new duration, sim_objects
       end
 
       def self.start
