@@ -21,10 +21,6 @@ module Sim
         Celluloid::Actor[:fire_workers]
       end
 
-      def start
-        info "sim event queue started..."
-      end
-
       def stop
         @timer.reset if @timer
         terminate

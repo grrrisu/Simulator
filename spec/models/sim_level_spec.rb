@@ -8,15 +8,19 @@ describe Sim::Level do
 
   describe 'listen_to_parent_process' do
 
-    it "should create a sim queue" do
-      allow(Sim::Net::MessageDispatcher).to receive_message_chain(:new, :listen)
+    it "should create listening subprocess" do
+      expect(Sim::Net::MessageDispatcher).to receive_message_chain(:new, :listen)
       level.load_config(level_config)
       level.setup
-      expect(Celluloid::Actor[:event_queue]).to_not be_nil
     end
   end
 
   describe 'build' do
+
+    it "should set event queue" do
+      level.build(config_file)
+      expect(Celluloid::Actor[:event_queue]).to_not be_nil
+    end
 
     it "should set time unit" do
       level.build(config_file)

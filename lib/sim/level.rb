@@ -21,7 +21,7 @@ module Sim
 
     def setup
       setup_logger
-      setup_queue
+      #setup_queue
       setup_server
       setup_dispatcher
     end
@@ -39,9 +39,9 @@ module Sim
       Celluloid.logger.level = Logger::SEV_LABEL.index(config[:log_level])
     end
 
-    def setup_queue
-      Sim::Queue::Master.setup self
-    end
+    # def setup_queue
+    #   Sim::Queue::Master.setup self
+    # end
 
     def setup_server
       socket_path = File.expand_path(config[:socket_file], config[:root_path])
@@ -54,8 +54,8 @@ module Sim
     end
 
     def build config_file
-      config = Buildable.load_config(config_file)
-      Sim::Queue::Master.launch config
+      self.config = Buildable.load_config(config_file)
+      Sim::Queue::Master.launch self
       create(config)
     end
 

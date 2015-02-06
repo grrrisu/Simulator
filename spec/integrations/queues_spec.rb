@@ -2,18 +2,20 @@ require 'spec_helper'
 
 describe "Sim Queues" do
 
+  let(:level)         { double(Sim::Level) }
   let(:config)        { {time_unit: 1, sim_loop: {duration: 1} } }
   let(:event_queue)   { Celluloid::Actor[:event_queue] }
   let(:sim_loop)      { Celluloid::Actor[:sim_loop] }
   let(:fire_workers)  { Celluloid::Actor[:fire_workers] }
 
   before :each do
-    Sim::Queue::Master.setup 'level'
+    allow(level).to receive(:config).and_return(config)
+    #Sim::Queue::Master.setup 'level'
   end
 
   it "should process sim objects" do
     sim_objects = %w{a b c d e x y}.map {|n| SimulatedObject.new(n)}
-    Sim::Queue::Master.launch config, sim_objects[0,5] # launch a b c d e
+    Sim::Queue::Master.launch level, sim_objects[0,5] # launch a b c d e
 
     Sim::Queue::Master.start
     sim_loop << sim_objects[5] # add x
@@ -32,7 +34,7 @@ describe "Sim Queues" do
 
   it "should process sim object even if they raise execptions" do
     sim_objects = %w{a b c d e}.map {|n| SimulatedObject.new(n, true)}
-    Sim::Queue::Master.launch config, sim_objects
+    Sim::Queue::Master.launch level, sim_objects
 
     Sim::Queue::Master.start
     sleep 1
