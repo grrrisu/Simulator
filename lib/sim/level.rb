@@ -21,7 +21,6 @@ module Sim
 
     def setup
       setup_logger
-      setup_queue
       setup_server
       setup_dispatcher
     end
