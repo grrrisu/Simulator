@@ -3,9 +3,6 @@ module Sim
 
     class Master < Celluloid::SupervisionGroup
 
-      # def self.setup level
-      # end
-
       def self.launch level, sim_objects = []
         # this queues will be restarted automaticaly if they crash
         supervise EventQueue,        as: :event_queue
@@ -21,10 +18,13 @@ module Sim
       end
 
       def self.stop
+        Celluloid::Actor[:loops_supervisor].try(:stop)
         Celluloid::Actor[:sim_loop].try(:stop)
+        Celluloid::Actor.delete(:sim_loop)
         Celluloid::Actor[:event_queue].try(:stop)
         Celluloid::Actor[:fire_workers].try(:terminate)
         Celluloid::Actor[:time_unit].try(:stop)
+        Celluloid::Actor.delete(:time_unit)
         Celluloid::Actor[:event_broadcaster].try(:stop)
       end
 
@@ -40,6 +40,10 @@ module Sim
 
       def initialize config, sim_objects
         launch config, sim_objects
+      end
+
+      def stop
+        terminate
       end
 
       def launch config, sim_objects

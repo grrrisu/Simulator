@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Sim Queues" do
 
-  let(:level)         { double(Sim::Level) }
+  let(:level)         { Sim::Level.instance }
   let(:config)        { {time_unit: 1, sim_loop: {duration: 1} } }
   let(:event_queue)   { Celluloid::Actor[:event_queue] }
   let(:sim_loop)      { Celluloid::Actor[:sim_loop] }
