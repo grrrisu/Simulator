@@ -7,6 +7,7 @@ module Sim
     def initialize id, level
       @id     = id
       @level  = level
+      @alive  = true
     end
 
     def direct_actions
@@ -34,6 +35,10 @@ module Sim
     # override in sub class
     def overlap_current_view?
       true
+    end
+
+    def alive?
+      @alive
     end
 
   end

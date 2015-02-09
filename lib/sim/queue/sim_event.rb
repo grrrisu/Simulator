@@ -25,6 +25,10 @@ module Sim
         notify(changed_area)
       end
 
+      def owner_alive?
+        @object.alive?
+      end
+
     end
 
   end

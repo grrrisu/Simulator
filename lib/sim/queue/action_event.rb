@@ -33,6 +33,10 @@ module Sim
         notify_listners(answer[:notify])
       end
 
+      def owner_alive?
+        @player.alive?
+      end
+
     end
 
   end

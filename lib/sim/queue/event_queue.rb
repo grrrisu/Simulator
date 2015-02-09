@@ -28,6 +28,9 @@ module Sim
 
       def needed_resources_free? event
         event.needed_resources.none? {|resource| @locks.include? resource }
+      rescue NoMethodError
+        raise unless event.owner_alive? # re-raise exception if error did not occur because owner is dead
+        false
       end
 
       def lock_resources event

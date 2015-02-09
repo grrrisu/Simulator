@@ -9,10 +9,19 @@ module Sim
 
     def initialize
       touch # just in order that @last_touched is not nil
+      @alive = true
     end
 
     def touch time = Time.now
       @last_touched = time
+    end
+
+    def alive?
+      @alive
+    end
+
+    def die
+      @alive = false
     end
 
     def update_simulation time = Time.now
