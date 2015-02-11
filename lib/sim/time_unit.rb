@@ -4,7 +4,9 @@ module Sim
     include Celluloid
     include Celluloid::Logger
 
-    attr_reader :time_unit
+    attr_reader :time_unit, :started, :units_since_start, :time_last_change
+
+    finalizer :rescue_me
 
     def self.instance
       Celluloid::Actor[:time_unit]
@@ -22,12 +24,23 @@ module Sim
       info "time unit started at #{now}"
     end
 
+    def resume started, units_since_start
+      @started           = started
+      @units_since_start = units_since_start
+      @time_last_change  = Time.now
+    end
+
     def stop
       terminate
     end
 
+    def rescue_me
+      puts "*****************"
+      Celluloid::Actor[:loops_supervisor].async.relaunch_time_unit(self)
+    end
+
     def time_unit= value
-      if @started
+      if started
         @units_since_start = time_elapsed
         @time_last_change = Time.now
       end
@@ -35,18 +48,18 @@ module Sim
     end
 
     def time_elapsed
-      @units_since_start + (Time.now - @time_last_change) / @time_unit
+      units_since_start + (Time.now - time_last_change) / time_unit
     end
 
     def zero_or_time_elapsed
-      @started ? time_elapsed : 0.0
+      started ? time_elapsed : 0.0
     end
 
     def as_json
       {
         time_unit: time_unit,
         time_elapsed: zero_or_time_elapsed.round(2),
-        started: @started.try(:iso8601)
+        started: started.try(:iso8601)
       }
     end
 

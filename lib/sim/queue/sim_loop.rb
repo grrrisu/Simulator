@@ -7,13 +7,19 @@ module Sim
 
       TIMEOUT = 5 #sec
 
-      attr_reader :objects
+      attr_reader :duration, :objects, :start_time
+
+      finalizer :rescue_me
 
       def initialize duration, objects = []
         raise ArgumentError, "duration must be set" unless duration
         @duration = duration.to_f || 1.0
         @objects  = objects
         @counter  = 0
+      end
+
+      def rescue_me
+        Celluloid::Actor[:loops_supervisor].async.relaunch_sim_loop(self)
       end
 
       def add object

@@ -19,21 +19,33 @@ module Sim
 
       def launch config, sim_objects
         #this queues will NOT be restarted automaticaly if they crash
-        Celluloid::Actor[:time_unit] = TimeUnit.new_link config[:time_unit]
+        unless Celluloid::Actor[:time_unit].try(:alive?)
+          Celluloid::Actor[:time_unit] = TimeUnit.new_link config[:time_unit]
+        end
          
-        duration = config[:time_unit] * config[:sim_loop][:duration]
-        Celluloid::Actor[:sim_loop]  = SimLoop.new_link duration, sim_objects
+        unless Celluloid::Actor[:sim_loop].try(:alive?)
+          duration = config[:time_unit] * config[:sim_loop][:duration]
+          Celluloid::Actor[:sim_loop]  = SimLoop.new_link duration, sim_objects
+        end
       end
 
       def actor_died(actor, reason)
-        $stderr.puts "Oh no! #{actor.inspect} has died because of a #{reason.class} #{reason.message if reason}"
-        $stderr.puts reason.backtrace.join("\n") if reason
+        if reason
+          warn "#{actor.inspect} has died because of a #{reason.class} #{reason.message}"
+        end
       end
 
-      def restart_time_unit
+      def relaunch_time_unit dead_actor
+        p "++++++++++++++"
+        time_unit = TimeUnit.new dead_actor.time_unit
+        time_unit.resume dead_actor.started, dead_actor.units_since_start
+        Celluloid::Actor[:time_unit] = time_unit
       end
 
-      def restart_sim_loop
+      def relaunch_sim_loop dead_actor
+        sim_loop = SimLoop.new_link dead_actor.duration, dead_actor.objects
+        sim_loop.start if dead_actor.start_time
+        Celluloid::Actor[:sim_loop] = sim_loop
       end
 
     end
