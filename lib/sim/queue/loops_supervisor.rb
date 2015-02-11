@@ -22,7 +22,7 @@ module Sim
         unless Celluloid::Actor[:time_unit].try(:alive?)
           Celluloid::Actor[:time_unit] = TimeUnit.new_link config[:time_unit]
         end
-         
+
         unless Celluloid::Actor[:sim_loop].try(:alive?)
           duration = config[:time_unit] * config[:sim_loop][:duration]
           Celluloid::Actor[:sim_loop]  = SimLoop.new_link duration, sim_objects
@@ -36,8 +36,7 @@ module Sim
       end
 
       def relaunch_time_unit dead_actor
-        p "++++++++++++++"
-        time_unit = TimeUnit.new dead_actor.time_unit
+        time_unit = TimeUnit.new_link dead_actor.time_unit
         time_unit.resume dead_actor.started, dead_actor.units_since_start
         Celluloid::Actor[:time_unit] = time_unit
       end

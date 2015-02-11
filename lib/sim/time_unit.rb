@@ -25,9 +25,10 @@ module Sim
     end
 
     def resume started, units_since_start
-      @started           = started
-      @units_since_start = units_since_start
-      @time_last_change  = Time.now
+      if @started = started
+        @units_since_start = units_since_start
+        @time_last_change  = Time.now
+      end
     end
 
     def stop
@@ -35,7 +36,6 @@ module Sim
     end
 
     def rescue_me
-      puts "*****************"
       Celluloid::Actor[:loops_supervisor].async.relaunch_time_unit(self)
     end
 

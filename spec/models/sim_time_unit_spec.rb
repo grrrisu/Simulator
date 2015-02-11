@@ -27,4 +27,12 @@ describe Sim::TimeUnit do
     expect(@time_unit.time_elapsed).to be == 7
   end
 
+  it "should resume" do
+    Timecop.freeze(@now + 6)
+    time_unit = Sim::TimeUnit.new(2)
+    time_unit.resume(@now, 3)
+    Timecop.freeze(@now + 10)
+    expect(@time_unit.time_elapsed).to be == 5
+  end
+
 end
