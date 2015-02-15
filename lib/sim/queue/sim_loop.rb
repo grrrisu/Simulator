@@ -19,7 +19,9 @@ module Sim
       end
 
       def rescue_me
-        Celluloid::Actor[:loops_supervisor].async.relaunch_sim_loop(self)
+        if loops_supervisor = Celluloid::Actor[:loops_supervisor]
+          loops_supervisor.async.relaunch_sim_loop(self)
+        end
       end
 
       def add object

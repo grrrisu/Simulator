@@ -36,7 +36,9 @@ module Sim
     end
 
     def rescue_me
-      Celluloid::Actor[:loops_supervisor].async.relaunch_time_unit(self)
+      if loops_supervisor = Celluloid::Actor[:loops_supervisor]
+        loops_supervisor.async.relaunch_time_unit(self)
+      end
     end
 
     def time_unit= value
