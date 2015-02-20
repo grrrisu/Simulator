@@ -6,7 +6,7 @@ module Sim
   #   default_attr :max, 8
   # end
   #
-  # class Wolf
+  # class Wolf < Animal
   #   default_attr :size, 7
   # end
   #
