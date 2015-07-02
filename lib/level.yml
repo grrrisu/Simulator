@@ -1,3 +1,4 @@
+process_name: simulator
 time_unit: 5
 sim_loop:
   duration: 3 # duration in time units

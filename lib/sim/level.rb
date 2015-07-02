@@ -20,6 +20,7 @@ module Sim
     end
 
     def setup
+      setup_process_name
       setup_logger
       setup_server
       setup_dispatcher
@@ -28,6 +29,11 @@ module Sim
     def load_config config_file
       @config = YAML.load(File.open(config_file)).deep_symbolize_keys
       @config = @config[SIM_ENV.to_sym]
+    end
+
+    def setup_process_name
+      name = config[:process_name] || 'simulator'
+      Process.setproctitle(name)
     end
 
     def setup_logger
