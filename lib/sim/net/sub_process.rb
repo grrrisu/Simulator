@@ -6,7 +6,11 @@ module Sim
 
       def listen(receiver)
         @receiver = receiver
-        self.input, self.output = $stdin, $stdout
+
+        server = UNIXServer.new('level.sock')
+        socket = server.accept
+        self.input, self.output = socket, socket
+
         send_message answer: 'ready'
         @running = true
         log 'started'

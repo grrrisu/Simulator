@@ -5,19 +5,23 @@ module Sim
   module Net
 
     class ParentConnection
-      include Open3
       include MessageSerializer
 
       attr_reader :pid
 
       RUBY = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 
-      def launch_subprocess sim_library, level_class, config_file, env = 'development'
+      def initialize
         @mutex = Mutex.new
+      end
+
+      def launch_subprocess sim_library, level_class, config_file, env = 'development'
         cmd = %W{bundle exec #{RUBY} -r #{sim_library} -e #{level_class}.attach('#{config_file}')}
-        self.output, self.input, wait_thr = popen2({"SIM_ENV" => env}, *cmd)
-        @pid = wait_thr.pid
-        # wait for sub process to be ready
+        @pid = Kernel.spawn {'SIM_ENV'=> env}, cmd
+
+        socket = UNIXSocket.new("level.sock")
+        self.input, self.output = socket, socket
+
         receive_message
       end
 
