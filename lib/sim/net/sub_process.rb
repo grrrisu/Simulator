@@ -7,8 +7,8 @@ module Sim
       def listen(receiver)
         @receiver = receiver
 
-        socket_file = File.expand_path('../../../../level.sock', __FILE__)
-        server = UNIXServer.new(socket_file)
+        @socket_path = File.expand_path('../../../../level.sock', __FILE__)
+        server = UNIXServer.new(@socket_path)
         socket = server.accept
         self.input, self.output = socket, socket
 
@@ -43,6 +43,7 @@ module Sim
       rescue EOFError, Errno::EPIPE
         log "parent closed connection"
         @running = false
+        FileUtils.rm @socket_path if @socket_path && File.exists?(@socket_path)
         @receiver.stop_level
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"
