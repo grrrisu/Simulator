@@ -16,7 +16,7 @@ describe "popen" do
     @connection.close
   end
 
-  it "should send a message" do
+  it "should send a message", focus: true do
     answer = @connection.send_action :reverse, msg: 'see all the stars'
     expect(answer).to be == 'see all the stars'.reverse
   end

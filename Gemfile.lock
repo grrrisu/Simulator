@@ -157,6 +157,7 @@ DEPENDENCIES
   guard-rspec
   hashie
   jeweler
+  pry
   rake
   rb-fsevent
   rspec

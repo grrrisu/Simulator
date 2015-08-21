@@ -7,7 +7,8 @@ module Sim
       def listen(receiver)
         @receiver = receiver
 
-        server = UNIXServer.new('level.sock')
+        socket_file = File.expand_path('../../../../level.sock', __FILE__)
+        server = UNIXServer.new(socket_file)
         socket = server.accept
         self.input, self.output = socket, socket
 

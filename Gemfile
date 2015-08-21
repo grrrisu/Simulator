@@ -21,3 +21,7 @@ group :test do
   gem 'timecop'
   gem "codeclimate-test-reporter", :require => false
 end
+
+group :development, :test do
+  gem 'pry'
+end
