@@ -10,10 +10,6 @@ module Sim
       @alive  = true
     end
 
-    def direct_actions
-      []
-    end
-
     # TODO this method can be called by different threads
     # by the player_connection for incoming messages
     # and by the event_broadcaster to update the view
@@ -21,8 +17,9 @@ module Sim
     # -> if yes how handle errors?
     def process_message action, params
       answer = send(action, *params.values)
-      if direct_actions.include? action
-        # actions like init_map, view
+      unless answer.nil?
+        # if we got an answer than we can send it directly back
+        # otherwise the answer will be sent by the action async
         connection.send_message action, answer
       end
     end
