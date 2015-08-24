@@ -18,7 +18,7 @@ module Sim
         EM.connect_unix_domain(socket_path, Handler) do |handler|
           handler.player_proxy = self
           @sim_connection = handler
-          # regiser to player server
+          # register to player server
           handler.send_object(player_id: id, role: @role)
         end
       end

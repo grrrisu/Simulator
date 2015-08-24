@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "popen" do
+describe "Level Server" do
 
   before :each do
     @connection   = Sim::Net::ParentConnection.new
