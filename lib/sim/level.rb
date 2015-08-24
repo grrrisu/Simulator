@@ -5,8 +5,6 @@ module Sim
   class Level
     include Singleton
 
-    SIM_ENV = ENV['SIM_ENV'] unless defined? SIM_ENV
-
     attr_accessor :config, :players
 
     def self.attach config_file

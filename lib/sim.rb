@@ -40,4 +40,5 @@ require_relative './sim/queue/sim_loop.rb'
 require_relative './sim/queue/loops_supervisor.rb'
 require_relative './sim/queue/master.rb'
 
-RAILS_ENV = 'development' unless defined? RAILS_ENV
+SIM_ENV = ENV['SIM_ENV'] || 'development'
+RAILS_ENV = SIM_ENV unless defined? RAILS_ENV

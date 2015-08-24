@@ -7,7 +7,8 @@ class DummyLevel < Sim::Level
   end
 
   def create config
-    $stderr.puts "creating..."
+    puts "creating..."
+    true
   end
 
   def build_player data

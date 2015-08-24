@@ -23,8 +23,6 @@ describe Sim::Net::SubProcess do
     it "should send the exception message back" do
       expect(@receiver).to receive(:dispatch).with({action: 'foo'}).and_raise("process error")
       expect(@process).to receive(:send_message).with(exception: 'RuntimeError: process error')
-      expect($stderr).to receive(:puts).with('[subprocess] ERROR: RuntimeError process error').once
-      expect($stderr).to receive(:puts).once # stacetrack
       @process.receive_message
     end
 
@@ -42,7 +40,6 @@ describe Sim::Net::SubProcess do
       @process.instance_variable_set('@running', true)
       allow(@process).to receive(:receive_data) { raise EOFError }
       expect(@receiver).to receive(:stop_level)
-      expect($stderr).to receive(:puts).once # log
       @process.listen_for_messages
     end
 

@@ -56,7 +56,9 @@ module Sim
       end
 
       def log message
-        $stderr.puts "[subprocess] #{message}"
+        unless SIM_ENV == 'test'
+          $stderr.puts "[subprocess] #{message}"
+        end
       end
 
     end

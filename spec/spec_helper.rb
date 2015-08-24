@@ -8,7 +8,7 @@ SimpleCov.start do
   add_filter "/spec/"
 end
 
-SIM_ENV ||= 'test'
+ENV['SIM_ENV'] ||= 'test'
 
 require 'celluloid'
 require 'celluloid/rspec'
