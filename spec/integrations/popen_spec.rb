@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "popen", focus: true do
+describe "popen" do
 
   before :each do
     @connection   = Sim::Net::ParentConnection.new

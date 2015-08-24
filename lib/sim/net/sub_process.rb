@@ -20,6 +20,7 @@ module Sim
 
       def stop
         @running = false
+        FileUtils.rm @socket_path if @socket_path && File.exists?(@socket_path)
       end
 
       def listen_for_messages
@@ -42,8 +43,7 @@ module Sim
         end
       rescue EOFError, Errno::EPIPE
         log "parent closed connection"
-        @running = false
-        FileUtils.rm @socket_path if @socket_path && File.exists?(@socket_path)
+        stop
         @receiver.stop_level
       rescue Exception => e
         log "ERROR: #{e.class} #{e.message}"

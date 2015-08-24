@@ -19,12 +19,19 @@ module Sim
         cmd = "SIM_ENV=#{env} bundle exec #{RUBY} -r #{sim_library} -e '#{level_class}.attach(\"#{config_file}\")'"
         @pid = Process.spawn cmd
 
-        sleep 2
         @socket_file = File.expand_path('../../../../level.sock', __FILE__)
-        socket = UNIXSocket.new(@socket_file)
-        self.input, self.output = socket, socket
+        wait_for_server(@socket_file) do
+          socket = UNIXSocket.new(@socket_file)
+          self.input, self.output = socket, socket
+          receive_message
+        end
+      end
 
-        receive_message
+      def wait_for_server socket_path
+        until File.exists?(socket_path) do
+          sleep 0.5
+        end
+        yield
       end
 
       def send_message message
