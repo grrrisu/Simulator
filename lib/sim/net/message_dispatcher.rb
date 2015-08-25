@@ -8,8 +8,8 @@ module Sim
         @process = SubProcess.new
       end
 
-      def listen
-        @process.listen(self)
+      def listen(socket_path)
+        @process.listen(self, socket_path)
       end
 
       def stop

@@ -2,14 +2,17 @@ development:
   root_path:
   log_file: log/level.log
   log_level: DEBUG
-  socket_file: tmp/players.sock
+  level_socket_file: tmp/level.sock
+  player_socket_file: tmp/players.sock
 test:
   root_path:
   log_file: log/level_test.log
   log_level: DEBUG
-  socket_file: tmp/players.sock
+  level_socket_file: tmp/level.sock
+  player_socket_file: tmp/players.sock
 production:
   root_path:
   log_file: log/level.log
   log_level: WARN
-  socket_file: tmp/players.sock
+  level_socket_file: tmp/level.sock
+  player_socket_file: tmp/players.sock

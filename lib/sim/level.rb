@@ -37,13 +37,14 @@ module Sim
     end
 
     def setup_server
-      socket_path = File.expand_path(config[:socket_file], config[:root_path])
+      socket_path = File.expand_path(config[:player_socket_file], config[:root_path])
       @player_server = Net::PlayerServer.new(self, socket_path)
     end
 
     def setup_dispatcher
       @dispatcher = Net::MessageDispatcher.new self
-      @dispatcher.listen
+      socket_path = File.expand_path(config[:level_socket_file], config[:root_path])
+      @dispatcher.listen(socket_path)
     end
 
     def build config_file

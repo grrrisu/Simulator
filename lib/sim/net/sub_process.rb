@@ -4,23 +4,32 @@ module Sim
     class SubProcess
       include MessageSerializer
 
-      def listen(receiver)
-        @receiver = receiver
+      attr_reader :socket_path
 
-        @socket_path = File.expand_path('../../../../level.sock', __FILE__)
+      def listen(receiver, socket_path)
+        @receiver = receiver
+        @socket_path = socket_path
+
+        start_server
+        run
+      end
+
+      def start_server
         server = UNIXServer.new(@socket_path)
         socket = server.accept
         self.input, self.output = socket, socket
+      end
 
+      def run
         send_message answer: 'ready'
         @running = true
-        log 'started'
+        log 'level is running'
         listen_for_messages
       end
 
       def stop
         @running = false
-        FileUtils.rm @socket_path if @socket_path && File.exists?(@socket_path)
+        FileUtils.rm socket_path if socket_path && File.exists?(socket_path)
       end
 
       def listen_for_messages

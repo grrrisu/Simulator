@@ -19,12 +19,18 @@ module Sim
         cmd = "SIM_ENV=#{env} bundle exec #{RUBY} -r #{sim_library} -e '#{level_class}.attach(\"#{config_file}\")'"
         @pid = Process.spawn cmd
 
-        @socket_file = File.expand_path('../../../../level.sock', __FILE__)
-        wait_for_server(@socket_file) do
-          socket = UNIXSocket.new(@socket_file)
+        socket_path = level_socket_path(config_file, env)
+        wait_for_server(socket_path) do
+          socket = UNIXSocket.new(socket_path)
           self.input, self.output = socket, socket
           receive_message
         end
+      end
+
+      def level_socket_path config_file, env
+        config = YAML.load(File.open(config_file)).deep_symbolize_keys
+        config = config[env.to_sym]
+        File.expand_path(config[:level_socket_file], config[:root_path])
       end
 
       def wait_for_server socket_path
