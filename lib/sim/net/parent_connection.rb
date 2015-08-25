@@ -18,8 +18,11 @@ module Sim
       def launch_subprocess sim_library, level_class, config_file, env = 'development'
         cmd = "SIM_ENV=#{env} bundle exec #{RUBY} -r #{sim_library} -e '#{level_class}.attach(\"#{config_file}\")'"
         @pid = Process.spawn cmd
-
         socket_path = level_socket_path(config_file, env)
+        open_connection_to_server(socket_path)
+      end
+
+      def open_connection_to_server socket_path
         wait_for_server(socket_path) do
           socket = UNIXSocket.new(socket_path)
           self.input, self.output = socket, socket
