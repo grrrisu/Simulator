@@ -1,0 +1,11 @@
+dependencies:
+  bundler:
+    without: [development]
+database:
+  override:
+    - mv config/level_example.yml config/level.yml
+    - mkdir tmp
+    - mkdir tmp/sockets
+test:
+  override:
+    - SIM_ENV=test bundle exec rake spec
