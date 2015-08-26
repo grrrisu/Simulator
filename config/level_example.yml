@@ -1,16 +1,19 @@
 development:
+  process_name: simulator
   root_path:
   log_file: log/level.log
   log_level: DEBUG
   level_socket_file: tmp/level.sock
   player_socket_file: tmp/players.sock
 test:
+  process_name: simulator
   root_path:
   log_file: log/level_test.log
   log_level: DEBUG
   level_socket_file: tmp/level.sock
   player_socket_file: tmp/players.sock
 production:
+  process_name: simulator
   root_path:
   log_file: log/level.log
   log_level: WARN
