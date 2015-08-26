@@ -43,7 +43,7 @@ describe "Sim Queues" do
       expect(sim_object.simulated).to be > 0
     end
     expect(event_queue.instance_variable_get("@waitings")).to be_empty
-    sleep 0.1
+    sleep 2 * Sim::Queue::EventQueue::DELAY
     expect(event_queue.instance_variable_get("@processing")).to be_empty
 
     event_queue.stop
