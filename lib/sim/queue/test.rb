@@ -16,7 +16,6 @@ require_relative './master.rb'
 module Sim
   module Queue
 
-    Master.setup $stderr
     Master.launch 15, [1,2,3,4,5]
     Master.start
 

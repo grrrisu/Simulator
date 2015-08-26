@@ -37,7 +37,6 @@ module Sim
     def setup_logger
       logfile = File.open(File.expand_path(config[:log_file], config[:root_path]), 'a')
       logfile.sync = true
-      #logfile = $stderr
       Celluloid.logger = ::Logger.new(logfile)
       Celluloid.logger.level = Logger::SEV_LABEL.index(config[:log_level])
     end

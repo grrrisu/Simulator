@@ -21,7 +21,6 @@ module Sim
       end
 
       def forward_message data
-        $stderr.puts "*** forward_message #{data}"
         check_permission!(data)
         action = data.delete(:action).to_sym
         if action && @player.respond_to?(action)

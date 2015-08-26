@@ -24,7 +24,6 @@ module Sim
 
       def fire
         answer = player.send(action, *params.values)
-        $stderr.puts("*** event sending back answer after #{Time.now - @start}")
         respond answer
       end
 
