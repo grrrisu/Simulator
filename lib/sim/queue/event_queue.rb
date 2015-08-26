@@ -23,6 +23,7 @@ module Sim
 
       def stop
         @timer.reset if @timer
+        release_finished_events
         terminate
       end
 
