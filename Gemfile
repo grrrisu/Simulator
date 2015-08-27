@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
 gem 'rake'
-gem 'celluloid', '~> 0.13'
-gem 'celluloid-io', '~> 0.15'
-gem 'activesupport', '>= 4.0.2'
+gem 'celluloid', '~> 0.16.0'
+gem 'celluloid-io', '~> 0.16.0'
+gem 'activesupport', '>= 4.2.4'
 gem 'hashie'
 gem 'eventmachine'
 
