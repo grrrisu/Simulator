@@ -24,7 +24,7 @@ module Sim
       end
 
       def message_received message
-        puts "received message: #{message}"
+        # override in subclass
       end
 
       module Handler

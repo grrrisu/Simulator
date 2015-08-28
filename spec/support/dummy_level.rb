@@ -7,7 +7,6 @@ class DummyLevel < Sim::Level
   end
 
   def create config
-    puts "creating..."
     true
   end
 

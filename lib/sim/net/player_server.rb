@@ -36,7 +36,7 @@ module Sim
         socket.close
       rescue Exception => e
         puts "\e[0;31mconnection for player #{connection.player.try(:id)} crashed!: \n #{e.message}"
-        puts e.backtrace.join("\n")
+        puts e.backtrace.join("\n") unless SIM_ENV == 'test'
         puts "\e[0m"
       end
 
