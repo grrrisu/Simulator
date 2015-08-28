@@ -10,7 +10,6 @@ gem 'eventmachine'
 group :development do
   gem 'jeweler'
 
-  gem 'rspec'
   gem 'guard'
   gem 'guard-rspec'
   gem 'growl'
@@ -24,4 +23,5 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'rspec'
 end
