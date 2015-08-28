@@ -1,7 +1,7 @@
 language: ruby
 
 rvm:
-  - 2.1.2
+  - 2.2.2
 
 before_script:
   - mkdir tmp
@@ -11,5 +11,3 @@ addons:
   code_climate:
     repo_token:
       secure: "AGSaueR2sidnTHEWwx+3LgeK543yHn0YJECst4gMJHHC0BElwbvceCWixXiLDaS2SIAiL/m7TckBXxRyXAlRIEUXYiNNeRKxEUCtCHmhkqKjpaPegXo/ogKiejm1dfsuIYwXiAvsMu+G+xIVXhd5szxxtV/A+RtKHJ+HJp0AZOY="
-
-

@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Alessandro Di Maria"]
-  s.date = "2015-08-27"
+  s.date = "2015-08-28"
   s.description = "A simulation container based on Celluloid"
   s.email = "adm@m42.ch"
   s.extra_rdoc_files = [
@@ -91,7 +91,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/grrrisu/Simulator"
   s.licenses = ["MIT"]
-  s.rubygems_version = "2.4.1"
+  s.rubygems_version = "2.4.8"
   s.summary = "A simulation container based on Celluloid"
 
   if s.respond_to? :specification_version then
