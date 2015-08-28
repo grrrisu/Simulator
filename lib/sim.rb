@@ -1,10 +1,13 @@
+SIM_ENV = ENV['SIM_ENV'] || 'development'
+RAILS_ENV = SIM_ENV unless defined? RAILS_ENV
+
 require 'rubygems'
 require 'bundler/setup'
 require 'singleton'
 require 'socket'
 require 'celluloid'
 require 'celluloid/io'
-require 'celluloid/autostart'
+require 'celluloid/autostart' unless SIM_ENV == 'test'
 require 'active_support'
 require 'active_support/core_ext'
 require 'eventmachine'
@@ -39,6 +42,3 @@ require_relative './sim/queue/event_queue.rb'
 require_relative './sim/queue/sim_loop.rb'
 require_relative './sim/queue/loops_supervisor.rb'
 require_relative './sim/queue/master.rb'
-
-SIM_ENV = ENV['SIM_ENV'] || 'development'
-RAILS_ENV = SIM_ENV unless defined? RAILS_ENV

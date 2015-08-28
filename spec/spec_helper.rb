@@ -35,9 +35,9 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.before(:each) do
+    Celluloid.logger = nil
     Celluloid.shutdown
     Celluloid.boot
-    Celluloid.logger = nil
   end
 
 end
