@@ -7,6 +7,8 @@ module Sim
     extend Forwardable
     def_delegators :@matrix, :to_s, :to_json, :flatten, :inspect
 
+    attr_writer :matrix
+
     def initialize columns, rows = nil, default = nil
       rows = columns unless rows
       @matrix = Array.new(rows) { Array.new(columns){ default } }
