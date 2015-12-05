@@ -5,7 +5,7 @@ module Sim
   class Level
     include Singleton
 
-    attr_accessor :config, :players
+    attr_accessor :config, :level_config, :players
 
     def self.attach config_file
       level = instance
@@ -53,9 +53,9 @@ module Sim
     end
 
     def build config_file
-      self.config = Buildable.load_config(config_file)
+      @level_config = Buildable.load_config(config_file)
       Sim::Queue::Master.launch self
-      create(config)
+      create(@level_config)
     end
 
     def start

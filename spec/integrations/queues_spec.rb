@@ -9,8 +9,7 @@ describe "Sim Queues" do
   let(:fire_workers)  { Celluloid::Actor[:fire_workers] }
 
   before :each do
-    allow(level).to receive(:config).and_return(config)
-    #Sim::Queue::Master.setup 'level'
+    allow(level).to receive(:level_config).and_return(config)
   end
 
   it "should process sim objects" do

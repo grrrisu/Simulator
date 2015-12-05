@@ -8,7 +8,7 @@ module Sim
         supervise EventQueue,        as: :event_queue
         pool      FireWorker,        as: :fire_workers
         supervise EventBroadcaster,  as: :event_broadcaster, args: level
-        supervise LoopsSupervisor,   as: :loops_supervisor, args: [level.config, sim_objects]
+        supervise LoopsSupervisor,   as: :loops_supervisor, args: [level.level_config, sim_objects]
         run!
       end
 
