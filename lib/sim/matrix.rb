@@ -14,6 +14,16 @@ module Sim
       @matrix = Array.new(rows) { Array.new(columns){ default } }
     end
 
+    def == other
+      if other.instance_of? Sim::Matrix
+        fields == other.fields
+      elsif other.instance_of? Array
+        fields == other
+      else
+        raise ArgumentError, "class #{other.class} is not comparable with Sim::Matrix"
+      end
+    end
+
     # size of matrix [x,y]
     def size
       [width, height]
