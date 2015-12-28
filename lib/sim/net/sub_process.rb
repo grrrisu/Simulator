@@ -54,7 +54,7 @@ module Sim
         log "parent closed connection"
         stop
         @receiver.stop_level
-      rescue Exception => e
+      rescue StandardError => e
         log "ERROR: #{e.class} #{e.message}"
         log e.backtrace.join("\n")
         send_message exception: "#{e.class}: #{e.message}"

@@ -34,7 +34,7 @@ module Sim
       rescue EOFError
         puts "*** parent process closed connection"
         socket.close
-      rescue Exception => e
+      rescue StandardError => e
         puts "\e[0;31mconnection for player #{connection.player.try(:id)} crashed!: \n #{e.message}"
         puts e.backtrace.join("\n") unless SIM_ENV == 'test'
         puts "\e[0m"
