@@ -127,9 +127,7 @@ describe Sim::Matrix do
     end
 
     it "should check equality with something else" do
-      expect {
-        matrix == Object.new
-      }.to raise_error ArgumentError
+      expect(matrix).to_not be == Object.new
     end
 
   end

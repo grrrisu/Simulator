@@ -20,7 +20,7 @@ module Sim
       elsif other.instance_of? Array
         fields == other
       else
-        raise ArgumentError, "class #{other.class} is not comparable with Sim::Matrix"
+        super
       end
     end
 
