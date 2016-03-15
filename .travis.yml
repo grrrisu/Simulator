@@ -3,9 +3,6 @@ language: ruby
 rvm:
   - 2.3.0
 
-before_script:
-  - mkdir tmp
-
 addons:
   code_climate:
     repo_token:
