@@ -19,7 +19,7 @@ exports.connect = function(file, callback) {
   client.on("data", function(data){
     console.log("data from server: ", data.toString());
     client.browserConnection.emit("action", data.toString());
-  })
+  });
 
   client.on("end", function(){
     console.log("server disconnected");

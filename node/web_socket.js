@@ -49,7 +49,7 @@ exports.connect = function(server){
       if(serverConnection) {
         serverConnection.end();
       }
-    })
+    });
   });
 
-}
+};
