@@ -6,7 +6,7 @@ A simulation container based on [Celluloid](https://github.com/celluloid/cellulo
 
 ####JSON API
 
-```{sope: 'test', action: 'reverse', args: 'hello world'}``
+```{sope: 'test', action: 'reverse', args: 'hello world'}```
 
 
 #### Requirements
