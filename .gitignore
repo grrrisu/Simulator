@@ -1,11 +1,10 @@
-log/*.log
-/tmp
 .DS_Store
 
 rdoc/*
-/coverage/**
+coverage/**
+log/*.log
+tmp/sockets/player.sock
+
+node/node_modules/**/*
 
 config/level.yml
-player.sock
-
-node_modules/**/*
