@@ -1,6 +1,0 @@
-time_unit: 5
-sim_loop:
-  duration: 1
-world:
-  width: 50
-  height: 100

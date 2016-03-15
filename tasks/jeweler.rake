@@ -2,7 +2,7 @@ unless ENV['SIM_ENV'] == 'test'
   require 'jeweler'
   require_relative '../lib/sim'
   Jeweler::Tasks.new do |gem|
-    # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+    # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
     gem.name = "Simulator"
     gem.version = Sim::VERSION
     gem.homepage = "http://github.com/grrrisu/Simulator"
