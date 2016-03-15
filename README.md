@@ -1,4 +1,13 @@
-### Run
+### Readme
+[![Build Status](https://travis-ci.org/grrrisu/Simulator.svg?branch=master)](https://travis-ci.org/grrrisu/Simulator)
+[![Code Climate](https://codeclimate.com/github/grrrisu/Simulator.png)](https://codeclimate.com/github/grrrisu/Simulator)
+
+A simulation container based on [Celluloid](https://github.com/celluloid/celluloid).
+
+####JSON API
+
+```{sope: 'test', action: 'reverse', args: 'hello world'}``
+
 
 #### Requirements
 
@@ -7,20 +16,28 @@
 
 #### Install
 
-```bundle```
-```cd node && node install```
+sim server:
 
-#### Middleware
+```$> bundle```
+
+middleware:
+
+```$> cd node && node install```
+
+#### Run
+
+sim server:
+
+```$> ruby lib/boot.rb```
+
+middleware:
 
 ```$> node --harmony node/main.js```
 
-#### Sim Server
-
-```$> ruby lib/boot.rb```
 
 
 ### Debug PlayerServer
 
 test unix socket with netcat:
 
-```$> nc -U pong.sock```
+```$> nc -U tmp/sockets/pong.sock```
