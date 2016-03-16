@@ -6,11 +6,8 @@ module Sim
     attr_reader :delay
 
     default_attr :sim_threshold, 0.25
-    default_attr :alive, true
-    default_attr :last_touched, 0.0
 
     def initialize
-      @alive = true
       @last_touched = 0.0
     end
 
