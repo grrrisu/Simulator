@@ -1,11 +1,13 @@
 module Sim
 
   class Object
-    #include Buildable
+    include Buildable
 
     attr_reader :delay
 
     default_attr :sim_threshold, 0.25
+    default_attr :alive, true
+    default_attr :last_touched, 0.0
 
     def initialize
       @alive = true
@@ -16,8 +18,8 @@ module Sim
       @last_touched = time_unit
     end
 
-    def update_simulation time_units
-      @delay =  @last_touched - (time_units || now)
+    def update_simulation time_units = nil
+      @delay =  (time_units || now) - @last_touched
       if @delay >= sim_threshold
         touch now
         sim
@@ -51,7 +53,7 @@ module Sim
     end
 
     def now
-      Celluloid::Actor[:time_unit].time_elapsed
+      Celluloid::Actor[:time_unit]&.time_elapsed
     end
 
   end
