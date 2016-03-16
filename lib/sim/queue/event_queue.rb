@@ -21,7 +21,7 @@ module Sim
         TimeUnit.supervise_as :time_unit, seconds: 10 # timeunit 10 secs
       end
 
-      def add_event event
+      def add event
         info "add event #{event.inspect}"
         @events << event
         @fire_worker.actors.first.async.run

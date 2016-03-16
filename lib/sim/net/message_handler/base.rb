@@ -15,7 +15,7 @@ module Sim
         end
 
         def queue event
-          Celluloid::Actor[:event_queue].async.add_event event
+          Celluloid::Actor[:event_queue].async.add event
         end
 
       end

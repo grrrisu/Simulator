@@ -23,8 +23,8 @@ module Sim
 
     def receive message
       info "player[#{id}] received message #{message}"
-      if answer = get_handler(message[:scope]).dispatch(message)
-        send_message({scope: message[:scope], action: message[:action], answer: answer})
+      if answer = dispatch(message)
+        send_message scope: message[:scope], action: message[:action], answer: answer
       end
     end
 
@@ -39,7 +39,11 @@ module Sim
       @message_handlers[:test] = Net::MessageHandler::Test.new(self)
     end
 
-    def get_handler scope
+    def dispatch message
+      handler(message[:scope]).dispatch(message)
+    end
+
+    def handler scope
       @message_handlers[scope.to_sym]
     end
 

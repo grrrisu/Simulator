@@ -9,8 +9,7 @@ module Sim
 
       attr_reader :socket
 
-      def initialize(socket)
-        info "starting with socket #{socket.object_id}"
+      def initialize socket
         @socket = socket
       end
 
@@ -24,7 +23,7 @@ module Sim
         terminate
       end
 
-      def receive(data)
+      def receive data
         message = JSON.parse(data, symbolize_names: true)
         info "received message #{message}"
         player = get_player message[:player_id]
