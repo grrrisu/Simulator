@@ -18,6 +18,7 @@ module Sim
       def initialize
         @events = []
         @fire_worker = FireWorker.supervise(self)
+        TimeUnit.supervise_as :time_unit, seconds: 10 # timeunit 10 secs
       end
 
       def add_event event

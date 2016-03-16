@@ -19,7 +19,7 @@ module Sim
       end
 
       def process event
-        info "process event #{event.inspect}"
+        debug "process event #{event.inspect}"
         event.fire # later maybe retry
       end
 
