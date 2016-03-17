@@ -29,7 +29,6 @@ module Sim
 
     def sim
       calculate_steps
-      changed_area
     end
 
     def calculate_steps
