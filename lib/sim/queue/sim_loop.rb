@@ -68,7 +68,7 @@ module Sim
 
       def sim
         if @objects.any?
-          event = next_object.create_event
+          event = create_event next_object
           event_queue.async.add event
           @timer = after(delay) { sim }
         else
@@ -97,6 +97,10 @@ module Sim
       end
 
     private
+
+      def create_event sim_object
+        SimEvent.new(sim_object)
+      end
 
       def event_queue
         Actor[:event_queue]

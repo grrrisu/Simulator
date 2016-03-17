@@ -39,16 +39,6 @@ module Sim
       calculate(delay % 1.0)
     end
 
-    # TODO move to event
-    def changed_area
-      nil # nothing changed
-    end
-
-    # TODO move to sim_loop
-    def create_event
-      Queue::SimEvent.new(self)
-    end
-
     def now
       Celluloid::Actor[:time_unit]&.time_elapsed
     end

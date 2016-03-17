@@ -9,6 +9,7 @@ require 'celluloid/io'
 
 require_relative 'ext/hash'
 require_relative 'sim/version'
+require_relative 'sim/queue/event/base'
 require_relative 'sim/queue/event/sim_event'
 require_relative 'sim/queue/event/action'
 require_relative 'sim/queue/event/test'
