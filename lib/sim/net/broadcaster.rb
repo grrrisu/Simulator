@@ -8,7 +8,7 @@ module Sim
 
       def broadcast player_ids, message
         info "broadcast #{message.inspect} to #{player_ids}"
-        player_ids.each do |player_id|
+        Array(player_ids).each do |player_id|
           if player = level.find_player(player_id)
             player.async.send_message message
           end

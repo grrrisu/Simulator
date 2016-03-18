@@ -8,7 +8,7 @@ module Sim
 
       def initialize config = {}
         TimeUnit.supervise_as :time_unit, seconds: 10 # timeunit 10 secs
-        @sim_loop_supervisor = SimLoop.supervise
+        @sim_loop_supervisor = SimLoop.supervise 8.0
       end
 
       def start

@@ -21,7 +21,7 @@ module Sim
 
         def broadcast player_ids, message
           broadcaster = Celluloid::Actor[:broadcaster]
-          broadcaster.broadcast Array(player_ids), message
+          broadcaster.broadcast player_ids, message
         end
 
         def changed_area
