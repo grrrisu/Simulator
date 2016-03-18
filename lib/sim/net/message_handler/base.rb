@@ -6,6 +6,20 @@ module Sim
 
         attr_reader :player
 
+        def self.register_handler handlers
+          @handlers ||= {}
+          handlers.each do |key, klass|
+            @handlers[key] = klass
+          end
+        end
+
+        def self.create_handlers(player)
+          @handlers.inject({}) do |handlers, item|
+            handlers[item[0]] = item[1].new(player)
+            handlers
+          end
+        end
+
         def initialize player
           @player = player
         end
