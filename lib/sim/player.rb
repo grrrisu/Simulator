@@ -34,6 +34,12 @@ module Sim
 
   private
 
+    def create_handlers
+      @message_handlers = {}
+      @message_handlers[:test]  = Net::MessageHandler::Test.new(self)
+      @message_handlers[:admin] = Net::MessageHandler::Admin.new(self)
+    end
+
     def dispatch message
       if handler = handler(message[:scope])
         handler.dispatch(message)

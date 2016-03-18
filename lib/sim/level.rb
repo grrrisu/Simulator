@@ -24,6 +24,10 @@ module Sim
       @players[player_id]
     end
 
+    def create
+      raise "implement in subclass"
+    end
+
     def shutdown
       @players.clear
       info "level shutdown"

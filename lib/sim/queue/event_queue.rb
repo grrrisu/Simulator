@@ -17,14 +17,13 @@ module Sim
 
       def initialize
         @events = []
-        @fire_worker = FireWorker.supervise(self)
-        TimeUnit.supervise_as :time_unit, seconds: 10 # timeunit 10 secs
+        @fire_worker_supervisor = FireWorker.supervise(self)
       end
 
       def add event
         info "add event #{event.inspect}"
         @events << event
-        @fire_worker.actors.first.async.run
+        @fire_worker_supervisor.actors.first.async.run
       end
 
       def get_event
@@ -33,7 +32,7 @@ module Sim
 
       def shutdown
         @events.clear
-        @fire_worker.terminate
+        @fire_worker_supervisor.terminate
         debug "shutdown event queue"
       end
 
