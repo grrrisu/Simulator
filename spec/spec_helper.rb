@@ -22,6 +22,9 @@ logfile = File.open(File.expand_path("../../log/test.log", __FILE__), 'a')
 Celluloid.logger.level = Logger::WARN
 
 Dir['./spec/support/*.rb'].map {|f| require f }
+# example code
+Dir['./examples/event/*.rb'].map {|f| require f }
+Dir['./examples/message_handler/*.rb'].map {|f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
@@ -30,10 +33,10 @@ RSpec.configure do |config|
   config.filter_run_excluding :skip => true
   config.run_all_when_everything_filtered = true
 
-  config.before(:each) do
-    Celluloid.logger = nil
-    Celluloid.shutdown
-    Celluloid.boot
-  end
+  # config.before(:each) do
+  #   Celluloid.logger = nil
+  #   Celluloid.shutdown
+  #   Celluloid.boot
+  # end
 
 end

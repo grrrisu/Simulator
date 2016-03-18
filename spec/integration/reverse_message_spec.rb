@@ -7,6 +7,7 @@ module Sim
     let(:connection) { Net::PlayerConnection.new(socket) }
 
     before(:each) do
+      Sim::Net::MessageHandler::Base.register_handler test: Example::SimpleHandler
       Celluloid::Actor[:event_queue] = Queue::EventQueue.new
       Celluloid::Actor[:level] = Level.new
       Celluloid::Actor[:broadcaster] = Net::Broadcaster.new

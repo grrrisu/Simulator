@@ -14,6 +14,7 @@ module Sim
         end
 
         def self.create_handlers(player)
+          return {} unless @handlers
           @handlers.inject({}) do |handlers, item|
             handlers[item[0]] = item[1].new(player)
             handlers
