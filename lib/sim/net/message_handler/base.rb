@@ -4,7 +4,7 @@ module Sim
 
       class Base
 
-        attr_reader :player
+        attr_reader :session
 
         def self.register_handler handlers
           @handlers ||= {}
@@ -21,8 +21,8 @@ module Sim
           end
         end
 
-        def initialize player
-          @player = player
+        def initialize session
+          @session = session
         end
 
         def dispatch message

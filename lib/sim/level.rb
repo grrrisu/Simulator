@@ -4,24 +4,24 @@ module Sim
     include Celluloid::Logger
     finalizer :shutdown
 
-    attr_reader :players
+    attr_reader :sessions
 
     def initialize
       info "level init"
-      @players = {}
+      @sessions = {}
     end
 
-    def add_player player
-      @players[player.id] = player
+    def add_session session
+      @sessions[session.player_id] = session
     end
 
-    def remove_player player_id
-      @players.delete player_id
-      debug "player #{player_id} removed"
+    def remove_session player_id
+      @sessions.delete player_id
+      debug "session #{player_id} removed"
     end
 
-    def find_player player_id
-      @players[player_id]
+    def find_session player_id
+      @sessions[player_id]
     end
 
     def create
@@ -29,7 +29,7 @@ module Sim
     end
 
     def shutdown
-      @players.clear
+      @sessions.clear
       info "level shutdown"
     end
 

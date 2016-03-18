@@ -19,15 +19,15 @@ module Sim
           receive data unless data.empty?
         end until data.empty? && socket.eof?
         info "client disconnected"
-        @player.terminate if @player
+        @session.terminate if @session
         terminate
       end
 
       def receive data
         message = JSON.parse(data, symbolize_names: true)
         info "received message #{message}"
-        player = get_player message[:player_id]
-        player.receive(message)
+        session = get_session message[:player_id]
+        session.receive(message)
       rescue StandardError => e
         message = {exception: e.class.name, message: e.message, data: data}
         socket.print message.to_json
@@ -49,13 +49,13 @@ module Sim
 
       private
 
-      def get_player player_id
+      def get_session player_id
         raise ArgumentError, "player_id is required" unless player_id
-        return @player if @player
-        @player = Player.new_link(player_id)
-        @player.connection = self
-        level.add_player @player
-        @player
+        return @session if @session
+        @session = Session.new_link(player_id)
+        @session.connection = self
+        level.add_session @session
+        @session
       end
 
     end
