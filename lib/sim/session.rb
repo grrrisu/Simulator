@@ -12,7 +12,7 @@ module Sim
     def initialize player_id
       info "session init with #{player_id}"
       @player_id = player_id
-      create_handlers
+      @message_handlers = Net::MessageHandler::Base.create_handlers(self)
     end
 
     def shutdown
@@ -35,8 +35,6 @@ module Sim
   private
 
     def create_handlers
-      @message_handlers = {}
-      @message_handlers[:test]  = Net::MessageHandler::Test.new(self)
       @message_handlers[:admin] = Net::MessageHandler::Admin.new(self)
     end
 
@@ -44,7 +42,7 @@ module Sim
       if handler = handler(message[:scope])
         handler.dispatch(message)
       else
-        raise ArgumentError, "no message handler found for scope #{message[:scope]} and player #{id}"
+        raise ArgumentError, "no message handler found for scope #{message[:scope]} and player #{player_id}"
       end
     end
 

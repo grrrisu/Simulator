@@ -32,7 +32,6 @@ module Sim
 
       def shutdown
         @events.clear
-        @fire_worker_supervisor.terminate
         debug "shutdown event queue"
       end
 

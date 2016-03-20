@@ -13,10 +13,10 @@ module Sim
           end
         end
 
-        def self.create_handlers(player)
+        def self.create_handlers(session)
           return {} unless @handlers
           @handlers.inject({}) do |handlers, item|
-            handlers[item[0]] = item[1].new(player)
+            handlers[item[0]] = item[1].new(session)
             handlers
           end
         end
