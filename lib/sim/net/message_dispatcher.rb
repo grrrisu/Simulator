@@ -6,11 +6,9 @@ module Sim
       include Celluloid::Logger
       finalizer :shutdown
 
-      def self.register_handler handlers
+      def self.register_handler name, klass
         @handlers ||= {}
-        handlers.each do |key, klass|
-          @handlers[key] = klass
-        end
+        @handlers[name] = klass
       end
 
       def self.create_handler name, session
