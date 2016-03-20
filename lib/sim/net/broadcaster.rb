@@ -9,7 +9,7 @@ module Sim
       def broadcast player_ids, message
         info "broadcast #{message.inspect} to #{player_ids}"
         Array(player_ids).each do |player_id|
-          if session = Session.find player_id
+          if session = Session.find(player_id)
             session.async.send_message message
           end
         end

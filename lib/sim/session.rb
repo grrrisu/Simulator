@@ -1,4 +1,5 @@
 module Sim
+
   class Session
     include Celluloid
     include Celluloid::Logger
@@ -11,16 +12,33 @@ module Sim
       Actor["session_#{player_id}"]
     end
 
+    def self.role name, &block
+      @role_definitions ||= {}
+      @role_definitions[name.to_sym] = block
+    end
+
+    def self.create_roles player_id
+      @role_definitions.map do |name, callback|
+        name if callback.call(player_id)
+      end
+    end
+
     def initialize player_id
       @player_id = player_id
-      @message_handlers = Net::MessageHandler::Base.create_handlers(self)
       Actor["session_#{player_id}"] = Actor.current
+      @roles = Session.create_roles player_id
     end
 
     def receive message
-      if answer = dispatch(message)
-        send_message scope: message[:scope], action: message[:action], answer: answer
+      if authorized?(message)
+        Actor[:message_dispatcher].dispatch(message, Actor.current)
+      else
+        raise "player #{player_id} is not authorized for #{message[:scope]}"
       end
+    end
+
+    def authorized?(message)
+      @roles.include?(message[:scope].to_sym)
     end
 
     def send_message message
@@ -28,25 +46,7 @@ module Sim
     end
 
     def shutdown
-      Actor["session_#{player_id}"] = nil
-    end
-
-  private
-
-    def create_handlers
-      @message_handlers[:admin] = Net::MessageHandler::Admin.new(self)
-    end
-
-    def dispatch message
-      if handler = handler(message[:scope])
-        handler.dispatch(message)
-      else
-        raise ArgumentError, "no message handler found for scope #{message[:scope]} and player #{player_id}"
-      end
-    end
-
-    def handler scope
-      @message_handlers[scope.to_sym]
+      Actor.delete "session_#{player_id}"
     end
 
   end
