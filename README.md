@@ -4,9 +4,31 @@
 
 A simulation container based on [Celluloid](https://github.com/celluloid/celluloid).
 
+### Usage
+
+#### Example
+
+routes:
+
+```
+Sim::Net::Router.define do |router|
+
+  router.forward :test, to: Example::SimpleHandler # allow everybody
+
+  router.forward :admin, to: Example::SimpleHandler do |player_id|
+    player_id.to_i == 123
+  end
+
+end
+```
+
 ####JSON API
 
 ```{sope: 'test', action: 'reverse', args: 'hello world'}```
+
+#### Examples
+
+see examples directory
 
 
 #### Requirements
