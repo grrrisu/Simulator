@@ -1,6 +1,4 @@
 module Sim
-  # the player actor is linked with its connection
-  # if one of the two crashes the other crashes as well
   class Session
     include Celluloid
     include Celluloid::Logger
@@ -9,20 +7,17 @@ module Sim
     attr_reader :player_id
     attr_accessor :connection
 
-    def initialize player_id
-      info "session init with #{player_id}"
-      @player_id = player_id
-      @message_handlers = Net::MessageHandler::Base.create_handlers(self)
+    def self.find player_id
+      Actor["session_#{player_id}"]
     end
 
-    def shutdown
-      level = Celluloid::Actor[:level]
-      level.async.remove_session @player_id
-      debug "player[#{@player_id}] shutdown"
+    def initialize player_id
+      @player_id = player_id
+      @message_handlers = Net::MessageHandler::Base.create_handlers(self)
+      Actor["session_#{player_id}"] = Actor.current
     end
 
     def receive message
-      info "player[#{@player_id}] received message #{message}"
       if answer = dispatch(message)
         send_message scope: message[:scope], action: message[:action], answer: answer
       end
@@ -30,6 +25,10 @@ module Sim
 
     def send_message message
       connection.send_message message
+    end
+
+    def shutdown
+      Actor["session_#{player_id}"] = nil
     end
 
   private

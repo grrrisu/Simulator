@@ -34,11 +34,8 @@ module Sim
         raise
       end
 
-      def level
-        Celluloid::Actor[:level]
-      end
-
       def send_message(message)
+        info "send message #{message}"
         socket.print message.to_json
       end
 
@@ -54,7 +51,6 @@ module Sim
         return @session if @session
         @session = Session.new_link(player_id)
         @session.connection = self
-        level.add_session @session
         @session
       end
 

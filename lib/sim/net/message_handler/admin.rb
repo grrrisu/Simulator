@@ -5,7 +5,7 @@ module Sim
       class Admin < Base
 
         def create
-          Celluloid::Actor[:level].create
+          Celluloid::Actor[:universe].create
           true
         end
 

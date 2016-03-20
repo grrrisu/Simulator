@@ -9,20 +9,16 @@ module Sim
       def broadcast player_ids, message
         info "broadcast #{message.inspect} to #{player_ids}"
         Array(player_ids).each do |player_id|
-          if session = level.find_session(player_id)
+          if session = Session.find player_id
             session.async.send_message message
           end
         end
       end
 
       def broadcast_to_all message
-        level.sessions.values.each do |session|
-          session.async.send_message message
-        end
-      end
-
-      def level
-        Celluloid::Actor[:level]
+        # level.sessions.values.each do |session|
+        #   session.send_message message
+        # end
       end
 
       def player_crashed actor, reason
