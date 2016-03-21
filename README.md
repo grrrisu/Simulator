@@ -46,6 +46,8 @@ middleware:
 
 ```$> cd node && node install```
 
+```$> gulp compile```
+
 #### Run
 
 sim server:
