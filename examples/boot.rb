@@ -1,6 +1,7 @@
 require_relative '../lib/sim'
 
 require_relative 'event/simple_event'
+require_relative 'event/crash_event'
 require_relative 'message_handler/simple_handler'
 
 Sim::Net::Router.define do |router|

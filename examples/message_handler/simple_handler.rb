@@ -6,8 +6,8 @@ module Example
       queue SimpleEvent.new(session.player_id, text)
     end
 
-    def direct_reverse text
-      text.reverse
+    def crash
+      queue CrashEvent.new(session.player_id)
     end
 
   end

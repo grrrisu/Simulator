@@ -1,0 +1,52 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="messages">
+    </div>
+
+    <form id="message-form">
+      <button type="submit" id="submit-button">Crash</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect("http://localhost:8080");
+
+      socket.on("connect", function(data){
+        console.log("connected to server");
+        socket.emit("join", 123, 'abc-123');
+      });
+
+      socket.on("action", function(data){
+        data = JSON.parse(data);
+        console.log("data received", data);
+        $('#messages').append('<div class="message">'+data.answer+'</div>');
+      });
+
+      socket.on("end", function(){
+        console.log("reloading");
+        window.location.href = window.location.href;
+      });
+
+      socket.on("net-status", function(data){
+        $('#messages').append('<div class="message">'+data.message+'</div>');
+      });
+
+      var MessageController = {
+        sendMessage: function(){
+          var message = $('#message').val();
+          action = {"scope": "test", "action": "crash" }
+          socket.emit("action", action);
+        }
+      }
+
+      $('#message-form').on('submit', function(e){
+        e.preventDefault();
+        MessageController.sendMessage();
+      });
+
+    </script>
+  </body>
+</html>
