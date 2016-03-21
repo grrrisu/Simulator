@@ -1,6 +1,6 @@
 module Example
 
-  class SimpleEvent < Sim::Queue::Event::Action
+  class ReverseEvent < Sim::Queue::Event::Action
 
     def initialize player_id, text
       @player_id = player_id

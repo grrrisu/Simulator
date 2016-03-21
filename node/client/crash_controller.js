@@ -9,7 +9,7 @@ module.exports = class CrashController {
   bind_event(socket) {
     $('#crash-form').on('submit', function(e){
       e.preventDefault();
-      let action = {"scope": "test", "action": "crash" }
+      let action = {"scope": "example", "action": "crash" }
       socket.send_message(action);
     });
   }

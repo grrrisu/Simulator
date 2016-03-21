@@ -10,7 +10,7 @@ module.exports = class ReverseController {
     $('#reverse-form').on('submit', function(e){
       e.preventDefault();
       let message = $('#message').val();
-      let action = {"scope": "test", "action": "reverse", "args": message }
+      let action = {"scope": "example", "action": "reverse", "args": message }
       socket.send_message(action);
     });
   }
