@@ -31,7 +31,7 @@ module Sim
 
     def receive message
       if authorized?(message)
-        Actor[:message_dispatcher].dispatch(message, Actor.current)
+        Actor[:message_dispatcher].async.dispatch(message, Actor.current)
       else
         raise "player #{player_id} is not authorized for #{message[:scope]}"
       end

@@ -7,7 +7,7 @@ Sim::Net::Router.define do |router|
 
   router.forward :test, to: Example::SimpleHandler
 
-  router.forward :admin, to: Example::SimpleHandler do |player_id|
+  router.forward :admin, to: Sim::Net::MessageHandler::Admin do |player_id|
     player_id.to_i == 123
   end
 

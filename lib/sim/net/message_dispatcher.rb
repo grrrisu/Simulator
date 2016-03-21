@@ -5,6 +5,7 @@ module Sim
       include Celluloid
       include Celluloid::Logger
       finalizer :shutdown
+      trap_exit :handler_crashed
 
       def self.register_handler name, klass
         @handlers ||= {}
@@ -19,7 +20,7 @@ module Sim
 
       def dispatch message, session
         if answer = forward(message, session)
-          session.send_message scope: message[:scope], action: message[:action], answer: answer
+          session.async.send_message scope: message[:scope], action: message[:action], answer: answer
         end
       end
 
@@ -29,6 +30,10 @@ module Sim
         else
           raise ArgumentError, "no message handler found for scope #{message[:scope]} and player #{player_id}"
         end
+      end
+
+      def handler_crashed actor, reason
+        info "handler #{actor} crashed for reason #{reason}"
       end
 
       def shutdown
