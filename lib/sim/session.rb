@@ -12,6 +12,12 @@ module Sim
       Actor["session_#{player_id}"]
     end
 
+    def self.session_size
+      Actor.registered.inject(0) do |count, name|
+        name.to_s.start_with?('session_') ? count + 1 : count
+      end
+    end
+
     def self.role name, &block
       @role_definitions ||= {}
       @role_definitions[name.to_sym] = block

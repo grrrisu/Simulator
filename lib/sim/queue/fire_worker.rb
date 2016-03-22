@@ -22,12 +22,13 @@ module Sim
         debug "process event #{event.inspect}"
         event.fire # later maybe retry
       rescue RuntimeError => e
-        monitor event, error
-        raise
+        monitor event, e
+        raise # or retry
       end
 
       def monitor event, error
-        Actor[:monitor].async.add component: :fire_worker, event: event.class.name, error: error.message
+        event = {component: :fire_worker, event: event.class.name, error: error.message}
+        Actor[:monitor].async.add event
       end
 
       def shutdown

@@ -11,6 +11,10 @@ module Sim
         @sim_loop_supervisor = SimLoop.supervise 8.0
       end
 
+      def object_size
+        @sim_loop_supervisor.actors.first.objects.size
+      end
+
       def start
         Celluloid::Actor[:time_unit].start
         @sim_loop_supervisor.actors.first.start

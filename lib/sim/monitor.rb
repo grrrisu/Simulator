@@ -13,6 +13,7 @@ module Sim
     end
 
     def add entry
+      entry[time: Time.now]
       @logs << entry
       broadcast entry
     end

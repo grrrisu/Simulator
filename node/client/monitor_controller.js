@@ -36,6 +36,12 @@ module.exports = class MonitorController {
       let action = {"scope": "monitor", "action": "unsubscribe"}
       socket.send_message(action);
     });
+
+    $('#monitor-snapshot').on('click', function(e){
+      e.preventDefault();
+      let action = {"scope": "monitor", "action": "snapshot"}
+      socket.send_message(action);
+    });
   }
 
 }
