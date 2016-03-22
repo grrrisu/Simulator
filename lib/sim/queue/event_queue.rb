@@ -11,7 +11,7 @@ module Sim
       include Celluloid
       include Celluloid::Logger
       finalizer :shutdown
-      trap_exit :worker_crashed
+      trap_exit :worker_supervisor_crashed
 
       attr_reader :events
 
@@ -23,7 +23,11 @@ module Sim
       def add event
         info "add event #{event.inspect}"
         @events << event
-        @fire_worker_supervisor.actors.first.async.run
+        fire_worker.async.run
+      end
+
+      def fire_worker
+        @fire_worker_supervisor.actors.first
       end
 
       def get_event
@@ -35,7 +39,7 @@ module Sim
         debug "shutdown event queue"
       end
 
-      def worker_crashed actor, reason
+      def worker_supervisor_crashed actor, reason
         info "actor #{actor.inspect} dies of #{reason}:#{reason.message}"
       end
 

@@ -2,17 +2,14 @@ module Sim
   module Net
     module MessageHandler
 
-      class Monitor
+      class Monitor < Base
 
-        def initialize config
+        def subscribe
+          monitor.async.subscribe session.player_id
         end
 
-        def subscribe player_id
-          monitor.async.subscribe player_id
-        end
-
-        def unsubscribe player_id
-          monitor.async.unsubscribe player_id
+        def unsubscribe
+          monitor.async.unsubscribe session.player_id
         end
 
         def logs
