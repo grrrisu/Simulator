@@ -1,5 +1,7 @@
 "use strict";
 
+var $ = require('../bower_components/jquery/dist/jquery.min.js');
+
 var SocketService = require('./socket_service.js');
 var ReverseController = require('./reverse_controller.js');
 var CrashController = require('./crash_controller.js');

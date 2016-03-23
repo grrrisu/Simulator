@@ -1,5 +1,8 @@
 "use strict";
 
+var io = require('../node_modules/socket.io/node_modules/socket.io-client/socket.io.js');
+var $ = require('../bower_components/jquery/dist/jquery.min.js');
+
 module.exports = class SocketService {
 
   connect(url, player_id, token) {

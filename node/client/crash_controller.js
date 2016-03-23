@@ -1,5 +1,7 @@
 "use strict";
 
+var $ = require('../bower_components/jquery/dist/jquery.min.js');
+
 module.exports = class CrashController {
 
   constructor(socket) {

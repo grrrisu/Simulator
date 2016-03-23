@@ -6,6 +6,7 @@ log/*.log
 tmp/sockets/player.sock
 
 node/node_modules/**/*
+node/bower_components/**/*
 node/public/javascripts/client.js
 
 config/level.yml
