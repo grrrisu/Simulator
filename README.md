@@ -45,11 +45,12 @@ sim server:
 
 middleware:
 
-```$> cd node && npm install```
-
-```$> bower install```
-
-```$> gulp compile```
+```
+$> cd node 
+$> npm install
+$> bower install
+$> gulp compile
+```
 
 #### Run
 
