@@ -7,18 +7,17 @@ module Sim
       trap_exit :player_crashed
 
       def broadcast player_ids, message
-        info "broadcast #{message.inspect} to #{Array(player_ids)}"
-        Array(player_ids).each do |player_id|
-          if session = Session.find(player_id)
-            session.async.send_message message
-          end
+        player_ids = Array(player_ids)
+        info "broadcast #{message.inspect} to #{player_ids}"
+        Session.find_players(player_ids).each do |session|
+          session.async.send_message message
         end
       end
 
       def broadcast_to_all message
-        # level.sessions.values.each do |session|
-        #   session.send_message message
-        # end
+        Session.registry_keys do |key|
+          Actor[key].async.send_message message
+        end
       end
 
       def player_crashed actor, reason

@@ -5,16 +5,31 @@ module Sim
     include Celluloid::Logger
     finalizer :shutdown
 
-    attr_reader :player_id
+    attr_reader :session_id, :player_id
     attr_accessor :connection
 
-    def self.find player_id
-      Actor["session_#{player_id}"]
+    def self.find_players player_ids
+      registry_keys.inject([]) do |sessions, key|
+        if player_ids.include? Actor[key].player_id
+          sessions << Actor[key]
+        end
+        sessions
+      end
+    end
+
+    def self.find_player player_id
+      registry_keys.each do |key|
+        return Actor[key] if player_id == Actor[key].player_id
+      end
     end
 
     def self.session_size
-      Actor.registered.inject(0) do |count, name|
-        name.to_s.start_with?('session_') ? count + 1 : count
+      registry_keys.size
+    end
+
+    def self.registry_keys
+      Actor.registered.find_all do |key|
+        key.to_s.start_with?('session_')
       end
     end
 
@@ -30,8 +45,9 @@ module Sim
     end
 
     def initialize player_id
-      @player_id = player_id
-      Actor["session_#{player_id}"] = Actor.current
+      @player_id  = player_id
+      @session_id = object_id
+      Actor["session_#{session_id}"] = Actor.current
       @roles = Session.create_roles player_id
     end
 
@@ -52,7 +68,8 @@ module Sim
     end
 
     def shutdown
-      Actor.delete "session_#{player_id}"
+      debug "shutdown session #{session_id} for player #{player_id}"
+      Actor.delete "session_#{session_id}"
     end
 
   end
