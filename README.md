@@ -35,6 +35,7 @@ see examples directory
 
 * ruby 2.3.x
 * node 0.12.x
+* bower 1.7.x
 
 #### Install
 
@@ -44,7 +45,9 @@ sim server:
 
 middleware:
 
-```$> cd node && node install```
+```$> cd node && npm install```
+
+```$> bower install```
 
 ```$> gulp compile```
 
