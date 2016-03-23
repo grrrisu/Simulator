@@ -35,7 +35,6 @@ see examples directory
 
 * ruby 2.3.x
 * node 0.12.x
-* bower 1.7.x
 
 #### Install
 
