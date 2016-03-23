@@ -18,8 +18,8 @@ module Sim
       end
 
       def forward name, to:, &block
-        Sim::Net::MessageDispatcher.register_handler name.to_sym, to
-        Sim::Session.role(name.to_sym) do |player_id|
+        MessageDispatcher.register_handler name.to_sym, to
+        Session.role(name.to_sym) do |player_id|
           block || proc { true }
         end
       end
