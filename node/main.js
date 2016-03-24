@@ -10,7 +10,7 @@ web_socket.connect(server);
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/reverse.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 server.listen(8080, function(){
