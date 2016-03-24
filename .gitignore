@@ -7,8 +7,6 @@ tmp/sockets/player.sock
 
 node/node_modules/**/*
 examples/node/node_modules/**/*
-node/bower_components/**/*
-examples/node/bower_components/**/*
 node/public/javascripts/client.js
 
 config/level.yml

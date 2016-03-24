@@ -9,6 +9,7 @@ module Sim
 
       def initialize event_queue
         @event_queue = event_queue
+        run
       end
 
       def run
@@ -21,14 +22,20 @@ module Sim
       def process event
         debug "process event #{event.inspect}"
         event.fire # later maybe retry
+        monitor_processed event
       rescue RuntimeError => e
-        monitor event, e
+        monitor_error event, e
         raise # or retry
       end
 
-      def monitor event, error
+      def monitor_processed event
+        event = {name: event.class.name}
+        Actor[:monitor].async.add_event event
+      end
+
+      def monitor_error event, error
         event = {component: :fire_worker, event: event.class.name, error: error.message}
-        Actor[:monitor].async.add event
+        Actor[:monitor].async.add_error event
       end
 
       def shutdown
