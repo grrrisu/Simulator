@@ -18,17 +18,17 @@ module Sim
       broadcast entry
     end
 
-    def subscribe player_id
-      @subscribers << player_id
+    def subscribe session_id
+      @subscribers << session_id
     end
 
-    def unsubscribe player_id
-      @subscribers.delete player_id
+    def unsubscribe session_id
+      @subscribers.delete session_id
     end
 
     def broadcast entry
       message = {scope: :monitor, action: :add, answer: entry}
-      Actor[:broadcaster].async.broadcast @subscribers, message
+      Actor[:broadcaster].async.broadcast_to_sessions @subscribers, message
     end
 
     def shutdown

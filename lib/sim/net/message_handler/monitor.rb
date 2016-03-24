@@ -5,11 +5,11 @@ module Sim
       class Monitor < Base
 
         def subscribe
-          monitor.async.subscribe session.player_id
+          monitor.async.subscribe session.session_id
         end
 
         def unsubscribe
-          monitor.async.unsubscribe session.player_id
+          monitor.async.unsubscribe session.session_id
         end
 
         def snapshot

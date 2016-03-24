@@ -24,6 +24,10 @@ module Sim
         end
       end
 
+      def self.find session_id
+        Actor["session_#{session_id}"]
+      end
+
       def self.session_size
         registry_keys.size
       end

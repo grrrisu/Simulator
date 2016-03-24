@@ -13,6 +13,16 @@ module Sim
           session.async.send_message message
         end
       end
+      alias broadcast_to_players broadcast
+
+      def broadcast_to_sessions sessions_ids, message
+        sessions_ids = Array(sessions_ids)
+        info "broadcast #{message.inspect} to #{sessions_ids}"
+        sessions_ids.each do |session_id|
+          session = Session.find session_id
+          session.async.send_message message
+        end
+      end
 
       def broadcast_to_all message
         Session.registry_keys do |key|
