@@ -26,7 +26,7 @@ gulp.task('compile', function() {
   return sources.bundle()
     .pipe(vinylSourceStream('client.js'))
     .pipe(vinylBuffer())
-    .pipe(gulp.dest('public/javascripts/'))
+    .pipe(gulp.dest('./public/javascripts/'))
     .pipe(liveReload());
 });
 

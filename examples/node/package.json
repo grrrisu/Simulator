@@ -1,7 +1,7 @@
 {
-  "name": "simulator-middleware",
+  "name": "simulator-middleware-examples",
   "version": "0.4.0",
-  "description": "middleware between client browser and the sim server",
+  "description": "examples for simulator middleware",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,6 +23,17 @@
   },
   "homepage": "https://github.com/grrrisu/Simulator#readme",
   "dependencies": {
-    "socket.io": "^1.4.5"
+    "babelify": "^7.2.0",
+    "bootstrap": "^3.3.6",
+    "browserify": "^13.0.0",
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1",
+    "jquery": "^2.2.2",
+    "retry": "^0.9.0",
+    "simulator-middleware": "file:../../node",
+    "socket.io": "^1.4.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

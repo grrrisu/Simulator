@@ -2,7 +2,7 @@
 
 const retry = require('retry');
 
-exports.connect = function(server){
+exports.connect = function(server, socket_file){
 
   const io = require('socket.io')(server);
   const unix_socket = require('./unix_socket');
@@ -19,8 +19,7 @@ exports.connect = function(server){
 
       let operation = retry.operation();
       operation.attempt(function(currentAttempt){
-        console.log(__dirname + '../tmp/sockets/server/player.sock');
-        unix_socket.connect(__dirname + '/../tmp/sockets/player.sock', (err, socket) => {
+        unix_socket.connect(socket_file, (err, socket) => {
           if(operation.retry(err)){
             client.emit("net-status", {message: "sim server is not available", error: err});
             return;
