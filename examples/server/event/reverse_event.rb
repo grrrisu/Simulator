@@ -8,7 +8,7 @@ module Example
     end
 
     def fire
-      broadcast player_id, scope: 'test', action: 'reverse', answer: reverse_text
+      broadcast player_id, scope: 'example', action: 'reverse', answer: reverse_text
     end
 
     def reverse_text

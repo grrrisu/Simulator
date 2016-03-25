@@ -7,7 +7,7 @@ module Example
     end
 
     def fire
-      broadcast player_id, scope: 'test', action: 'reverse', answer: wait
+      broadcast player_id, scope: 'example', action: 'reverse', answer: wait
     end
 
     def wait

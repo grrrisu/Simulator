@@ -1,9 +1,13 @@
 "use strict";
 
 var io = require('socket.io/node_modules/socket.io-client/socket.io.js');
-var $ = require('jquery/dist/jquery.min.js');
+var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
-module.exports = class SocketService {
+module.exports = class SocketService extends EventEmitter2 {
+
+  constructor(){
+    super({wildcard: true});
+  }
 
   connect(url, player_id, token) {
 
@@ -16,8 +20,7 @@ module.exports = class SocketService {
 
     this.socket.on("action", (data) => {
       data = JSON.parse(data);
-      console.log("data received", data);
-      $('#messages').append('<div class="message">'+data.answer+'</div>');
+      this.emit([data.scope, data.action], data);
     });
 
     this.socket.on("end", () => {
@@ -26,10 +29,10 @@ module.exports = class SocketService {
     });
 
     this.socket.on("net-status", (data) => {
-      $('#messages').append('<div class="message">'+data.message+'</div>');
+      this.emit('net-status', data);
     });
 
-    return this.socket;
+    return this;
 
   }
 
