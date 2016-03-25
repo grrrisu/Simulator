@@ -25,9 +25,10 @@ module.exports = class Game {
       $('#errors').append('<div class="message">'+answer.component+': '+answer.error+' - '+answer.event+'</div>');
     });
 
+    let emptyData = [{"label": 'empty', "values": [{"time": new Date().getTime(), y: 0}]}]
     let processedEventsChart = $('#processedEventsChart').epoch({
       type: 'time.bar',
-      data: [] //[{"label": 'Example::ReverseEvent', "values": [{"time": new Date().getTime(), y: 10}]}]
+      data: emptyData
     });
 
     socket.on('monitor.history', function(data){
@@ -35,10 +36,15 @@ module.exports = class Game {
       let chartData = [];
       let time = new Date().getTime();
       Object.keys(data.answer).forEach(function(key, index){
-        chartData.push({"label": key, "values": [{"time": time, "y": data.answer[key]}]});
+        let label = key.replace('::', ' ');
+        chartData.push({"label": label, "time": time, "y": data.answer[key]});
       });
       console.log(chartData);
-      $('#processedEventsChart').epoch({type: 'time.bar', data: chartData});
+      if(chartData.length != 0){
+        processedEventsChart.push(chartData);
+      } else {
+        processedEventsChart.push(emptyData);
+      }
     });
 
     socket.on('monitor.snapshot', function(data){
