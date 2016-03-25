@@ -26,6 +26,8 @@
     "babelify": "^7.2.0",
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.0",
+    "d3": "^3.5.16",
+    "epoch-charting": "^0.8.4",
     "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-livereload": "^3.8.1",

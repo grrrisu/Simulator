@@ -9,6 +9,7 @@ web_socket.connect(server, __dirname + '/../../tmp/sockets/player.sock');
 
 app.use(express.static('public'));
 app.use(express.static('node_modules/bootstrap/dist'));
+app.use(express.static('node_modules/epoch-charting/dist'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');

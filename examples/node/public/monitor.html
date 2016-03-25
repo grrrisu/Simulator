@@ -6,31 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simulator Monitor</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/epoch.min.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Monitor</h1>
+    <div class="container-fluid">
+      <h1>Monitor</h1>
 
-    <div id="status">
-    </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Actions</h3>
+          <div>
+            <a href="#" class="btn btn-sm btn-primary" id="button-reverse">Reverse</a>
+            <a href="#" class="btn btn-sm btn-primary" id="button-crash">Crash</a>
+            <a href="#" class="btn btn-sm btn-primary" id="button-wait">Wait</a>
+          </div>
 
-    <div id="errors">
-    </div>
+          <h3>Monitor</h3>
+          <div>
+            <a href="#" class="btn btn-sm btn-primary" id="monitor-subscribe">subscribe</a>
+            <a href="#" class="btn btn-sm btn-primary" id="monitor-unsubscribe">unsubscribe</a>
+            <a href="#" class="btn btn-sm btn-primary" id="monitor-snapshot">snapshot</a>
+          </div>
+        </div>
 
-    <div id="messages">
-    </div>
+        <div class="col-md-6">
+          <h2>Info</h2>
+          <table class="table">
+            <tr>
+              <td>Status:</td>
+              <td id="net-status"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
-    <div>
-      <a href="#" class="btn btn-sm btn-primary" id="button-reverse">Reverse</a>
-      <a href="#" class="btn btn-sm btn-primary" id="button-crash">Crash</a>
-      <a href="#" class="btn btn-sm btn-primary" id="button-wait">Wait</a>
-    </div>
-    <div>
-      <a href="#" class="btn btn-sm btn-primary" id="monitor-subscribe">subscribe</a>
-      <a href="#" class="btn btn-sm btn-primary" id="monitor-unsubscribe">unsubscribe</a>
-      <a href="#" class="btn btn-sm btn-primary" id="monitor-snapshot">snapshot</a>
+      <div class="row">
+        <div id="messages" class="col-md-6">
+          <h2>Events</h2>
+        </div>
+        <div class="col-md-6">
+          <div id="processedEventsChart" class="epoch" style="width: 690px; height: 200px"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="errors" class="col-md-6">
+          <h2>Errors</h2>
+        </div>
+        <div class="col-md-6">
+          <div id="errorsChart" style="width: 690px; height: 200px"></div>
+        </div>
+      </div>
+
     </div>
 
     <script src="javascripts/client.js"></script>
-    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
