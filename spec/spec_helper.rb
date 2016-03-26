@@ -23,8 +23,8 @@ Celluloid.logger.level = Logger::WARN
 
 Dir['./spec/support/*.rb'].map {|f| require f }
 # example code
-Dir['./examples/event/*.rb'].map {|f| require f }
-Dir['./examples/message_handler/*.rb'].map {|f| require f }
+Dir['./examples/server/event/*.rb'].map {|f| require f }
+Dir['./examples/server/message_handler/*.rb'].map {|f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
