@@ -26,7 +26,10 @@ module.exports = function(){
   } );
 
   let errorsHoverDetail = new Rickshaw.Graph.HoverDetail({
-    graph: errorsChart
+    graph: errorsChart,
+    yFormatter: function(y){
+      return Math.round(y);
+    }
   });
 
   errorsChart.render();

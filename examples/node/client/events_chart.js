@@ -2,7 +2,7 @@
 
 module.exports = function(){
 
-  let processedPalette = new Rickshaw.Color.Palette( { scheme: 'spectrum2000' } );
+  let processedPalette = new Rickshaw.Color.Palette( { scheme: 'spectrum14' } );
 
   let processedEventsChart = new Rickshaw.Graph( {
     element: document.getElementById("processed-events-chart"),
@@ -10,8 +10,7 @@ module.exports = function(){
     height: 200,
     renderer: 'bar',
     stroke: true,
-    series: new Rickshaw.Series.FixedDuration([{ name: 'one' }], undefined, {
-      color: processedPalette.color(),
+    series: new Rickshaw.Series.FixedDuration([{ name: 'one' }], processedPalette, {
       timeInterval: 10000,
       maxDataPoints: 100,
       timeBase: new Date().getTime() / 1000
@@ -26,7 +25,10 @@ module.exports = function(){
   } );
 
   let processedHoverDetail = new Rickshaw.Graph.HoverDetail({
-    graph: processedEventsChart
+    graph: processedEventsChart,
+    yFormatter: function(y){
+      return Math.round(y);
+    }
   });
 
   processedEventsChart.render();
