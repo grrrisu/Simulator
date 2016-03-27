@@ -23,7 +23,7 @@ exports.connect = function(file, callback) {
 
   client.on("end", function(){
     console.log("server disconnected");
-    client.browserConnection.emit("net-status", {message: "sim server disconnected", error: null});
+    client.browserConnection.emit("net-status", {message: "sim server disconnected", key: "server closed", error: null});
     client.browserConnection.serverConnection = null;
   });
 

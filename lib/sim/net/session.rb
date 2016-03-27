@@ -74,7 +74,7 @@ module Sim
 
       def shutdown
         debug "shutdown session #{session_id} for player #{player_id}"
-        Actor[:monitor].async.unsubscribe session_id
+        Actor[:monitor].async.unsubscribe session_id if Actor[:monitor]
         Actor.delete "session_#{session_id}"
       end
 

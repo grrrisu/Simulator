@@ -18,7 +18,7 @@
       	bottom: 0;
       	width: 40px;
       }
-      #messages, #errors {
+      .table-container {
         height: 250px;
         overflow: scroll;
       }
@@ -47,10 +47,23 @@
 
         <div class="col-md-6">
           <h2>Info</h2>
-          <table class="table">
+          <div id="net-status"></div>
+          <table class="table table-bordered">
             <tr>
-              <td>Status:</td>
-              <td id="net-status"></td>
+              <td width="25%">sessions:</td>
+              <td width="75%" id="sessions"></td>
+            </tr>
+            <tr>
+              <td width="25%">Time Unit:</td>
+              <td width="75%" id="time-unit"></td>
+            </tr>
+            <tr>
+              <td width="25%">Objects:</td>
+              <td width="75%" id="objects"></td>
+            </tr>
+            <tr>
+              <td width="25%">Event Queue:</td>
+              <td width="75%" id="event-queue"></td>
             </tr>
           </table>
         </div>
@@ -59,7 +72,9 @@
       <div class="row">
         <div class="col-md-6">
           <h2>Events</h2>
-          <div id="messages"></div>
+          <div class="table-container">
+            <table id="messages" class="table"></table>
+          </div>
         </div>
         <div class="col-md-6 chart_container">
           <div id="processed-events-y-axis"></div>
@@ -71,7 +86,9 @@
       <div class="row">
         <div class="col-md-6">
           <h2>Errors</h2>
-          <div id="errors"></div>
+          <div class="table-container">
+            <table id="errors" class="table"></table>
+          </div>
         </div>
         <div class="col-md-6">
           <div id="errors-y-axis"></div>

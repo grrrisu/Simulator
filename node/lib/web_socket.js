@@ -21,12 +21,12 @@ exports.connect = function(server, socket_file){
       operation.attempt(function(currentAttempt){
         unix_socket.connect(socket_file, (err, socket) => {
           if(operation.retry(err)){
-            client.emit("net-status", {message: "sim server is not available", error: err});
+            client.emit("net-status", {message: "sim server is not available", key: "server_away", error: err});
             return;
           } else {
             serverConnection = socket;
             serverConnection.browserConnection = client;
-            client.emit("net-status", {message: "connected to sim server", error: null});
+            client.emit("net-status", {message: "connected to sim server", key: "server_connected", error: null});
           }
         });
 

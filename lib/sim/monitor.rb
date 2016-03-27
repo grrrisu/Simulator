@@ -39,7 +39,7 @@ module Sim
     def broadcast_history
       if @subscribers.any?
         @timer = after(HISTORY_LENGTH) do
-          message = {scope: :monitor, action: :history, answer: summary}
+          message = {scope: :monitor, action: :history, summary: summary, snapshot: snapshot }
           Actor[:broadcaster].async.broadcast_to_sessions @subscribers, message
           broadcast_history
           @events.clear # history lives only for one interval
@@ -47,6 +47,19 @@ module Sim
       else
         @timer = nil
       end
+    end
+
+    def snapshot
+      event_size  = Celluloid::Actor[:event_queue].future.events
+      session_size = Net::Session.session_size
+      object_size = Celluloid::Actor[:sim_master].future.object_size
+      time_unit   = Celluloid::Actor[:time_unit].zero_or_time_elapsed
+      {
+        session_size: session_size,
+        event_size: event_size.value.size,
+        object_size: object_size.value,
+        time_unit: time_unit
+      }
     end
 
     def summary
