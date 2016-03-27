@@ -30,6 +30,7 @@ module Sim
     def subscribe session_id
       @subscribers << session_id
       broadcast_history unless @timer
+      send_history
     end
 
     def unsubscribe session_id
@@ -39,14 +40,18 @@ module Sim
     def broadcast_history
       if @subscribers.any?
         @timer = after(HISTORY_LENGTH) do
-          message = {scope: :monitor, action: :history, summary: summary, snapshot: snapshot }
-          Actor[:broadcaster].async.broadcast_to_sessions @subscribers, message
-          broadcast_history
+          send_history
           @events.clear # history lives only for one interval
         end
       else
         @timer = nil
       end
+    end
+
+    def send_history
+      message = {scope: :monitor, action: :history, summary: summary, snapshot: snapshot }
+      Actor[:broadcaster].async.broadcast_to_sessions @subscribers, message
+      broadcast_history
     end
 
     def snapshot
