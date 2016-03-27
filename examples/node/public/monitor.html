@@ -6,7 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simulator Monitor</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/epoch.min.css" rel="stylesheet">
+    <link href="rickshaw.min.css" rel="stylesheet">
+    <style>
+      #processed-events-chart, #errors-chart {
+      	position: relative;
+      	left: 40px;
+      }
+      #processed-events-y-axis, #errors-y-axis {
+      	position: absolute;
+      	top: 0;
+      	bottom: 0;
+      	width: 40px;
+      }
+      #messages, #errors {
+        height: 250px;
+        overflow: scroll;
+      }
+    </style>
   </head>
   <body>
     <div class="container-fluid">
@@ -41,20 +57,26 @@
       </div>
 
       <div class="row">
-        <div id="messages" class="col-md-6">
-          <h2>Events</h2>
-        </div>
         <div class="col-md-6">
-          <div id="processedEventsChart" class="epoch" style="width: 690px; height: 200px"></div>
+          <h2>Events</h2>
+          <div id="messages"></div>
+        </div>
+        <div class="col-md-6 chart_container">
+          <div id="processed-events-y-axis"></div>
+          <div id="processed-events-chart" style="width: 690px; height: 200px"></div>
+          <div id="processed-events-legend"></div>
         </div>
       </div>
 
       <div class="row">
-        <div id="errors" class="col-md-6">
+        <div class="col-md-6">
           <h2>Errors</h2>
+          <div id="errors"></div>
         </div>
         <div class="col-md-6">
-          <div id="errorsChart" style="width: 690px; height: 200px"></div>
+          <div id="errors-y-axis"></div>
+          <div id="errors-chart" style="width: 690px; height: 200px"></div>
+          <div id="errors-legend"></div>
         </div>
       </div>
 
