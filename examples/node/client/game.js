@@ -2,8 +2,7 @@
 
 const SocketService = require('simulator-middleware/client/socket_service.js');
 const MonitorController = require('./monitor_controller.js');
-const EventsChart = require('./events_chart.js');
-const ErrorsChart = require('./errors_chart.js');
+const MonitorChart   = require('./monitor_chart.js');
 
 module.exports = class Game {
 
@@ -18,29 +17,40 @@ module.exports = class Game {
   dispatch(socket) {
     socket.on('example.*', function(data){
       console.log("data received", data);
-      $('#messages').prepend('<tr class="message"><td>'+data.answer+'</td></tr>');
+      let time = new Date().toLocaleString();
+      $('#messages').prepend('<tr class="message"><td>'+time+'</td><td>'+data.answer+'</td></tr>');
     });
 
-    let errorsChart = ErrorsChart();
+    let errorsChart = new MonitorChart({
+      chartElementId: "errors-chart",
+      palette: 'colorwheel',
+      defaultSerie: 'errors',
+      yAxisElementId: 'errors-y-axis'
+    })
+    errorsChart.render();
     let errorCount = 0;
 
     socket.on('monitor.error', function(data){
       console.log("data received", data);
       let answer = data.answer;
       errorCount++;
-      $('#errors').prepend('<tr class="danger"><td>'+answer.component+': '+answer.error+' - '+answer.event+'</td></tr>');
+      let time = new Date().toLocaleString();
+      $('#errors').prepend('<tr class="danger"><td>'+time+'</td><td>'+answer.component+': '+answer.error+' - '+answer.event+'</td></tr>');
     });
 
-    let processedEventsChart = EventsChart();
+    let processedEventsChart = new MonitorChart({
+      chartElementId: "processed-events-chart",
+      palette: 'spectrum14',
+      yAxisElementId: 'processed-events-y-axis'
+    });
+    processedEventsChart.render();
 
     socket.on('monitor.history', (data) => {
-      processedEventsChart.series.addData(data.summary);
-    	processedEventsChart.render();
-      this.updateInfo(data.snapshot);
+      processedEventsChart.update(data.summary);
+    	this.updateInfo(data.snapshot);
 
-      errorsChart.series.addData({errors: errorCount});
-    	errorsChart.render();
-      errorCount = 0;
+      errorsChart.update({errors: errorCount});
+    	errorCount = 0;
     });
 
     socket.on('monitor.snapshot', (data) => {

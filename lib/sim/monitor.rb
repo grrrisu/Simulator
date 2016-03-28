@@ -17,12 +17,14 @@ module Sim
     end
 
     def add_error entry
+      return if @subscribers.empty?
       entry[time: Time.now]
       @errors << entry
       broadcast_error entry
     end
 
     def add_event event
+      return if @subscribers.empty?
       event[time: Time.now]
       @events << event
     end
@@ -35,6 +37,7 @@ module Sim
 
     def unsubscribe session_id
       @subscribers.delete session_id
+      @events.clear if @subscribers.empty?
     end
 
     def broadcast_history
