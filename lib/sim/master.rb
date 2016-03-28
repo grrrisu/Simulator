@@ -5,6 +5,8 @@ module Sim
     supervise Queue::EventQueue, as: :event_queue
     supervise Net::MessageDispatcher, as: :message_dispatcher
     supervise Net::Broadcaster, as: :broadcaster
-    supervise Net::PlayerServer, as: :player_server, args: ['tmp/sockets/player.sock', {start: true}]
+    # TODO read from config yml
+    socket_file = File.join(__dir__, '..', '..', 'tmp', 'sockets', 'player.sock')
+    supervise Net::PlayerServer, as: :player_server, args: [socket_file, {start: true}]
   end
 end
