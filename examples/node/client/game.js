@@ -35,7 +35,7 @@ module.exports = class Game {
       let answer = data.answer;
       errorCount++;
       let time = new Date().toLocaleString();
-      $('#errors').prepend('<tr class="danger"><td>'+time+'</td><td>'+answer.component+': '+answer.error+' - '+answer.event+'</td></tr>');
+      $('#errors').prepend('<tr class="danger"><td>'+time+'</td><td>'+answer.error+' - '+answer.event+'</td></tr>');
     });
 
     let processedEventsChart = new MonitorChart({
