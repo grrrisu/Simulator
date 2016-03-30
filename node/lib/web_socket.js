@@ -28,10 +28,7 @@ exports.connect = function(server, socket_file){
     console.log("browser connected");
     let serverConnection = null;
 
-    client.on("join", function(id, token){
-      console.log(id + " : " + token + " joined");
-      player_id = id;
-
+    client.connect_to_backend = () => {
       connect_to_unix_socket(socket_file, (socket) => {
         serverConnection = socket;
         serverConnection.browserConnection = client;
@@ -39,6 +36,12 @@ exports.connect = function(server, socket_file){
       }, (err) => {
         client.emit("net-status", {message: "sim server is not available", key: "server_away", error: err});
       });
+    }
+
+    client.on("join", function(id, token){
+      console.log(id + " : " + token + " joined");
+      player_id = id;
+      client.connect_to_backend();
     });
 
     client.on("action", function(data){

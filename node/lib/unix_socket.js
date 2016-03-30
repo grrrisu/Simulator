@@ -25,6 +25,7 @@ exports.connect = function(file, callback) {
     console.log("server disconnected");
     client.browserConnection.emit("net-status", {message: "sim server disconnected", key: "server closed", error: null});
     client.browserConnection.serverConnection = null;
+    client.browserConnection.connect_to_backend();
   });
 
 };
