@@ -30,7 +30,7 @@ module Sim
         session.receive(message)
       rescue StandardError => e
         message = {exception: e.class.name, message: e.message, data: data}
-        socket.print message.to_json
+        socket.puts message.to_json
         raise
       end
 
