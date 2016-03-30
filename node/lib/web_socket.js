@@ -1,11 +1,11 @@
 "use strict";
 
 const retry = require('retry');
+const unix_socket = require('./unix_socket');
 
 exports.connect = function(server, socket_file){
 
   const io = require('socket.io')(server);
-  const unix_socket = require('./unix_socket');
 
   let player_id = null;
 
@@ -17,19 +17,10 @@ exports.connect = function(server, socket_file){
       console.log(id + " : " + token + " joined");
       player_id = id;
 
-      let operation = retry.operation();
-      operation.attempt(function(currentAttempt){
-        unix_socket.connect(socket_file, (err, socket) => {
-          if(operation.retry(err)){
-            client.emit("net-status", {message: "sim server is not available", key: "server_away", error: err});
-            return;
-          } else {
-            serverConnection = socket;
-            serverConnection.browserConnection = client;
-            client.emit("net-status", {message: "connected to sim server", key: "server_connected", error: null});
-          }
-        });
-
+      connect_unix_socket(socket_file, (socket) => {
+        serverConnection = socket;
+        serverConnection.browserConnection = client;
+        client.emit("net-status", {message: "connected to sim server", key: "server_connected", error: null});
       });
     });
 
@@ -52,3 +43,18 @@ exports.connect = function(server, socket_file){
   });
 
 };
+
+connect_to_unix_socket(socket_file, callback){
+  let operation = retry.operation();
+  operation.attempt(function(currentAttempt){
+    unix_socket.connect(socket_file, (err, socket) => {
+      if(operation.retry(err)){
+        client.emit("net-status", {message: "sim server is not available", key: "server_away", error: err});
+        return;
+      } else {
+        callback(socket);
+      }
+    });
+
+  });
+}
