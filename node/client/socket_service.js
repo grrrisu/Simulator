@@ -23,11 +23,6 @@ module.exports = class SocketService extends EventEmitter2 {
       this.emit([data.scope, data.action], data);
     });
 
-    this.socket.on("end", () => {
-      console.log("reloading");
-      window.location.href = window.location.href;
-    });
-
     this.socket.on("net-status", (data) => {
       this.emit('net-status', data);
     });
@@ -38,6 +33,18 @@ module.exports = class SocketService extends EventEmitter2 {
 
   send_message(message){
     this.socket.emit("action", message);
+  }
+
+  on_connect_error(callback){
+    this.socket.on("connect_error", (data) => {
+      console.log("middleware connect error");
+      callback(data);
+    });
+
+    this.socket.on("disconnect", (data) => {
+      console.log("middleware disconnected");
+      callback(data);
+    });
   }
 
 }

@@ -15,6 +15,10 @@ module.exports = class Game {
   }
 
   dispatch(socket) {
+    socket.on_connect_error( (data) => {
+      $('#net-status').html('<div class="message alert alert-danger">middleware not available</div>');
+    });
+
     socket.on('example.*', function(data){
       console.log("data received", data);
       let time = new Date().toLocaleString();
