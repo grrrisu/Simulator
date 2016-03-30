@@ -45,25 +45,33 @@ sim server:
 middleware:
 
 ```
-$> cd node 
+$> cd examples/node
 $> npm install
-$> bower install
 $> gulp compile
 ```
 
-#### Run
+#### Run Examples
 
 sim server:
 
-```$> ruby lib/boot.rb```
+```$> ruby examples/server/boot.rb```
 
 middleware:
 
-```$> node --harmony node/main.js```
+```$> node --harmony examples/node/main.js```
 
 
+### Development
 
-### Debug PlayerServer
+create a npm link to have all the recent changes in the examples
+
+in folder node issue:
+```$>npm link```
+
+then in examples/node create the sym link like so:
+```$>npm link simulator-middleware```
+
+#### Debug PlayerServer
 
 test unix socket with netcat:
 
