@@ -7,7 +7,6 @@ tmp/sockets/player.sock
 
 node/node_modules/**/*
 examples/node/node_modules/**/*
-node/public/javascripts/client.js
 
 config/level.yml
-examples/node/public/javascripts/client.js
+examples/node/public/client.js

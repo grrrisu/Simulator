@@ -1,5 +1,8 @@
 "use strict";
 
+import d3 from 'd3';
+import Rickshaw from 'rickshaw';
+
 module.exports = class TimeChart {
 
   constructor(options){

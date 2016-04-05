@@ -1,6 +1,6 @@
 "use strict";
 
-const $ = require('jquery/dist/jquery.min.js');
+import $ from 'jquery';
 
 module.exports = class MonitorController {
 

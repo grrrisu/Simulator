@@ -1,8 +1,10 @@
 "use strict";
 
-const SocketService = require('simulator-middleware/client/socket_service.js');
-const MonitorController = require('./monitor_controller.js');
-const MonitorChart   = require('./monitor_chart.js');
+import $ from 'jquery';
+
+import SocketService from 'simulator-middleware/client/socket_service.js';
+import MonitorController from './monitor_controller.js';
+import MonitorChart from './monitor_chart.js';
 
 module.exports = class Game {
 

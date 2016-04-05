@@ -1,6 +1,6 @@
 "use strict";
 
-var io = require('socket.io/node_modules/socket.io-client/socket.io.js');
+var io = require('socket.io/node_modules/socket.io-client');
 var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
 module.exports = class SocketService extends EventEmitter2 {

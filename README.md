@@ -47,7 +47,7 @@ middleware:
 ```
 $> cd examples/node
 $> npm install
-$> gulp compile
+$> webpack
 ```
 
 #### Run Examples
