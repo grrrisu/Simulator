@@ -10,7 +10,7 @@ module.exports = class Receiver {
   }
 
   this.listen(socket){
-    socket.on('game_of_life.*', function(data){
+    socket.on('game_of_life.*', (data) => {
       console.log("data received", data);
       let time = new Date().toLocaleString();
       $('#messages').prepend('<tr class="message"><td>'+time+'</td><td>'+data.answer+'</td></tr>');

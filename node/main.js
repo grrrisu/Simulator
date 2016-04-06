@@ -5,7 +5,7 @@ const app = express();
 const server = require('http').createServer(app);
 
 const web_socket  = require('./web_socket');
-web_socket.connect(server);
+web_socket.connect(server, __dirname + '/../tmp/sockets/player.sock');
 
 // add something here
 

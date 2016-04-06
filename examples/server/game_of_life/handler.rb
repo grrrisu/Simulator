@@ -5,8 +5,7 @@ module GameOfLife
     def build config
       # TODO universe Actor
       Celluloid::Actor[:universe].universe   = World.new config[:size]
-      Celluloid::Actor[:time_unit].time_unit = config[:timeunit]
-      # TODO setup Sim Loop
+      # TODO setup Sim Loop config[:duration]
     end
 
     def start
