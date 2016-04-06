@@ -7,7 +7,6 @@ module Sim
 
         def initialize object
           @object = object or raise ArgumentError, "sim object must be set"
-          @done = false
         end
 
         def to_s
