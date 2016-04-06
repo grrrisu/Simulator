@@ -4,15 +4,15 @@ import $ from 'jquery';
 
 import SocketService from 'simulator-middleware/client/socket_service.js';
 import controller from './controller.js';
-import dispatcher from './dispatcher.js';
+import dispatcher from './receiver.js';
 
 module.exports = class Game {
 
   constructor(){
     let socket = new SocketService().connect("http://localhost:8080", 123, 'abc-123');
     new Controller(socket);
-    new Dispatcher(socket);
-    
+    new Receiver(socket);
+
     this.bindNetStatus(socket);
   }
 
