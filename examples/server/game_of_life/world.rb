@@ -10,7 +10,7 @@ module GameOfLife
       srand
       set_each_field_with_index do |x, y|
         cell = Cell.new(self, x, y)
-        cell.alive = rand(3) == 2
+        cell.alive = rand(4) == 0
         cell
       end
     end
