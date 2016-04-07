@@ -10,10 +10,3 @@ module Sim
     supervise Net::PlayerServer, as: :player_server, args: [socket_file, {start: true}]
   end
 end
-
-Celluloid.exception_handler do |exception|
-  event = {event: exception.backtrace.first, error: exception.message}
-  if monitor = Celluloid::Actor[:monitor]
-    monitor.async.add_error event
-  end
-end

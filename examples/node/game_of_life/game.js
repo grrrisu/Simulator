@@ -3,8 +3,8 @@
 import $ from 'jquery';
 
 import SocketService from 'simulator-middleware/client/socket_service.js';
-import controller from './controller.js';
-import dispatcher from './receiver.js';
+import Controller from './controller.js';
+import Receiver from './receiver.js';
 
 module.exports = class Game {
 

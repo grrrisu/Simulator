@@ -1,15 +1,21 @@
 module.exports = {
-  entry: './client',
+  entry: {
+    monitor: './monitor',
+    game_of_life: './game_of_life'
+  },
   output: {
     path: './public',
-    filename: 'client.js'
+    filename: '[name].js'
   },
   module: {
     loaders: [
       {
         test:   /\.js/,
         loader: 'babel',
-        include: __dirname + '/client',
+        include: [
+          __dirname + '/monitor',
+          __dirname + '/game_of_life'
+        ]
       }
     ],
   }

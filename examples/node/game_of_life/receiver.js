@@ -9,7 +9,7 @@ module.exports = class Receiver {
     this.listen(socket);
   }
 
-  this.listen(socket){
+  listen(socket){
     socket.on('game_of_life.*', (data) => {
       console.log("data received", data);
       let time = new Date().toLocaleString();

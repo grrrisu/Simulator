@@ -2,10 +2,9 @@ module GameOfLife
 
   class Handler < Sim::Net::MessageHandler::Base
 
-    def build config
-      # TODO universe Actor
-      Celluloid::Actor[:universe].universe   = World.new config[:size]
-      # TODO setup Sim Loop config[:duration]
+    def build duration, size
+      Celluloid::Actor[:universe].universe = World.new size
+      Celluloid::Actor[:sim_master].setup_sim_loop duration: duration, event_class: GameOfLife::Event 
     end
 
     def start

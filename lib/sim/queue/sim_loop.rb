@@ -12,15 +12,15 @@ module Sim
 
       finalizer :rescue_me
 
-      def initialize duration, objects = []
+      def initialize duration: 1.0 , objects: [], event_class: SimEvent
         raise ArgumentError, "duration must be set" unless duration
-        @duration = duration.to_f || 1.0
-        @objects  = objects
-        @counter  = 0
+        @duration    = duration.to_f
+        @objects     = objects
+        @event_class = event_class
+        @counter     = 0
       end
 
       def add object
-        #object.touch
         @objects << object
       end
       alias << add
@@ -35,7 +35,6 @@ module Sim
       end
 
       def start
-        #@objects.each {|obj| obj.touch}
         @start_time = Time.now
         info "sim loop started..."
         sim
@@ -99,7 +98,7 @@ module Sim
     private
 
       def create_event sim_object
-        SimEvent.new(sim_object)
+        @event_class.new(sim_object)
       end
 
       def event_queue

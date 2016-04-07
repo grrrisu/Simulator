@@ -9,4 +9,4 @@ node/node_modules/**/*
 examples/node/node_modules/**/*
 
 config/level.yml
-examples/node/public/client.js
+examples/node/public/*.js

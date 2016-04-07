@@ -1,6 +1,6 @@
 module GameOfLife
 
-  class SimEvent < Sim::Queue::Event::SimEvent
+  class Event < Sim::Queue::Event::SimEvent
 
     def fire
       sim

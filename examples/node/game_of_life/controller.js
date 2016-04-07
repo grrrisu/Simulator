@@ -14,7 +14,7 @@ module.exports = class Controller {
       e.preventDefault();
       let size      = +$('#size').val() || 8;
       let duration  = +$('#duration').val() || 1.0;
-      let message = {"scope": "game_of_life", "action": "build", "args": {duration: duration, size: size}}
+      let message = {"scope": "game_of_life", "action": "build", "args": [duration, size]}
       this.socket.send_message(message);
     });
 
