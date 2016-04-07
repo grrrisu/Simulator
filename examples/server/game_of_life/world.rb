@@ -13,6 +13,7 @@ module GameOfLife
         cell.alive = rand(4) == 0
         cell
       end
+      self
     end
 
   end

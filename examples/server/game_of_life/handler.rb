@@ -19,8 +19,7 @@ module GameOfLife
   private
 
     def create_world size
-      world = World.new size
-      world.create
+      world = World.new(size).create
       Celluloid::Actor[:universe].universe = world
       world
     end
