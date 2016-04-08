@@ -15,8 +15,6 @@ module GameOfLife
         set_alive true
       elsif object.alive && (alive_neighbours < 2 || alive_neighbours > 3)
         set_alive false
-      else
-        broadcast
       end
     end
 

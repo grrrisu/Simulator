@@ -9,10 +9,7 @@ module GameOfLife
     end
 
     def start
-      world = Celluloid::Actor[:universe].universe
-      event = GameOfLife::Event.new(world[1,1])
-      queue event
-      #Celluloid::Actor[:sim_master].start
+      Celluloid::Actor[:sim_master].start
     end
 
     def stop

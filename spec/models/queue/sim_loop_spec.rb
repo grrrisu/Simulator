@@ -38,8 +38,7 @@ module Sim
         end
       end
 
-      it "should touch every object" do
-        #sim_objects.each {|obj| expect(obj).to receive(:touch)}
+      it "should sim every object" do
         expect(sim_loop.wrapped_object).to receive(:sim).once
         sim_loop.start
       end
