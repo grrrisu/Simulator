@@ -1,6 +1,6 @@
 module GameOfLife
 
-  class World < Sim::Matrix::Base
+  class World < Sim::Matrix::Globe
 
     def initialize size
       super
@@ -37,7 +37,13 @@ module GameOfLife
     end
 
     def look_around
-
+      neighbours = []
+      (-1..1).each do |dy|
+        (-1..1).each do |dx|
+          neighbours << @world[x + dx, y + dy] unless dy == 0 && dx == 0
+        end
+      end
+      neighbours
     end
 
   end

@@ -25,6 +25,8 @@ module Sim
       end
 
       def broadcast_to_all message
+        info "*** braodcast to all"
+        info Session.registry_keys
         Session.registry_keys do |key|
           Actor[key].async.send_message message
         end

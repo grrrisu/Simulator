@@ -11,6 +11,10 @@ module Sim
           @player_id = player_id
         end
 
+        def to_s
+          "<#{self.class.name} player_id: #{player_id}>"
+        end
+
       end
 
     end

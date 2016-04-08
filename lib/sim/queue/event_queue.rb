@@ -21,7 +21,7 @@ module Sim
       end
 
       def add event
-        info "add event #{event.inspect}"
+        info "add event #{event}"
         @events << event
         fire_worker.async.run
       end

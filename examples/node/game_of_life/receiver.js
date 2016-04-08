@@ -16,10 +16,15 @@ module.exports = class Receiver {
       this.renderMatrix(matrix, JSON.parse(data.answer));
     });
 
-    socket.on('game_of_life.*', (data) => {
+    socket.on('game_of_life.sim', (data) => {
       console.log("data received", data);
-      let time = new Date().toLocaleString();
-      $('#messages').prepend('<tr class="message"><td>'+time+'</td><td>'+data.answer+'</td></tr>');
+      let cell = data.answer;
+      let element = $('.cell[data-coord="'+cell.x+':'+cell.y+'"]');
+      if(cell.alive) {
+        element.addClass('alive');
+      } else {
+        element.removeClass('alive');
+      }
     });
   }
 
@@ -28,9 +33,9 @@ module.exports = class Receiver {
       let row = document.createElement("div");
       $(row).addClass('clearfix');
       matrix.appendChild(row);
-      y.forEach((x) => {
-        let alive_css = x.alive ? ' alive' : '';
-        $(row).append('<div class="cell'+alive_css+'"></div>');
+      y.forEach((cell) => {
+        let alive_css = cell.alive ? ' alive' : '';
+        $(row).append('<div class="cell'+alive_css+'" data-coord="'+cell.x+':'+cell.y+'"></div>');
       });
     });
   }
