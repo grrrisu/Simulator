@@ -12,7 +12,7 @@ module Sim
 
       finalizer :rescue_me
 
-      def initialize duration: 1.0 , objects: [], event_class: SimEvent
+      def initialize duration: 1.0 , objects: [], event_class: Event::SimEvent
         raise ArgumentError, "duration must be set" unless duration
         @duration    = duration.to_f
         @objects     = objects
