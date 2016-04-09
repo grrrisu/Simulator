@@ -19,7 +19,7 @@ module.exports = class TimeChart {
     this.chart = new Rickshaw.Graph( {
       element: document.getElementById(this.chartElementId),
       width: 650,
-      height: 200,
+      height: 250,
       renderer: 'bar',
       stroke: true,
       series: new Rickshaw.Series.FixedDuration([{ name: this.defaultSerie}], chartPalette, {
