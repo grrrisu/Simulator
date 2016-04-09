@@ -5,6 +5,7 @@ module Sim
       include Celluloid
       include Celluloid::Logger
       finalizer :shutdown
+      trap_exit :supervisor_crashed
 
       def initialize config = {}
         TimeUnit.supervise_as :time_unit, seconds: 10 # timeunit 10 secs
@@ -40,6 +41,10 @@ module Sim
       def stop
         Celluloid::Actor[:time_unit].stop
         sim_loop.stop if @sim_loop_supervisor
+      end
+
+      def supervisor_crashed actor, reason
+        info "actor #{actor.inspect} dies of #{reason}:#{reason.message}"
       end
 
       def shutdown
