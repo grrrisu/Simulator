@@ -23,7 +23,7 @@ module Sim
       def add event
         info "add event #{event}"
         @events << event
-        fire_worker.async.run
+        fire_worker&.async&.run
       end
 
       def fire_worker
