@@ -11,9 +11,11 @@ module.exports = class Receiver {
 
   listen(socket){
     socket.on('game_of_life.build', (data) => {
-      let matrix = document.getElementById("matrix");
-      $(matrix).html('');
-      this.renderMatrix(matrix, JSON.parse(data.answer));
+      this.renderMatrix(JSON.parse(data.answer));
+    });
+
+    socket.on('game_of_life.init', (data) => {
+      this.renderMatrix(JSON.parse(data.answer));
     });
 
     socket.on('game_of_life.sim', (data) => {
@@ -28,7 +30,10 @@ module.exports = class Receiver {
     });
   }
 
-  renderMatrix(matrix, fields){
+  renderMatrix(fields){
+    let matrix = document.getElementById("matrix");
+    $(matrix).html('');
+
     fields.forEach((y) => {
       let row = document.createElement("div");
       $(row).addClass('clearfix');

@@ -2,6 +2,12 @@ module GameOfLife
 
   class Handler < Sim::Net::MessageHandler::Base
 
+    def init
+      if world = Celluloid::Actor[:universe].universe
+        world.to_json
+      end
+    end
+
     def build duration, size
       Celluloid::Actor[:sim_master].setup_sim_loop duration: duration, event_class: GameOfLife::Event
       world = create_world size

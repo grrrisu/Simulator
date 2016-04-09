@@ -7,6 +7,7 @@ module.exports = class Controller {
   constructor(socket){
     this.socket = socket;
     this.bind_events();
+    this.request_initial_state();
   }
 
   bind_events(){
@@ -29,6 +30,11 @@ module.exports = class Controller {
       let message = {"scope": "game_of_life", "action": "stop"}
       this.socket.send_message(message);
     });
+  }
+
+  request_initial_state(){
+    let message = {"scope": "game_of_life", "action": "init"}
+    this.socket.send_message(message);
   }
 
 }

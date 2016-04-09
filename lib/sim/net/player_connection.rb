@@ -25,7 +25,7 @@ module Sim
 
       def receive data
         message = JSON.parse(data, symbolize_names: true)
-        info "received message #{message}"
+        debug "received message #{message}"
         session = get_session message[:player_id]
         session.receive(message)
       rescue StandardError => e
@@ -35,13 +35,13 @@ module Sim
       end
 
       def send_message(message)
-        info "send message #{message}"
+        debug "send message #{message}"
         socket.print message.to_json
       end
 
       def shutdown
         socket.close if socket
-        info "socket closed"
+        debug "socket closed"
       end
 
       private
