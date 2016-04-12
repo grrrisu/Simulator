@@ -17,6 +17,6 @@ module.exports = {
           __dirname + '/game_of_life'
         ]
       }
-    ],
+    ]
   }
 }
