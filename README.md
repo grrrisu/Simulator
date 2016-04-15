@@ -71,6 +71,10 @@ in folder node issue:
 then in examples/node create the sym link like so:
 ```$>npm link simulator-middleware```
 
+#### Testing
+
+for better output comment out ```Celluloid.logger = nil``` in spec_helper.rb
+
 #### Debug PlayerServer
 
 test unix socket with netcat:

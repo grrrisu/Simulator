@@ -14,7 +14,7 @@ module Sim
     end
 
     it "and return the reversed text" do
-      expect(socket).to receive(:print).with('{"scope":"example","action":"reverse","answer":"dlrow olleh"}')
+      expect(socket).to receive(:puts).with('{"scope":"example","action":"reverse","answer":"dlrow olleh"}')
       connection.receive '{"scope":"example","player_id":123,"action":"reverse","args":"hello world"}'
       sleep 0.1
     end

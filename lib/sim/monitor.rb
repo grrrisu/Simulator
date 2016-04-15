@@ -9,7 +9,7 @@ module Sim
 
     attr_reader :logs
 
-    def initialize config
+    def initialize config = {}
       @errors = []
       @events = []
       @subscribers = Set.new
