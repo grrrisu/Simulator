@@ -34,7 +34,7 @@ module Sim
         raise
       end
 
-      def send_message(message)
+      def send_message message
         debug "send message #{message}"
         socket.puts message.to_json
       end

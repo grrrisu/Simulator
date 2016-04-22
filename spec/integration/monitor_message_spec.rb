@@ -31,5 +31,15 @@ module Sim
       sleep 0.1
     end
 
+    it "should unsubscribe" do
+      allow(socket).to receive(:puts).with(/\{"scope":"monitor","action":"history",.*\}/)
+      connection.receive '{"scope":"monitor","player_id":123,"action":"subscribe"}'
+
+      expect(socket).to receive(:puts).never.with(/\{"scope":"monitor","action":"error","answer":\{"event":.*,"error":"Oh Snap!"\}\}/)
+      connection.receive '{"scope":"monitor","player_id":123,"action":"unsubscribe"}'
+      connection.receive '{"scope":"example","player_id":123,"action":"crash"}'
+      sleep 0.1
+    end
+
   end
 end

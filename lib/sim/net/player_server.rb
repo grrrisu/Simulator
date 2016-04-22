@@ -6,7 +6,7 @@ module Sim
       finalizer :shutdown
       trap_exit :player_connection_closed
 
-      def initialize(file, start: false)
+      def initialize file, start: false
         @file = file
         @server = UNIXServer.new(file)
         boot if start
@@ -26,7 +26,7 @@ module Sim
         end until @server.closed?
       end
 
-      def handle_connection(socket)
+      def handle_connection socket
         info "client connected"
         connection = PlayerConnection.new_link(socket)
         connection.async.listen
@@ -38,7 +38,7 @@ module Sim
         FileUtils.rm @file, force: true
       end
 
-      def player_connection_closed(actor, reason)
+      def player_connection_closed actor, reason
         if reason
           warn "player connection #{actor.inspect} has died because of a #{reason.class}: #{reason.message}"
         end

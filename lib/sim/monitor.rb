@@ -7,7 +7,7 @@ module Sim
 
     HISTORY_LENGTH = 10 # seconds
 
-    attr_reader :logs
+    attr_reader :subscribers
 
     def initialize config = {}
       @errors = []

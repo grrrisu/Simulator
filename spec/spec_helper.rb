@@ -19,7 +19,7 @@ require_relative '../lib/sim'
 # Terminate the default incident reporter and replace it with one that logs to a file
 logfile = File.open(File.expand_path("../../log/test.log", __FILE__), 'a')
 
-Celluloid.logger.level = Logger::WARN
+Celluloid.logger.level = Logger::DEBUG
 
 Dir['./spec/support/*.rb'].map {|f| require f }
 # example code

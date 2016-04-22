@@ -44,6 +44,7 @@ module Sim
       end
 
       def self.create_roles player_id
+        return [] unless @role_definitions
         @role_definitions.map do |name, callback|
           name if callback.call(player_id)
         end
@@ -51,7 +52,7 @@ module Sim
 
       def initialize player_id
         @player_id  = player_id
-        @session_id = object_id
+        @session_id = object_id # TODO use uuid ?
         Actor["session_#{session_id}"] = Actor.current
         @roles = Session.create_roles player_id
       end
