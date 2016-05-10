@@ -11,6 +11,9 @@ app.use(express.static('public'));
 app.use(express.static('node_modules/bootstrap/dist'));
 app.use(express.static('node_modules/rickshaw'));
 
-server.listen(8080, function(){
-  console.log("webserver listening on port 8080");
+// read port from ENV (eg. Heroku)
+let port = process.env.PORT || 8080;
+
+server.listen(port, function(){
+  console.log('webserver listening on port ' + port);
 });
