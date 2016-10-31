@@ -58,7 +58,7 @@ sim server:
 
 middleware:
 
-```$> node --harmony examples/node/main.js```
+```$> node --harmony examples/node/app.js```
 
 
 ### Development
