@@ -10,3 +10,4 @@ examples/node/node_modules/**/*
 
 config/level.yml
 examples/node/public/*.js
+examples/node/npm-debug.log

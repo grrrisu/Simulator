@@ -34,7 +34,7 @@ see examples directory
 #### Requirements
 
 * ruby 2.3.x
-* node 0.12.x
+* node 6.9.x
 
 #### Install
 
