@@ -22,7 +22,7 @@ Sim::Net::Router.define do |router|
 end
 ```
 
-####JSON API
+#### JSON API
 
 ```{sope: 'test', action: 'reverse', args: 'hello world'}```
 
@@ -34,7 +34,7 @@ see examples directory
 #### Requirements
 
 * ruby 2.3.x
-* node 6.9.x
+* node 8.3.x
 
 #### Install
 
