@@ -2,7 +2,7 @@
   "name": "simulator-middleware-examples",
   "version": "0.4.0",
   "description": "examples for simulator middleware",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
