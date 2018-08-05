@@ -33,7 +33,7 @@ see examples directory
 
 #### Requirements
 
-* ruby 2.3.x
+* ruby 2.4.x
 * node 8.3.x
 
 #### Install
