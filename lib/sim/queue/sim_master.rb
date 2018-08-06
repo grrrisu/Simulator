@@ -12,8 +12,8 @@ module Sim
         setup_universe
       end
 
-      def setup_sim_loop duration: 8.0, event_class:
-        @sim_loop_supervisor = SimLoop.supervise duration: duration, event_class: event_class
+      def setup_sim_loop duration: 8.0
+        @sim_loop_supervisor = SimLoop.supervise duration: duration
       end
 
       def setup_universe config = {}
