@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Queue::TimeUnit do
+  RSpec.describe Queue::TimeUnit do
 
     let(:time_unit) { Queue::TimeUnit.new(seconds: 2) }
     let(:now)       { Time.now }

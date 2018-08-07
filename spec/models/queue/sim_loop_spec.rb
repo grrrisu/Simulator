@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Queue::SimLoop do
+  RSpec.describe Queue::SimLoop do
 
     let(:sim_objects)   { %w{a b c d e f}.map{|n| SimulatedObject.new(n)} }
     let(:simulators)    { sim_objects.map{|obj| Simulator.new(obj)}}

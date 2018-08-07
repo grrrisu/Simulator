@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Monitor do
+  RSpec.describe Monitor do
 
     let(:monitor)     { Monitor.new }
     let(:broadcaster) { Celluloid::Actor[:broadcaster] = Net::Broadcaster.new }

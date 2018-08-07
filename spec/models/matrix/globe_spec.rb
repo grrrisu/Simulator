@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Matrix::Globe do
+  RSpec.describe Matrix::Globe do
 
     let(:globe)   { Matrix::Globe.new(15, 30) }
 

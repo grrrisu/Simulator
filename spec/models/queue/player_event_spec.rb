@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Queue::PlayerEvent do
+  RSpec.describe Queue::PlayerEvent do
 
     it "should execute function" do
       event = Queue::PlayerEvent.new(123) do |player_id|

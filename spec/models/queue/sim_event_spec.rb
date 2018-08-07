@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Queue::SimEvent do
+  RSpec.describe Queue::SimEvent do
 
     it "should sim object once" do
       simulator = Simulator.new(SimulatedObject.new('abc'))

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe 'should process a message' do
+  RSpec.describe 'should process a message' do
 
     let(:socket)     { double('Socket') }
     let(:connection) { Net::PlayerConnection.new(socket) }

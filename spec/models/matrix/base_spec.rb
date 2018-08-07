@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe Matrix::Base do
+  RSpec.describe Matrix::Base do
 
     let(:matrix) { Matrix::Base.new(3, 4) }
 

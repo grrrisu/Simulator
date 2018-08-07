@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Sim
-  describe 'monitor' do
+  RSpec.describe 'monitor' do
 
     let(:socket)     { double('Socket') }
     let(:connection) { Net::PlayerConnection.new(socket) }

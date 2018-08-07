@@ -29,7 +29,7 @@ class BuildableTwo
 end
 
 module Sim
-  describe Buildable do
+  RSpec.describe Buildable do
 
     before :all do
       @config = { min: 1, hunger: 6 }
