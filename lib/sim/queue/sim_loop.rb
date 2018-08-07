@@ -12,11 +12,10 @@ module Sim
 
       finalizer :rescue_me
 
-      def initialize duration: 1.0 , objects: [], event_class: Event::SimEvent
+      def initialize duration: 1.0 , objects: []
         raise ArgumentError, "duration must be set" unless duration
         @duration    = duration.to_f
         @objects     = objects
-        @event_class = event_class
         @counter     = 0
       end
 
@@ -26,18 +25,19 @@ module Sim
       alias << add
 
       def remove object
-        return unless @objects.include?(object)
-        debug "remove #{object.inspect}"
-        if @objects.index(object) < @counter
+        simulator = @objects.find {|simulator| simulator.object == object }
+        return unless simulator
+        debug "remove #{simulator.object.inspect}"
+        if @objects.index(simulator) < @counter
           @counter -= 1
         end
-        @objects.delete object
+        @objects.delete simulator
       end
 
       def start
         @start_time = Time.now
         info "sim loop started..."
-        sim
+        process_objects
       end
 
       def stop
@@ -65,13 +65,13 @@ module Sim
         object
       end
 
-      def sim
+      def process_objects
         if @objects.any?
           event = create_event next_object
           event_queue.async.add event
-          @timer = after(delay) { sim }
+          @timer = after(delay) { process_objects }
         else
-          @timer = after(TIMEOUT) { sim }
+          @timer = after(TIMEOUT) { process_objects }
         end
       end
 
@@ -97,8 +97,8 @@ module Sim
 
     private
 
-      def create_event sim_object
-        @event_class.new(sim_object)
+      def create_event object
+        SimEvent.new object
       end
 
       def event_queue

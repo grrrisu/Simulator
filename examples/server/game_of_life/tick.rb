@@ -1,13 +1,15 @@
 module GameOfLife
 
-  class Event < Sim::Queue::Event::SimEvent
+  class Tick
 
-    def fire
-      sim
+    attr_reader :object
+
+    def initialize object
+      @object = object
     end
 
     def to_s
-      "<GameOfLife::Event x:#{object.x} y:#{object.y} alive:#{object.alive.inspect}>"
+      "<GameOfLife::Tick object:#{object}>"
     end
 
     def sim

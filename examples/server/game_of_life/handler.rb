@@ -9,7 +9,7 @@ module GameOfLife
     end
 
     def build duration, size
-      Celluloid::Actor[:sim_master].setup_sim_loop duration: duration, event_class: GameOfLife::Event
+      Celluloid::Actor[:sim_master].setup_sim_loop duration: duration
       world = create_world size
       world.to_json
     end

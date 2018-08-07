@@ -10,30 +10,62 @@ A simulation container based on [Celluloid](https://github.com/celluloid/cellulo
 
 routes:
 
-```
+```ruby
 Sim::Net::Router.define do |router|
 
   router.forward :test, to: Example::SimpleHandler # allow everybody
 
   router.forward :admin, to: Example::SimpleHandler do |player_id|
-    player_id.to_i == 123
+    Player.find(player_id).admin? # allow only admins
   end
 
 end
 ```
 
-#### JSON API
+handle incoming player events and broadcast them back
 
-```{sope: 'test', action: 'reverse', args: 'hello world'}```
+```javascript
+{scope: 'test', action: 'reverse', args: 'hello world'}
+```
+
+```ruby
+class Example::SimpleHandler < Sim::Net::MessageHandler::Base
+
+  def reverse text
+    queue_player_event do |player_id|
+      broadcast player_id, scope: 'test', action: 'reverse', answer: text.reverse
+    end
+  end
+
+end
+```
+
+execute simulation. The class must have a reader to the simulated object and provide a `sim` method
+
+```ruby
+class Tick
+
+  attr_reader :object
+
+  def initialize object
+    @object = object
+  end
+
+  def sim
+    # calculate next object state
+  end
+
+end
+```
 
 #### Examples
 
-see examples directory
+see [examples directory](https://github.com/grrrisu/Simulator/tree/master/examples/server)
 
 
 #### Requirements
 
-* ruby 2.3.x
+* ruby 2.4.x
 * node 8.3.x
 
 #### Install

@@ -1,13 +1,11 @@
 require_relative '../../lib/sim'
 
-require_relative 'event/reverse_event'
-require_relative 'event/crash_event'
-require_relative 'event/wait_event'
 require_relative 'message_handler/handler'
 
+require_relative 'game_of_life/cell'
 require_relative 'game_of_life/world'
+require_relative 'game_of_life/tick'
 require_relative 'game_of_life/handler'
-require_relative 'game_of_life/event'
 
 Sim::Net::Router.define do |router|
 
