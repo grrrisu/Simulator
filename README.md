@@ -105,6 +105,9 @@ then in examples/node create the sym link like so:
 
 #### Testing
 
+##### dotenv
+copy ```.env-dev-example``` as ```.env-dev``` and adapt ```CELLULOID_SPECS_LOG_FILE```
+
 for better output comment out ```Celluloid.logger = nil``` in spec_helper.rb
 
 #### Debug PlayerServer

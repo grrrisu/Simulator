@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 gem 'rake'
-gem 'celluloid', '~> 0.16.0'
-gem 'celluloid-io', '~> 0.16.0'
+gem 'celluloid', '~> 0.17.0'
+gem 'celluloid-io', '~> 0.17.0'
 
 group :development do
   gem 'jeweler'
@@ -13,6 +13,8 @@ group :development do
 end
 
 group :test do
+  gem 'dotenv'      # celluloid 0.17
+  gem 'rspec-retry' # celluloid 0.17
   gem 'rb-fsevent'
   gem 'timecop'
   gem "codeclimate-test-reporter", :require => false

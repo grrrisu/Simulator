@@ -10,15 +10,11 @@ end
 ENV['SIM_ENV'] ||= 'test'
 
 require 'celluloid'
-require 'celluloid/rspec'
+require "celluloid/rspec"
+require "celluloid/essentials"
 require 'timecop'
 
 require_relative '../lib/sim'
-
-# Terminate the default incident reporter and replace it with one that logs to a file
-logfile = File.open(File.expand_path("../../log/test.log", __FILE__), 'a')
-
-Celluloid.logger.level = Logger::DEBUG
 
 Dir['./spec/support/*.rb'].map {|f| require f }
 # example code
@@ -34,8 +30,11 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Celluloid.logger = nil
-    Celluloid.shutdown
     Celluloid.boot
+  end
+
+  config.after(:each) do
+    Celluloid.shutdown
   end
 
 end
