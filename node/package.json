@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/grrrisu/Simulator#readme",
   "dependencies": {
-    "eventemitter2": "^1.0.0",
-    "npm": "^6.3.0",
-    "retry": "^0.9.0",
-    "socket.io": "^1.4.5"
+    "eventemitter2": "^5.0.1",
+    "npm": "^6.4.1",
+    "retry": "^0.12.0",
+    "socket.io": "^2.1.1"
   }
 }
